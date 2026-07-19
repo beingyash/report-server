@@ -22,4 +22,6 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', reportCount: reportsIndex.length });
 });
 
+app.use('/', require('./routes/index'));
+
 module.exports = app;

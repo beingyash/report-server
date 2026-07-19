@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="header">
+    <h1>Reports</h1>
+    <nav class="project-nav">
+      <a href="/" class="<%= !activeProject ? 'active' : '' %>">All</a>
+      <% projects.forEach(p => { %>
+        <a href="/?project=<%= p %>" class="<%= activeProject === p ? 'active' : '' %>"><%= p %></a>
+      <% }) %>
+    </nav>
+  </header>
+
+  <main class="content">
+    <% if (Object.keys(grouped).length === 0) { %>
+      <p class="empty-state">No reports yet</p>
+    <% } %>
+
+    <% Object.entries(grouped).forEach(([project, reports]) => { %>
+      <section class="project-group">
+        <h2 class="project-title"><%= project %></h2>
+        <div class="report-grid">
+          <% reports.forEach(r => { %>
+            <a href="/<%= r.project %>/<%= r.slug %>" class="report-card">
+              <h3 class="report-title"><%= r.title %></h3>
+              <% if (r.description) { %>
+                <p class="report-desc"><%= r.description %></p>
+              <% } %>
+              <% if (r.date) { %>
+                <time class="report-date"><%= r.date %></time>
+              <% } %>
+            </a>
+          <% }) %>
+        </div>
+      </section>
+    <% }) %>
+  </main>
+</body>
+</html>
