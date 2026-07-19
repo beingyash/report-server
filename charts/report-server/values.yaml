@@ -1,9 +1,7 @@
 replicaCount: 1
 
-image:
-  repository: docker.io/beingyash/report-server
-  tag: latest
-  pullPolicy: Always
+image: docker.io/beingyash/report-server:latest
+imagePullPolicy: Always
 
 service:
   port: 3000

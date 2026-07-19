@@ -1,0 +1,8 @@
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: report-server
+  namespace: flux-system
+spec:
+  image: docker.io/beingyash/report-server
+  interval: 1m
