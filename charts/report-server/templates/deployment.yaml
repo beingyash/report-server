@@ -27,10 +27,10 @@ spec:
             - name: PORT
               value: "{{ .Values.service.port }}"
             - name: REPORTS_DIR
-              value: /var/reports/source/reports
+              value: /git/source/reports
           volumeMounts:
             - name: reports
-              mountPath: /var/reports
+              mountPath: /git
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           livenessProbe:
@@ -53,7 +53,7 @@ spec:
             - name: GIT_SYNC_BRANCH
               value: {{ .Values.gitSync.ref | quote }}
             - name: GIT_SYNC_ROOT
-              value: /var/reports
+              value: /git
             - name: GIT_SYNC_DEST
               value: source
             - name: GIT_SYNC_WAIT
