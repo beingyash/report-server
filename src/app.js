@@ -15,8 +15,17 @@ const watcher = watchReports(REPORTS_DIR, () => {
   reportsIndex = buildIndex(REPORTS_DIR);
 });
 
+// Periodic re-scan: catches git-sync's initial clone if chokidar misses it
+const rescanInterval = setInterval(() => {
+  reportsIndex = buildIndex(REPORTS_DIR);
+}, 60000);
+
+// Expose for cleanup
 app.locals.getIndex = () => reportsIndex;
-app.locals.watcher = watcher;
+app.locals.cleanup = () => {
+  clearInterval(rescanInterval);
+  watcher.close();
+};
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', reportCount: reportsIndex.length });
