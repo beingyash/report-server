@@ -1,0 +1,26 @@
+replicaCount: 1
+
+image:
+  repository: docker.io/beingyash/report-server
+  tag: latest
+  pullPolicy: Always
+
+service:
+  port: 3000
+
+ingress:
+  host: reports.yash.abyssmallab.in
+  className: traefik
+
+gitSync:
+  repository: https://github.com/beingyash/report-server.git
+  ref: main
+  interval: 60
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 64Mi

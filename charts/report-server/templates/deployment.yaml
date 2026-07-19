@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "report-server.fullname" . }}
+  labels:
+    app: {{ include "report-server.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "report-server.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "report-server.name" . }}
+    spec:
+      volumes:
+        - name: reports
+          emptyDir: {}
+      containers:
+        - name: report-server
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          env:
+            - name: PORT
+              value: "{{ .Values.service.port }}"
+            - name: REPORTS_DIR
+              value: /var/reports/source/reports
+          volumeMounts:
+            - name: reports
+              mountPath: /var/reports
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+        - name: git-sync
+          image: registry.k8s.io/git-sync/git-sync:v4.2.1
+          env:
+            - name: GIT_SYNC_REPO
+              value: {{ .Values.gitSync.repository | quote }}
+            - name: GIT_SYNC_BRANCH
+              value: {{ .Values.gitSync.ref | quote }}
+            - name: GIT_SYNC_ROOT
+              value: /var/reports
+            - name: GIT_SYNC_DEST
+              value: source
+            - name: GIT_SYNC_WAIT
+              value: "{{ .Values.gitSync.interval }}"
+            - name: GIT_SYNC_ONE_TIME
+              value: "false"
+          volumeMounts:
+            - name: reports
+              mountPath: /var/reports
+          resources:
+            limits:
+              cpu: 100m
+              memory: 64Mi
+            requests:
+              cpu: 50m
+              memory: 32Mi

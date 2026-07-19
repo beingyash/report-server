@@ -1,0 +1,5 @@
+apiVersion: v2
+name: report-server
+description: Browseable HTML report server with git-sync sidecar
+version: 0.1.0
+appVersion: 0.1.0
