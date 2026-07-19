@@ -1,6 +1,6 @@
 replicaCount: 1
 
-image: docker.io/beingyash/report-server:latest
+image: docker.io/beingyash/report-server:v0.1.0
 imagePullPolicy: Always
 
 service:
