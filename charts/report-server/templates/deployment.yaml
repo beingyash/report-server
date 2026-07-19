@@ -62,7 +62,7 @@ spec:
               value: "false"
           volumeMounts:
             - name: reports
-              mountPath: /var/reports
+              mountPath: /git
           resources:
             limits:
               cpu: 100m
