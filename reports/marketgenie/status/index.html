@@ -37,49 +37,37 @@
 <header>
   <h1>marketgenie</h1>
   <div class="meta">Last updated 2026-07-21</div>
-  <div class="badges"><span class="badge badge-pending">18 Pending</span></div>
+  <div class="badges"><span class="badge badge-pending">8 Pending</span></div>
 </header>
 <section class="card" style="border-left-color: #3498db">
     <h2>Overview</h2>
     <ul></ul>
   </section>
 <section class="card" style="border-left-color: #3498db">
-    <h2>Deployment Targets</h2>
+    <h2>Deployment</h2>
     <ul></ul>
-  </section>
-<section class="card" style="border-left-color: #3498db">
-    <h2>Recent Work (Jul 2026)</h2>
-    <ul><li><span class="dot ">&#x25CB;</span> <code>deployment-core.yaml</code> — daemon+bot sidecar, emptyDir, ports 9100/8721/9103</li>
-<li><span class="dot ">&#x25CB;</span> <code>deployment-admin.yaml</code> — admin REST API + Vue SPA, RollingUpdate</li>
-<li><span class="dot ">&#x25CB;</span> <code>service-core.yaml</code> + <code>service-admin.yaml</code> — ClusterIP services</li>
-<li><span class="dot ">&#x25CB;</span> <code>configmap-core.yaml</code> + <code>configmap-admin.yaml</code> — per-deployment config overlays</li>
-<li><span class="dot ">&#x25CB;</span> <code>ingressroute.yaml</code> — Traefik IngressRoute (callback→core:8721, catch-all→admin:9102)</li>
-<li><span class="dot ">&#x25CB;</span> <code>certificate.yaml</code> — cert-manager Certificate for TLS</li>
-<li><span class="dot ">&#x25CB;</span> <code>serviceaccount.yaml</code>, <code>role.yaml</code>, <code>rolebinding.yaml</code> — RBAC for token Secret CRUD</li>
-<li><span class="dot ">&#x25CB;</span> <code>secret.yaml</code> — env var Secret (template, populated at deploy time)</li></ul>
   </section>
 <section class="card" style="border-left-color: #3498db">
     <h2>Cluster State</h2>
     <ul></ul>
   </section>
 <section class="card" style="border-left-color: #3498db">
-    <h2>Blockers</h2>
-    <ul><li><span class="dot ">&#x25CB;</span> <strong>Secrets needed for first deploy</strong> — Upstox API key/secret, Anthropic key, Telegram bot token, Postgres credentials. User needs to provide or create SealedSecret.</li>
-<li><span class="dot ">&#x25CB;</span> <strong>DNS</strong> — <code>marketgenie.abysmallab.in</code> needs to point to K8s VM <code>155.248.254.40</code></li></ul>
-  </section>
-<section class="card" style="border-left-color: #3498db">
-    <h2>Next Steps</h2>
-    <ul><li><span class="dot ">&#x25CB;</span> Deploy manually: <code>kubectl create secret marketgenie-env</code> + <code>helm upgrade --install</code></li>
-<li><span class="dot ">&#x25CB;</span> Create SealedSecret for git-committable secret management</li>
-<li><span class="dot ">&#x25CB;</span> Add Flux manifests for marketgenie to this repo (<code>deploy/flux/</code>)</li>
-<li><span class="dot ">&#x25CB;</span> Verify app running, test status endpoint, verify OAuth callback route</li>
-<li><span class="dot ">&#x25CB;</span> Clean up old compose VPS if still running</li></ul>
+    <h2>Recent Work (Jul 2026 — K8s Migration)</h2>
+    <ul></ul>
   </section>
 <section class="card" style="border-left-color: #3498db">
     <h2>Verification</h2>
-    <ul><li><span class="dot ">&#x25CB;</span> <code>python -m pytest tests/ -q</code> — 683 pass, 5 pre-existing Windows failures</li>
-<li><span class="dot ">&#x25CB;</span> <code>ruff check src tests</code> — all checks passed</li>
-<li><span class="dot ">&#x25CB;</span> <code>helm lint deploy/helm/marketgenie/</code> — pending (no <code>helm</code> on Windows)</li></ul>
+    <ul><li><span class="dot ">&#x25CB;</span> <code>https://marketgenie.abysmallab.in/healthz</code> → <code>{"status":"ok"}</code></li>
+<li><span class="dot ">&#x25CB;</span> Daemon EOD report generated (no trades, post-market)</li>
+<li><span class="dot ">&#x25CB;</span> <code>python -m pytest tests/ -q</code> — 683 pass, 5 pre-existing Windows failures</li>
+<li><span class="dot ">&#x25CB;</span> <code>ruff check src tests</code> — all checks passed</li></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
+    <h2>Known Issues</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> <strong><code>NT_ADMIN_TOKEN</code> missing for /api/</strong>* — status, decisions, trades endpoints return 401. Token is in <code>marketgenie-env</code> Secret but admin might not be reading it correctly.</li>
+<li><span class="dot ">&#x25CB;</span> <strong>Refine agent</strong> fails with missing <code>ANTHROPIC_API_KEY</code> — need to add or reconfigure LLM provider.</li>
+<li><span class="dot ">&#x25CB;</span> <strong>CLI deploy</strong> — CI/CD release pipeline uses GH secrets; SSH key needs to be the private key at <code>C:\Users\yash_\..ssh\id_ed25519</code>.</li>
+<li><span class="dot ">&#x25CB;</span> <strong>OAuth callback</strong> — <code>https://marketgenie.abysmallab.in/auth/callback</code> routes to daemon:8721 but redirect_uri in .env still points to old <code>token.abysmallab.in</code>.</li></ul>
   </section>
 </body>
 </html>
