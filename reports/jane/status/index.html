@@ -37,17 +37,16 @@
 <header>
   <h1>jane</h1>
   <div class="meta">Last updated 2026-07-21</div>
-  <div class="badges"><span class="badge badge-good">5 OK</span>
-<span class="badge badge-bad">1 Issues</span>
-<span class="badge badge-pending">5 Pending</span></div>
+  <div class="badges"><span class="badge badge-good">7 OK</span>
+<span class="badge badge-pending">3 Pending</span></div>
 </header>
-<section class="card" style="border-left-color: #e74c3c">
+<section class="card" style="border-left-color: #27ae60">
     <h2>Deployed</h2>
     <ul><li><span class="dot dot-good">&#x2713;</span> v0.1.16 images on Docker Hub (multi-arch amd64+arm64) ✓</li>
-<li><span class="dot dot-good">&#x2713;</span> Chart bumped to 0.1.16 ✓</li>
+<li><span class="dot dot-good">&#x2713;</span> Chart bumped to 0.1.17 ✓</li>
 <li><span class="dot dot-good">&#x2713;</span> Flux image policies resolved to 0.1.16 ✓</li>
-<li><span class="dot dot-bad">&#x2717;</span> Flux GitRepository <strong>broken</strong> (can't fetch — see kubernetes-deploy STATE.md)</li>
-<li><span class="dot ">&#x25CB;</span> Jane pods still on 0.1.13/0.1.14 (waiting on Flux fix)</li></ul>
+<li><span class="dot dot-good">&#x2713;</span> Flux GitRepository Ready ✓</li>
+<li><span class="dot dot-good">&#x2713;</span> Jane pods updated to 0.1.16 ✓</li></ul>
   </section>
 <section class="card" style="border-left-color: #3498db">
     <h2>CI Status</h2>
@@ -57,9 +56,8 @@
   </section>
 <section class="card" style="border-left-color: #3498db">
     <h2>Next</h2>
-    <ul><li><span class="dot ">&#x25CB;</span> Fix Flux GitRepository in kubernetes-deploy (SSH key mismatch + GitHub TLS)</li>
-<li><span class="dot ">&#x25CB;</span> Verify Flux reconcile updates Jane pods to 0.1.16</li>
-<li><span class="dot ">&#x25CB;</span> Verify <code>jane.yash.abyssmallab.in</code> after update</li></ul>
+    <ul><li><span class="dot ">&#x25CB;</span> Verify <code>jane.yash.abyssmallab.in</code> after update</li>
+<li><span class="dot ">&#x25CB;</span> Sub-project: NetworkPolicies + PDBs</li></ul>
   </section>
 </body>
 </html>
