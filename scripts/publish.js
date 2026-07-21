@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { execSync, spawnSync } = require('child_process');
+const { spawnSync } = require('child_process');
 
 function slugify(str) {
   const result = str

@@ -48,7 +48,7 @@ describe('findAvailableDir', () => {
     const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'publish-test-'));
     const result = findAvailableDir(tmp, 'my-slug');
     assert.strictEqual(result, path.join(tmp, 'my-slug'));
-    fs.rmdirSync(tmp, { recursive: true });
+    fs.rmSync(tmp, { recursive: true });
   });
 
   it('increments suffix on collision', () => {
