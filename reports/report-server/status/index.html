@@ -37,29 +37,32 @@
 <header>
   <h1>report-server</h1>
   <div class="meta">Last updated 2026-07-21</div>
-  <div class="badges"><span class="badge badge-good">2 OK</span>
-<span class="badge badge-bad">1 Issues</span>
-<span class="badge badge-pending">8 Pending</span></div>
+  <div class="badges"><span class="badge badge-good">3 OK</span>
+<span class="badge badge-pending">9 Pending</span></div>
 </header>
 <section class="card" style="border-left-color: #3498db">
     <h2>Deployed</h2>
-    <ul><li><span class="dot ">&#x25CB;</span> <strong>Chart</strong>: v0.1.2 deployed at <code>reports.yash.abysmallab.in</code></li>
-<li><span class="dot ">&#x25CB;</span> <strong>App image</strong>: <code>beingyash/report-server:v0.1.0</code> (chart appVersion, not same as chart version)</li>
-<li><span class="dot ">&#x25CB;</span> <strong>Sidecar</strong>: <code>git-sync:v4.2.1</code></li>
-<li><span class="dot dot-good">&#x2713;</span> <strong>TLS</strong>: Let's Encrypt cert issued (DNS-01 via Cloudflare), HTTPS 200 ✓</li>
-<li><span class="dot ">&#x25CB;</span> <strong>Helm status</strong>: deployed, revision 3</li></ul>
+    <ul><li><span class="dot ">&#x25CB;</span> <strong>Chart:</strong> v0.1.3 deployed at <code>reports.yash.abysmallab.in</code></li>
+<li><span class="dot ">&#x25CB;</span> <strong>App image:</strong> <code>beingyash/report-server:v0.1.1</code></li>
+<li><span class="dot ">&#x25CB;</span> <strong>Sidecar:</strong> <code>git-sync:v4.2.1</code></li>
+<li><span class="dot dot-good">&#x2713;</span> <strong>TLS:</strong> Let's Encrypt cert issued (DNS-01 via Cloudflare), HTTPS 200 ✓</li>
+<li><span class="dot ">&#x25CB;</span> <strong>Helm status:</strong> deployed, revision 4</li>
+<li><span class="dot dot-good">&#x2713;</span> <strong>Flux GitRepository:</strong> Ready ✓</li>
+<li><span class="dot dot-good">&#x2713;</span> <strong>Flux HelmRelease:</strong> Ready ✓</li></ul>
   </section>
 <section class="card" style="border-left-color: #3498db">
-    <h2>DNS</h2>
-    <ul><li><span class="dot dot-good">&#x2713;</span> <code>reports.yash.abysmallab.in</code> A <code>155.248.254.40</code> ✓</li>
-<li><span class="dot ">&#x25CB;</span> <code>yash.abysmallab.in</code> A <code>155.248.254.40</code></li>
-<li><span class="dot ">&#x25CB;</span> <code>*.yash.abysmallab.in</code> CNAME <code>yash.abysmallab.in</code></li>
-<li><span class="dot ">&#x25CB;</span> Domain <code>abysmallab.in</code> (single-s) properly delegated to Cloudflare</li></ul>
+    <h2>New in v0.1.3</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> Global status dashboard at root <code>/</code> replaces old reports listing</li>
+<li><span class="dot ">&#x25CB;</span> Old reports listing moved to <code>/reports</code></li>
+<li><span class="dot ">&#x25CB;</span> Design tokens: dark theme, card grid, responsive layout</li></ul>
   </section>
-<section class="card" style="border-left-color: #e74c3c">
+<section class="card" style="border-left-color: #3498db">
     <h2>Known Issues</h2>
-    <ul><li><span class="dot dot-bad">&#x2717;</span> Flux GitRepository for <code>report-server-chart</code> fails with <code>tls: internal error</code> — chart can't be updated via Flux</li>
-<li><span class="dot ">&#x25CB;</span> Image tag <code>v0.1.0</code> is last and only tag on Docker Hub; no newer images pushed</li></ul>
+    <ul><li><span class="dot ">&#x25CB;</span> (none)</li></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
+    <h2>Next</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> Verify overview dashboard renders correctly</li></ul>
   </section>
 </body>
 </html>
