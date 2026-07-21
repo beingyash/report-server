@@ -247,7 +247,7 @@ function commitAndPush(repoDir, projects) {
     return;
   }
 
-  const paths = projects.map(p => `reports/${p}/status/`);
+  const paths = [...projects.map(p => `reports/${p}/status/`), 'index.html'];
 
   try {
     spawnSync('git', ['-C', repoDir, 'add', ...paths], { encoding: 'utf-8', stdio: 'pipe' });
