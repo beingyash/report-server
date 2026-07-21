@@ -21,39 +21,60 @@ function readStateMd(projectsDir, project) {
   };
 }
 
-function markdownToHtml(md) {
-  let html = '';
-  const lines = md.split('\n');
+function detectLineStatus(text) {
+  const lower = text.toLowerCase();
+  if (/✓/.test(text)) return 'good';
+  if (/✗|❌/.test(text) || /broken|failed|error|issue/i.test(lower)) return 'bad';
+  return 'neutral';
+}
 
-  for (const line of lines) {
-    if (/^#{3,6}\s/.test(line)) {
-      const m = line.match(/^(#{3,6})\s(.+)/);
-      const level = m[1].length;
-      html += `<h${level}>${escape(m[2])}</h${level}>\n`;
-    } else if (/^##\s/.test(line)) {
-      html += `<h2>${escape(line.slice(3))}</h2>\n`;
-    } else if (/^#\s/.test(line)) {
-      html += `<h1>${escape(line.slice(2))}</h1>\n`;
-    } else if (/^[-*]\s/.test(line)) {
-      html += `<li>${inlineFormat(escape(line.replace(/^[-*]\s/, '')))}</li>\n`;
-    } else if (/^\d+\.\s/.test(line)) {
-      html += `<li>${inlineFormat(escape(line.replace(/^\d+\.\s/, '')))}</li>\n`;
-    } else if (line.trim() === '') {
-      html += '\n';
-    } else if (line.startsWith('```')) {
-      html += html.endsWith('</pre>\n') ? '' : '<pre>';
-    } else {
-      html += `<p>${inlineFormat(escape(line))}</p>\n`;
+function parseSections(md) {
+  const lines = md.split('\n');
+  let title = '';
+  const sections = [];
+  let currentSection = null;
+  let noteLines = [];
+
+  function flushNote() {
+    if (!currentSection || !noteLines.length) return;
+    const prevItem = currentSection.items[currentSection.items.length - 1];
+    if (prevItem) {
+      prevItem.note = (prevItem.note || '') + noteLines.join('\n');
     }
+    noteLines = [];
   }
 
-  html = html
-    .replace(/<li>/g, '<ul>\n<li>')
-    .replace(/<\/li>\n(?!<li>|<\/ul>)/g, '</li>\n</ul>\n')
-    .replace(/<\/li>\n<li>/g, '</li>\n<li>')
-    .replace(/<\/li>\n$/g, '</li>\n</ul>\n');
+  for (const line of lines) {
+    if (/^#\s/.test(line)) {
+      title = line.replace(/^#\s+/, '').trim();
+    } else if (line.startsWith('## ')) {
+      flushNote();
+      if (currentSection) sections.push(currentSection);
+      currentSection = { title: line.slice(3).trim(), items: [] };
+    } else if (currentSection) {
+      if (/^[-*]\s/.test(line)) {
+        flushNote();
+        const text = line.replace(/^[-*]\s+/, '').trim();
+        if (text) {
+          currentSection.items.push({ text, status: detectLineStatus(text) });
+        }
+      } else if (/^\d+\.\s/.test(line)) {
+        flushNote();
+        const text = line.replace(/^\d+\.\s+/, '').trim();
+        if (text) {
+          currentSection.items.push({ text, status: 'pending' });
+        }
+      } else {
+        const trimmed = line.trim();
+        if (trimmed) noteLines.push(trimmed);
+        else flushNote();
+      }
+    }
+  }
+  flushNote();
+  if (currentSection) sections.push(currentSection);
 
-  return html;
+  return { title, sections };
 }
 
 function escape(str) {
@@ -71,28 +92,102 @@ function inlineFormat(str) {
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
 }
 
+function renderSectionCard(section) {
+  let goodCount = 0;
+  let badCount = 0;
+  for (const item of section.items) {
+    if (item.status === 'good') goodCount++;
+    else if (item.status === 'bad') badCount++;
+  }
+
+  const borderColor = badCount > 0 ? '#e74c3c'
+    : goodCount > 0 && goodCount === section.items.length ? '#27ae60'
+    : '#3498db';
+
+  const itemsHtml = section.items.map((item, i) => {
+    const icon = item.status === 'good' ? '&#x2713;'
+      : item.status === 'bad' ? '&#x2717;'
+      : '&#x25CB;';
+    const cls = item.status === 'good' ? 'dot-good' : item.status === 'bad' ? 'dot-bad' : '';
+    const note = item.note ? `<p class="note">${inlineFormat(escape(item.note))}</p>` : '';
+    return `<li><span class="dot ${cls}">${icon}</span> ${inlineFormat(escape(item.text))}${note}</li>`;
+  }).join('\n');
+
+  return `<section class="card" style="border-left-color: ${borderColor}">
+    <h2>${escape(section.title)}</h2>
+    <ul>${itemsHtml}</ul>
+  </section>`;
+}
+
 function generateStatusHtml(project, stateMd) {
   const date = stateMd.mtime.toISOString().split('T')[0];
-  const bodyHtml = stateMd.content ? markdownToHtml(stateMd.content) : '<p>No content</p>';
+  const parsed = stateMd.content ? parseSections(stateMd.content) : null;
+
+  let totalGood = 0;
+  let totalBad = 0;
+  let totalPending = 0;
+
+  if (parsed) {
+    for (const section of parsed.sections) {
+      for (const item of section.items) {
+        if (item.status === 'good') totalGood++;
+        else if (item.status === 'bad') totalBad++;
+        else totalPending++;
+      }
+    }
+  }
+
+  const badges = [];
+  if (totalGood) badges.push(`<span class="badge badge-good">${totalGood} OK</span>`);
+  if (totalBad) badges.push(`<span class="badge badge-bad">${totalBad} Issues</span>`);
+  if (totalPending) badges.push(`<span class="badge badge-pending">${totalPending} Pending</span>`);
+
+  const sectionCards = parsed
+    ? parsed.sections.map(s => renderSectionCard(s)).join('\n')
+    : '<p class="empty">No content</p>';
 
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${project} — Project Status</title>
+<title>${escape(project)} — Project Status</title>
 <style>
-  body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; background: #fff; }
-  h1 { border-bottom: 2px solid #e5e5e5; padding-bottom: 0.5rem; }
-  .meta { color: #666; font-size: 0.9rem; margin-bottom: 2rem; }
-  code { background: #f0f0f0; padding: 0.1em 0.3em; border-radius: 3px; font-size: 0.9em; }
-  pre { background: #f5f5f5; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; background: #f5f6f8; }
+  header { background: #fff; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  header h1 { font-size: 1.4rem; color: #111; margin-bottom: 0.3rem; }
+  .meta { color: #888; font-size: 0.82rem; margin-bottom: 0.75rem; }
+  .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .badge { padding: 0.25em 0.7em; border-radius: 14px; font-size: 0.78rem; font-weight: 600; line-height: 1.4; }
+  .badge-good { background: #d4edda; color: #155724; }
+  .badge-bad { background: #f8d7da; color: #721c24; }
+  .badge-pending { background: #d1ecf1; color: #0c5460; }
+
+  .card { background: #fff; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; border-left: 4px solid #ddd; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .card h2 { font-size: 1.05rem; color: #333; margin-bottom: 0.75rem; }
+  .card ul { list-style: none; }
+  .card li { padding: 0.4rem 0; font-size: 0.92rem; color: #444; border-bottom: 1px solid #f2f2f2; }
+  .card li:last-child { border-bottom: none; }
+
+  .dot { margin-right: 0.45rem; font-size: 0.85rem; }
+  .dot-good { color: #27ae60; font-weight: 700; }
+  .dot-bad { color: #e74c3c; font-weight: 700; }
+
+  .note { font-size: 0.82rem; color: #888; margin-top: 0.25rem; margin-left: 1.1rem; }
+
+  code { background: #eee; padding: 0.12em 0.4em; border-radius: 3px; font-size: 0.9em; }
+  strong { color: #222; }
+  .empty { color: #888; font-style: italic; text-align: center; padding: 2rem; }
 </style>
 </head>
 <body>
-<h1>${escape(project)} — Project Status</h1>
-<p class="meta">Last updated: ${date}</p>
-${bodyHtml}
+<header>
+  <h1>${escape(project)}</h1>
+  <div class="meta">Last updated ${date}</div>
+  <div class="badges">${badges.join('\n')}</div>
+</header>
+${sectionCards}
 </body>
 </html>`;
 }
@@ -166,4 +261,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { listProjects, readStateMd, markdownToHtml, generateStatusHtml, generateAll };
+module.exports = { listProjects, readStateMd, parseSections, detectLineStatus, renderSectionCard, generateStatusHtml, generateAll };
