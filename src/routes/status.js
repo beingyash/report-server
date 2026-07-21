@@ -12,21 +12,15 @@ router.get('/status', (req, res) => {
     for (const projectDir of projects) {
       if (!projectDir.isDirectory()) continue;
       const metaPath = path.join(reportsDir, projectDir.name, 'status', 'report.json');
-      const htmlPath = path.join(reportsDir, projectDir.name, 'status', 'index.html');
-      if (!fs.existsSync(metaPath) || !fs.existsSync(htmlPath)) continue;
+      if (!fs.existsSync(metaPath)) continue;
 
       try {
         const meta = JSON.parse(fs.readFileSync(metaPath, 'utf-8'));
-        const html = fs.readFileSync(htmlPath, 'utf-8');
-        // Extract body content for inline embedding
-        const bodyMatch = html.match(/<body>([\s\S]*)<\/body>/i);
-        const bodyContent = bodyMatch ? bodyMatch[1].trim() : '';
         statusReports.push({
           project: projectDir.name,
           title: meta.title || `${projectDir.name} Status`,
           date: meta.date || null,
           status: meta.status || { good: 0, bad: 0, pending: 0 },
-          html: bodyContent,
         });
       } catch (err) {
         console.warn(`Failed to read status for ${projectDir.name}: ${err.message}`);
