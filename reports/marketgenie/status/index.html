@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>marketgenie — Project Status</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; background: #f5f6f8; }
+  header { background: #fff; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  header h1 { font-size: 1.4rem; color: #111; margin-bottom: 0.3rem; }
+  .meta { color: #888; font-size: 0.82rem; margin-bottom: 0.75rem; }
+  .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .badge { padding: 0.25em 0.7em; border-radius: 14px; font-size: 0.78rem; font-weight: 600; line-height: 1.4; }
+  .badge-good { background: #d4edda; color: #155724; }
+  .badge-bad { background: #f8d7da; color: #721c24; }
+  .badge-pending { background: #d1ecf1; color: #0c5460; }
+
+  .card { background: #fff; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; border-left: 4px solid #ddd; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .card h2 { font-size: 1.05rem; color: #333; margin-bottom: 0.75rem; }
+  .card ul { list-style: none; }
+  .card li { padding: 0.4rem 0; font-size: 0.92rem; color: #444; border-bottom: 1px solid #f2f2f2; }
+  .card li:last-child { border-bottom: none; }
+
+  .dot { margin-right: 0.45rem; font-size: 0.85rem; }
+  .dot-good { color: #27ae60; font-weight: 700; }
+  .dot-bad { color: #e74c3c; font-weight: 700; }
+
+  .note { font-size: 0.82rem; color: #888; margin-top: 0.25rem; margin-left: 1.1rem; }
+
+  code { background: #eee; padding: 0.12em 0.4em; border-radius: 3px; font-size: 0.9em; }
+  strong { color: #222; }
+  .empty { color: #888; font-style: italic; text-align: center; padding: 2rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1>marketgenie</h1>
+  <div class="meta">Last updated 2026-07-21</div>
+  <div class="badges"><span class="badge badge-pending">18 Pending</span></div>
+</header>
+<section class="card" style="border-left-color: #3498db">
+    <h2>Overview</h2>
+    <ul></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
+    <h2>Deployment Targets</h2>
+    <ul></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
+    <h2>Recent Work (Jul 2026)</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> <code>deployment-core.yaml</code> — daemon+bot sidecar, emptyDir, ports 9100/8721/9103</li>
+<li><span class="dot ">&#x25CB;</span> <code>deployment-admin.yaml</code> — admin REST API + Vue SPA, RollingUpdate</li>
+<li><span class="dot ">&#x25CB;</span> <code>service-core.yaml</code> + <code>service-admin.yaml</code> — ClusterIP services</li>
+<li><span class="dot ">&#x25CB;</span> <code>configmap-core.yaml</code> + <code>configmap-admin.yaml</code> — per-deployment config overlays</li>
+<li><span class="dot ">&#x25CB;</span> <code>ingressroute.yaml</code> — Traefik IngressRoute (callback→core:8721, catch-all→admin:9102)</li>
+<li><span class="dot ">&#x25CB;</span> <code>certificate.yaml</code> — cert-manager Certificate for TLS</li>
+<li><span class="dot ">&#x25CB;</span> <code>serviceaccount.yaml</code>, <code>role.yaml</code>, <code>rolebinding.yaml</code> — RBAC for token Secret CRUD</li>
+<li><span class="dot ">&#x25CB;</span> <code>secret.yaml</code> — env var Secret (template, populated at deploy time)</li></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
+    <h2>Cluster State</h2>
+    <ul></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
+    <h2>Blockers</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> <strong>Secrets needed for first deploy</strong> — Upstox API key/secret, Anthropic key, Telegram bot token, Postgres credentials. User needs to provide or create SealedSecret.</li>
+<li><span class="dot ">&#x25CB;</span> <strong>DNS</strong> — <code>marketgenie.abysmallab.in</code> needs to point to K8s VM <code>155.248.254.40</code></li></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
+    <h2>Next Steps</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> Deploy manually: <code>kubectl create secret marketgenie-env</code> + <code>helm upgrade --install</code></li>
+<li><span class="dot ">&#x25CB;</span> Create SealedSecret for git-committable secret management</li>
+<li><span class="dot ">&#x25CB;</span> Add Flux manifests for marketgenie to this repo (<code>deploy/flux/</code>)</li>
+<li><span class="dot ">&#x25CB;</span> Verify app running, test status endpoint, verify OAuth callback route</li>
+<li><span class="dot ">&#x25CB;</span> Clean up old compose VPS if still running</li></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
+    <h2>Verification</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> <code>python -m pytest tests/ -q</code> — 683 pass, 5 pre-existing Windows failures</li>
+<li><span class="dot ">&#x25CB;</span> <code>ruff check src tests</code> — all checks passed</li>
+<li><span class="dot ">&#x25CB;</span> <code>helm lint deploy/helm/marketgenie/</code> — pending (no <code>helm</code> on Windows)</li></ul>
+  </section>
+</body>
+</html>

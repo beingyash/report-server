@@ -37,8 +37,8 @@
 <header>
   <h1>kubernetes-deploy</h1>
   <div class="meta">Last updated 2026-07-21</div>
-  <div class="badges"><span class="badge badge-bad">1 Issues</span>
-<span class="badge badge-pending">52 Pending</span></div>
+  <div class="badges"><span class="badge badge-bad">3 Issues</span>
+<span class="badge badge-pending">64 Pending</span></div>
 </header>
 <section class="card" style="border-left-color: #3498db">
     <h2>Nodes</h2>
@@ -124,10 +124,32 @@
 <li><span class="dot ">&#x25CB;</span> Root cause: 45GB root disk with 24GB containerd images. Monitor over time.</li></ul>
   </section>
 <section class="card" style="border-left-color: #3498db">
+    <h2>Sub-project 5: Image Multi-Arch &amp; Version Bumps — ALREADY DONE ✓</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> Already latest available in jetstack Helm repo (v1.21.0). No upgrade needed.<p class="note">### sealed-secrets v0.38.4</p></li>
+<li><span class="dot ">&#x25CB;</span> Already latest GitHub release (v0.38.4). No upgrade needed.<p class="note">### Jane images multi-arch</p></li>
+<li><span class="dot ">&#x25CB;</span> Images <code>jane-bridge:0.1.16</code>, <code>jane-pwa:0.1.16</code>, <code>jane-speech:0.1.16</code> already multi-arch:<p class="note">- Manifests include <code>linux/amd64</code> and <code>linux/arm64</code>
+- Both images present on both containerd nodes
+- No action needed.</p></li></ul>
+  </section>
+<section class="card" style="border-left-color: #e74c3c">
+    <h2>Sub-project 6: Control-Plane Restart Investigation — DONE ✓</h2>
+    <ul><li><span class="dot dot-bad">&#x2717;</span> <strong>kube-scheduler:</strong> 20 restarts total. Last restart 2026-07-21T13:01:46 (Exit 1, <code>Error</code>)</li>
+<li><span class="dot dot-bad">&#x2717;</span> <strong>kube-controller-manager:</strong> 17 restarts total. Last restart 2026-07-21T13:01:43 (Exit 1, <code>Error</code>)</li>
+<li><span class="dot ">&#x25CB;</span> <strong>etcd:</strong> 1 restart (post-reboot). <strong>kube-apiserver:</strong> 0 restarts.</li>
+<li><span class="dot ">&#x25CB;</span> Both scheduler+CM stable for 80+ min since last restart — <strong>no ongoing flapping</strong>.<p class="note">### Root cause</p></li>
+<li><span class="dot ">&#x25CB;</span> Majority of restarts (15-18) from kernel update reboot on 2026-07-18</li>
+<li><span class="dot ">&#x25CB;</span> One additional restart today at 13:01 triggered by kubelet → etcd request timeout<p class="note">(<code>etcdserver: request timed out</code> during node status patch)</p></li>
+<li><span class="dot ">&#x25CB;</span> Transient etcd busyness caused scheduler/CM liveness probe failures → restart</li>
+<li><span class="dot ">&#x25CB;</span> Etcd recovered, both pods reconnected and have been stable since<p class="note">### Conclusion</p></li>
+<li><span class="dot ">&#x25CB;</span> <strong>Self-resolved post-reboot flapping.</strong> No action required.</li>
+<li><span class="dot ">&#x25CB;</span> Monitor restart trends via Prometheus/Grafana; if &gt;1 restart/day, investigate<p class="note">liveness probe timing vs etcd startup ordering.</p></li></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
     <h2>Next</h2>
     <ul><li><span class="dot ">&#x25CB;</span> ~~Sub-project 3: NetworkPolicies + PDBs~~ ✓</li>
 <li><span class="dot ">&#x25CB;</span> ~~Sub-project 4: Longhorn storage~~ ✓</li>
-<li><span class="dot ">&#x25CB;</span> Sub-project 5: Image multi-arch cleanup</li></ul>
+<li><span class="dot ">&#x25CB;</span> ~~Sub-project 5: Image multi-arch cleanup~~ ✓</li>
+<li><span class="dot ">&#x25CB;</span> ~~Sub-project 6: Control-Plane Restart Investigation~~ ✓<p class="note"><strong>All cluster hardening sub-projects complete.</strong></p></li></ul>
   </section>
 </body>
 </html>
