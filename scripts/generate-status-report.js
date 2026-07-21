@@ -196,7 +196,7 @@ function generateAll(opts) {
   const projectsDir = opts.projectsDir || PROJECTS_DIR;
   const repoDir = opts.repoDir || REPO_DIR;
   const projects = listProjects(projectsDir);
-  const generated = [];
+  const projectsData = [];
 
   for (const project of projects) {
     const stateMd = readStateMd(projectsDir, project);
@@ -229,14 +229,16 @@ function generateAll(opts) {
     };
     fs.writeFileSync(path.join(reportDir, 'report.json'), JSON.stringify(reportMeta, null, 2) + '\n');
 
-    generated.push(project);
+    projectsData.push({ project, good: goodCount, bad: badCount, pending: pendingCount, date: reportMeta.date, title: reportMeta.title });
   }
+
+  generateRootIndex(repoDir, projectsData);
 
   if (!opts.skipGit) {
-    commitAndPush(repoDir, generated);
+    commitAndPush(repoDir, projectsData.map(p => p.project));
   }
 
-  return generated;
+  return projectsData;
 }
 
 function commitAndPush(repoDir, projects) {
@@ -268,10 +270,11 @@ function commitAndPush(repoDir, projects) {
 if (require.main === module) {
   console.log('Scanning projects...');
   const projects = generateAll({});
-  console.log(`Generated status for: ${projects.join(', ') || 'none'}`);
+  const projectNames = projects.map(p => p.project);
+  console.log(`Generated status for: ${projectNames.join(', ') || 'none'}`);
 
   for (const p of projects) {
-    console.log(`https://reports.yash.abysmallab.in/${p}/status/`);
+    console.log(`https://reports.yash.abysmallab.in/${p.project}/status/`);
   }
 }
 
