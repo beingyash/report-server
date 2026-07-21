@@ -1,0 +1,54 @@
+### Task 9: GitHub Actions CI/CD
+
+**Files:**
+- Create: `.github/workflows/deploy.yml`
+
+- [ ] **Step 1: Create .github/workflows/deploy.yml**
+
+```yaml
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'Dockerfile'
+      - 'package.json'
+      - 'charts/**'
+      - '.github/workflows/deploy.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: docker.io/beingyash/report-server:latest
+```
+
+- [ ] **Step 2: Commit**
+
+```bash
+git add .github/workflows/deploy.yml
+git commit -m "ci: add Docker build and push workflow"
+```

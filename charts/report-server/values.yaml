@@ -7,7 +7,7 @@ service:
   port: 3000
 
 ingress:
-  host: reports.yash.abyssmallab.in
+  host: reports.yash.abysmallab.in
   className: traefik
 
 gitSync:

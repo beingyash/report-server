@@ -1,0 +1,193 @@
+### Task 6: CSS Styling (Light Theme)
+
+**Files:**
+- Create: `public/style.css`
+
+- [ ] **Step 1: Create public/style.css**
+
+```css
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #1a1a2e;
+  background: #f8f9fa;
+  line-height: 1.6;
+}
+
+/* Header */
+.header {
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 1.5rem 2rem;
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 0.75rem;
+}
+
+/* Project nav */
+.project-nav {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.project-nav a {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  color: #555;
+  text-decoration: none;
+  background: #f0f0f0;
+  transition: background 0.15s, color 0.15s;
+}
+
+.project-nav a:hover { background: #e0e0e0; color: #1a1a2e; }
+.project-nav a.active { background: #1a1a2e; color: #fff; }
+
+/* Content area */
+.content {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  color: #888;
+  padding: 3rem 0;
+  font-size: 1.125rem;
+}
+
+/* Project group */
+.project-group { margin-bottom: 2rem; }
+
+.project-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+/* Report card grid */
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.report-card {
+  display: block;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.25rem;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+.report-card:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-color: #ccc;
+}
+
+.report-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 0.375rem;
+}
+
+.report-desc {
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.report-date {
+  font-size: 0.75rem;
+  color: #999;
+}
+
+/* Report viewer page */
+.report-page { background: #fff; }
+
+.report-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 2rem;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.back-link {
+  font-size: 0.875rem;
+  color: #555;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.back-link:hover { color: #1a1a2e; }
+
+.report-header-project {
+  font-size: 0.75rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.report-content {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* 404 page */
+body:not(.report-page) .back-link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #555;
+  text-decoration: none;
+}
+
+body:not(.report-page) .back-link:hover { color: #1a1a2e; }
+```
+
+- [ ] **Step 2: Wire static middleware into app**
+
+Add `express.static` at the end of `src/app.js`, after all routes (so routes take priority over static files):
+
+Add before `module.exports`:
+```javascript
+app.use(express.static(path.join(__dirname, '..', 'public')));
+```
+
+Note: `path` is already imported in `src/app.js` from earlier tasks.
+
+- [ ] **Step 3: Verify styles render**
+
+```bash
+REPORTS_DIR=test/fixtures node src/index.js &
+curl http://localhost:3000/style.css | head -5
+# Expected: CSS content with light colors
+kill %1
+```
+
+- [ ] **Step 4: Commit**
+
+```bash
+git add public/style.css
+git commit -m "feat: add light theme CSS"
+```

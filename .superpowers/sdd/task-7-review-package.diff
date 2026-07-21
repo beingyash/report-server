@@ -1,0 +1,6 @@
+Commit list:
+4c78161 feat: add Dockerfile for production image
+
+ .dockerignore |  6 ++++++  Dockerfile    | 14 ++++++++++++++  2 files changed, 20 insertions(+)
+
+diff --git a/.dockerignore b/.dockerignore new file mode 100644 index 0000000..f8239ed --- /dev/null +++ b/.dockerignore @@ -0,0 +1,6 @@ +node_modules/ +.git/ +test/ +docs/ +*.md +.gitignore diff --git a/Dockerfile b/Dockerfile new file mode 100644 index 0000000..384e685 --- /dev/null +++ b/Dockerfile @@ -0,0 +1,14 @@ +FROM node:20-alpine + +WORKDIR /app + +COPY package*.json ./ +RUN npm ci --omit=dev + +COPY src/ src/ +COPY public/ public/ + +ENV PORT=3000 +EXPOSE 3000 + +CMD ["node", "src/index.js"]
