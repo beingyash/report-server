@@ -38,7 +38,7 @@
   <h1>kubernetes-deploy</h1>
   <div class="meta">Last updated 2026-07-21</div>
   <div class="badges"><span class="badge badge-bad">1 Issues</span>
-<span class="badge badge-pending">24 Pending</span></div>
+<span class="badge badge-pending">52 Pending</span></div>
 </header>
 <section class="card" style="border-left-color: #3498db">
     <h2>Nodes</h2>
@@ -80,9 +80,53 @@
 <li><span class="dot ">&#x25CB;</span> Routing fix: ip rule 5255 persisted via systemd</li></ul>
   </section>
 <section class="card" style="border-left-color: #3498db">
+    <h2>Sub-project 3: Security &amp; Resilience — DONE ✓</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> Default-deny ingress applied to: jane, pocketid, traefik-system, cert-manager, default, monitoring, kube-system, sealed-secrets</li>
+<li><span class="dot ">&#x25CB;</span> flux-system skipped (already has its own policies)</li>
+<li><span class="dot ">&#x25CB;</span> Per-namespace allow rules tailored to app needs:<p class="note">- <strong>jane:</strong> traefik-system (80,3000,8000), intra-namespace, monitoring scraping
+- <strong>pocketid:</strong> traefik-system on :1411
+- <strong>traefik-system:</strong> monitoring scraping on :9100, dashboard on :8080 (external traffic not restricted by NP)
+- <strong>cert-manager:</strong> webhook from all, monitoring scraping, intra-namespace
+- <strong>default:</strong> traefik-system on :3000 (report-server), monitoring scraping
+- <strong>monitoring:</strong> grafana from traefik, intra-namespace, prometheus API
+- <strong>kube-system:</strong> DNS from all, intra-namespace, monitoring scraping
+- <strong>sealed-secrets:</strong> API from all, monitoring scraping### PodDisruptionBudgets (minAvailable: 1)</p></li>
+<li><span class="dot ">&#x25CB;</span> jane/bridge-pdb, jane/pwa-pdb, jane/speech-pdb</li>
+<li><span class="dot ">&#x25CB;</span> pocketid/pocketid-pdb</li>
+<li><span class="dot ">&#x25CB;</span> traefik-system/traefik-pdb<p class="note">### Verification</p></li>
+<li><span class="dot ">&#x25CB;</span> All app pods Running</li>
+<li><span class="dot ">&#x25CB;</span> Ingress endpoints reachable: id.yash.abysmallab.in (200), jane.yash.abysmallab.in (200), reports.yash.abysmallab.in (200), grafana.yash.abysmallab.in (302)</li>
+<li><span class="dot ">&#x25CB;</span> DNS resolution, external connectivity, Flux gitrepositories all Ready</li>
+<li><span class="dot ">&#x25CB;</span> Prometheus targets: 14 UP, 9 DOWN (down targets likely pre-existing — control-plane scraping auth)</li>
+<li><span class="dot ">&#x25CB;</span> Rollback: <code>kubectl delete networkpolicy --all -n &lt;ns&gt;</code> per namespace<p class="note">### Manifests</p></li>
+<li><span class="dot ">&#x25CB;</span> <code>netpol/</code> — 9 YAML files covering all namespaces</li>
+<li><span class="dot ">&#x25CB;</span> <code>pdb/</code> — 3 YAML files (jane combined, pocketid, traefik)</li></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
+    <h2>Sub-project 4: Storage Durability (Longhorn) — DONE ✓</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> Longhorn v1.12.0 installed via Helm (<code>longhorn/longhorn</code> chart)</li>
+<li><span class="dot ">&#x25CB;</span> <code>open-iscsi</code> and <code>nfs-common</code> pre-installed on both nodes</li>
+<li><span class="dot ">&#x25CB;</span> Default StorageClass: <code>longhorn</code> (2 replicas, Immediate binding mode)</li>
+<li><span class="dot ">&#x25CB;</span> <code>local-path</code> de-prioritized (no longer default, kept as fallback)<p class="note">### PVC Migration</p></li>
+<li><span class="dot ">&#x25CB;</span> <strong>pocketid/pocketid-data</strong> (5Gi SQLite):<p class="note">- Backed up <code>/app/data/pocket-id.db</code> → <code>/tmp/pocketid-backup.sqlite3</code>
+- Scaled down, deleted old local-path PVC, created new with <code>storageClassName: longhorn</code>
+- Scaled up → pod healthy, ingress HTTP 200</p></li>
+<li><span class="dot ">&#x25CB;</span> <strong>jane/nats-js-nats-0</strong> (10Gi JetStream):<p class="note">- Scaled down, deleted old local-path PVC, created new with <code>storageClassName: longhorn</code>
+- Scaled up → pod Running 1/1, NATS HTTP 200</p></li>
+<li><span class="dot ">&#x25CB;</span> <strong>monitoring/prometheus</strong> left on <code>local-path</code> (ephemeral per spec; migrate later if needed)<p class="note">### Volume Health</p></li>
+<li><span class="dot ">&#x25CB;</span> Both Longhorn volumes <code>attached</code>, <code>degraded</code> robustness (3rd replica <code>stopped</code> — only 2 nodes available)</li>
+<li><span class="dot ">&#x25CB;</span> Replicas: 2 running per volume (one per node), 1 stopped pending third node</li>
+<li><span class="dot ">&#x25CB;</span> Acceptable for lab environment<p class="note">### Known Issue: CP Node DiskPressure</p></li>
+<li><span class="dot ">&#x25CB;</span> CP node (<code>marketgenie-market-genie</code>) had transient DiskPressure after Longhorn install</li>
+<li><span class="dot ">&#x25CB;</span> Evicted Longhorn CSI/instance-manager pods on CP</li>
+<li><span class="dot ">&#x25CB;</span> Resolved by pruning containerd images + journal vacuum</li>
+<li><span class="dot ">&#x25CB;</span> CSI plugin now Running on both nodes</li>
+<li><span class="dot ">&#x25CB;</span> Root cause: 45GB root disk with 24GB containerd images. Monitor over time.</li></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
     <h2>Next</h2>
-    <ul><li><span class="dot ">&#x25CB;</span> Sub-project 3: NetworkPolicies + PDBs</li>
-<li><span class="dot ">&#x25CB;</span> Sub-project 4: Longhorn storage</li>
+    <ul><li><span class="dot ">&#x25CB;</span> ~~Sub-project 3: NetworkPolicies + PDBs~~ ✓</li>
+<li><span class="dot ">&#x25CB;</span> ~~Sub-project 4: Longhorn storage~~ ✓</li>
 <li><span class="dot ">&#x25CB;</span> Sub-project 5: Image multi-arch cleanup</li></ul>
   </section>
 </body>
