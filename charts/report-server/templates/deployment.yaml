@@ -19,7 +19,7 @@ spec:
           emptyDir: {}
       containers:
         - name: report-server
-          image: {{ .Values.image }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.imagePullPolicy }}
           ports:
             - containerPort: {{ .Values.service.port }}
