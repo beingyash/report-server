@@ -14,6 +14,7 @@
       <% projects.forEach(p => { %>
         <a href="/?project=<%= p %>" class="<%= activeProject === p ? 'active' : '' %>"><%= p %></a>
       <% }) %>
+      <a href="/status" class="nav-status">Status</a>
     </nav>
   </header>
 
@@ -24,7 +25,12 @@
 
     <% Object.entries(grouped).forEach(([project, reports]) => { %>
       <section class="project-group">
-        <h2 class="project-title"><%= project %></h2>
+        <h2 class="project-title">
+          <%= project %>
+          <% if (hasStatus[project]) { %>
+            <a href="/<%= project %>/status/" class="status-indicator" title="View status for <%= project %>">&#x25CF;</a>
+          <% } %>
+        </h2>
         <div class="report-grid">
           <% reports.forEach(r => { %>
             <a href="/<%= r.project %>/<%= r.slug %>" class="report-card">

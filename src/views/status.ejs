@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Status - Reports</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="header">
+    <h1>System Status</h1>
+    <nav class="status-nav">
+      <a href="/" class="nav-pill">&larr; Reports</a>
+      <span class="nav-pill nav-pill-ok"><%= overallOk %> OK</span>
+      <% if (overallBad > 0) { %><span class="nav-pill nav-pill-issue"><%= overallBad %> Issues</span><% } %>
+      <% if (overallPending > 0) { %><span class="nav-pill nav-pill-pending"><%= overallPending %> Pending</span><% } %>
+    </nav>
+  </header>
+
+  <main class="content">
+    <% if (reports.length === 0) { %>
+      <p class="empty-state">No status reports yet. Run <code>node scripts/generate-status-report.js</code> to generate them.</p>
+    <% } %>
+
+    <% reports.forEach(r => { %>
+      <details class="status-card" <%= r.status.bad > 0 ? 'open' : '' %>>
+        <summary class="status-card-header">
+          <span class="status-card-project"><%= r.project %></span>
+          <div class="status-card-badges">
+            <% if (r.status.good > 0) { %><span class="badge badge-ok"><%= r.status.good %> OK</span><% } %>
+            <% if (r.status.bad > 0) { %><span class="badge badge-issue"><%= r.status.bad %> Issue<%= r.status.bad !== 1 ? 's' : '' %></span><% } %>
+            <% if (r.status.pending > 0) { %><span class="badge badge-pending"><%= r.status.pending %> Pending</span><% } %>
+          </div>
+          <a href="/<%= r.project %>/status/" class="status-card-link" onclick="event.stopPropagation()">Open &rarr;</a>
+        </summary>
+        <div class="status-card-body">
+          <%- r.html %>
+        </div>
+      </details>
+    <% }) %>
+  </main>
+</body>
+</html>

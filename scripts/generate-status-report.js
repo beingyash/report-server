@@ -208,10 +208,24 @@ function generateAll(opts) {
     const html = generateStatusHtml(project, stateMd);
     fs.writeFileSync(path.join(reportDir, 'index.html'), html);
 
+    // Count health from parsed content
+    let goodCount = 0, badCount = 0, pendingCount = 0;
+    const parsed = stateMd.content ? parseSections(stateMd.content) : null;
+    if (parsed) {
+      for (const section of parsed.sections) {
+        for (const item of section.items) {
+          if (item.status === 'good') goodCount++;
+          else if (item.status === 'bad') badCount++;
+          else pendingCount++;
+        }
+      }
+    }
+
     const reportMeta = {
       title: `${project} Status`,
       project,
       date: new Date().toISOString().split('T')[0],
+      status: { good: goodCount, bad: badCount, pending: pendingCount },
     };
     fs.writeFileSync(path.join(reportDir, 'report.json'), JSON.stringify(reportMeta, null, 2) + '\n');
 

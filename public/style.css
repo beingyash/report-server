@@ -41,6 +41,22 @@ body {
 .project-nav a:hover { background: #e0e0e0; color: #1a1a2e; }
 .project-nav a.active { background: #1a1a2e; color: #fff; }
 
+/* Status nav pill */
+.nav-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  color: #fff;
+  text-decoration: none;
+  background: #5b8def;
+  transition: background 0.15s;
+}
+.nav-status:hover { background: #4a7ad6; }
+
+/* Project status indicator dot */
+.status-indicator { color: #30a46c; text-decoration: none; font-size: 0.75rem; margin-left: 0.5rem; vertical-align: middle; }
+.status-indicator:hover { color: #27ae60; }
+
 /* Content area */
 .content {
   max-width: 960px;
@@ -155,3 +171,38 @@ body:not(.report-page) .back-link {
 }
 
 body:not(.report-page) .back-link:hover { color: #1a1a2e; }
+
+/* Status dashboard */
+.status-nav { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; margin-top: 0.75rem; }
+.status-nav .nav-pill { padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.85rem; font-weight: 600; text-decoration: none; }
+.status-nav .nav-pill:first-child { background: #f0f0f0; color: #555; }
+.status-nav .nav-pill:first-child:hover { background: #e0e0e0; color: #1a1a2e; }
+.nav-pill-ok { background: #d4edda; color: #155724; }
+.nav-pill-issue { background: #f8d7da; color: #721c24; }
+.nav-pill-pending { background: #d1ecf1; color: #0c5460; }
+
+/* Status cards (expandable) */
+.status-card { background: #fff; border-radius: 10px; margin-bottom: 1rem; box-shadow: 0 1px 4px rgba(0,0,0,0.06); overflow: hidden; }
+.status-card[open] { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+
+.status-card-header {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1rem 1.5rem; cursor: pointer;
+  list-style: none; user-select: none;
+}
+.status-card-header::-webkit-details-marker { display: none; }
+
+.status-card-project { font-weight: 600; font-size: 1rem; color: #1a1a2e; min-width: 140px; }
+
+.status-card-badges { display: flex; gap: 0.4rem; flex-wrap: wrap; flex: 1; }
+.badge { padding: 0.2em 0.6em; border-radius: 12px; font-size: 0.78rem; font-weight: 600; line-height: 1.5; }
+.badge-ok { background: #d4edda; color: #155724; }
+.badge-issue { background: #f8d7da; color: #721c24; }
+.badge-pending { background: #d1ecf1; color: #0c5460; }
+
+.status-card-link { font-size: 0.85rem; color: #5b8def; text-decoration: none; white-space: nowrap; font-weight: 500; }
+.status-card-link:hover { text-decoration: underline; }
+
+/* Body inside expanded card — respects status/ page styling */
+.status-card-body { padding: 0 1.5rem 1rem; border-top: 1px solid #eee; }
+.status-card-body .card { box-shadow: none; border: 1px solid #eee; margin-bottom: 0; }

@@ -164,6 +164,10 @@ describe('generateAll integration', () => {
 
     const meta = JSON.parse(fs.readFileSync(path.join(statusDir, 'report.json'), 'utf-8'));
     assert.strictEqual(meta.project, 'myproject');
+    assert.ok(meta.status, 'should have health status');
+    assert.strictEqual(meta.status.good, 1);
+    assert.strictEqual(meta.status.bad, 0);
+    assert.strictEqual(meta.status.pending, 0);
 
     fs.rmSync(tmp, { recursive: true });
   });

@@ -33,6 +33,7 @@ app.get('/health', (req, res) => {
 
 app.use('/', require('./routes/index'));
 app.use('/', require('./routes/reports'));
+app.use('/', require('./routes/status'));
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
