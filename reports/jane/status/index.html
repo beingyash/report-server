@@ -38,7 +38,7 @@
   <h1>jane</h1>
   <div class="meta">Last updated 2026-07-21</div>
   <div class="badges"><span class="badge badge-good">7 OK</span>
-<span class="badge badge-pending">3 Pending</span></div>
+<span class="badge badge-pending">14 Pending</span></div>
 </header>
 <section class="card" style="border-left-color: #27ae60">
     <h2>Deployed</h2>
@@ -49,14 +49,36 @@
 <li><span class="dot dot-good">&#x2713;</span> Jane pods updated to 0.1.16 ✓</li></ul>
   </section>
 <section class="card" style="border-left-color: #3498db">
+    <h2>In Progress</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> <strong>Kanban integration</strong> (PR #14, branch <code>feat/kanban-integration</code>): 17 files, 10 commits<p class="note">- Vikunja K8s manifests (7 templates), bridge capability, NATS worker, webhook handler
+- Workers wired: consolidation creates reflection tasks, proactive escalates alerts
+- <code>VIKUNJA_WEBHOOK_SECRET</code> sealed and deployed to <code>jane-bridge</code> secret
+- Blocked: Traefik crash-looping (<code>TLS options: jane-default</code> missing CRD)
+- Blocked: PocketID OIDC client registration needed (manual — web UI only)
+- Blocked: <code>VIKUNJA_API_TOKEN</code> needed after Vikunja deploy</p></li></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
     <h2>CI Status</h2>
     <ul><li><span class="dot dot-good">&#x2713;</span> Speech tests: skip gracefully when torch absent ✓</li>
 <li><span class="dot dot-good">&#x2713;</span> <code>bump-chart</code> step: fixed (<code>git push origin HEAD:master</code>) ✓</li>
 <li><span class="dot ">&#x25CB;</span> Known: <code>opencode</code> image cross-repo pull perms (<code>OPENCODE_PAT</code> needed for Flux deploy key, not CI)</li></ul>
   </section>
 <section class="card" style="border-left-color: #3498db">
+    <h2>Cluster Health</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> speech: crash-looping (10+ evictions, OOM)</li>
+<li><span class="dot ">&#x25CB;</span> traefik: crash-looping (<code>unknown TLS options: jane-default@kubernetescrd</code>)</li>
+<li><span class="dot ">&#x25CB;</span> bridge: 2/2 running (one pod)</li>
+<li><span class="dot ">&#x25CB;</span> NATS: running</li>
+<li><span class="dot ">&#x25CB;</span> pocketid: running</li>
+<li><span class="dot ">&#x25CB;</span> cert-manager: running</li></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
     <h2>Next</h2>
-    <ul><li><span class="dot ">&#x25CB;</span> Verify <code>jane.yash.abyssmallab.in</code> after update</li>
+    <ul><li><span class="dot ">&#x25CB;</span> Fix Traefik <code>jane-default</code> TLSOption CRD (blocking all ingress)</li>
+<li><span class="dot ">&#x25CB;</span> Fix speech OOM (adjust resource limits or model size)</li>
+<li><span class="dot ">&#x25CB;</span> Merge PR #14, deploy Vikunja</li>
+<li><span class="dot ">&#x25CB;</span> PocketID OIDC: register Vikunja client, set values</li>
+<li><span class="dot ">&#x25CB;</span> Create Vikunja API token, seal and deploy</li>
 <li><span class="dot ">&#x25CB;</span> Sub-project: NetworkPolicies + PDBs</li></ul>
   </section>
 </body>
