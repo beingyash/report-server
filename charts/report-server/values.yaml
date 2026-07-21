@@ -1,22 +1,17 @@
 replicaCount: 1
-
 image:
   repository: docker.io/beingyash/report-server
-  tag: v0.1.1 # {"$imagepolicy": "flux-system:report-server"}
+  tag: docker.io/beingyash/report-server:v0.1.1 # {"$imagepolicy": "flux-system:report-server"}
 imagePullPolicy: Always
-
 service:
   port: 3000
-
 ingress:
   host: reports.yash.abysmallab.in
   className: traefik
-
 gitSync:
   repository: https://github.com/beingyash/report-server.git
   ref: main
   interval: 60
-
 resources:
   limits:
     cpu: 200m
