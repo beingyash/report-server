@@ -1,5 +1,10 @@
 {
   "title": "jane Status",
   "project": "jane",
-  "date": "2026-07-21"
+  "date": "2026-07-21",
+  "status": {
+    "good": 5,
+    "bad": 1,
+    "pending": 5
+  }
 }

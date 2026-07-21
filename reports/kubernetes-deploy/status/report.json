@@ -1,5 +1,10 @@
 {
   "title": "kubernetes-deploy Status",
   "project": "kubernetes-deploy",
-  "date": "2026-07-21"
+  "date": "2026-07-21",
+  "status": {
+    "good": 1,
+    "bad": 1,
+    "pending": 16
+  }
 }
