@@ -3,8 +3,8 @@
   "project": "kubernetes-deploy",
   "date": "2026-07-21",
   "status": {
-    "good": 1,
+    "good": 0,
     "bad": 1,
-    "pending": 16
+    "pending": 24
   }
 }

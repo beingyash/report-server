@@ -37,9 +37,8 @@
 <header>
   <h1>kubernetes-deploy</h1>
   <div class="meta">Last updated 2026-07-21</div>
-  <div class="badges"><span class="badge badge-good">1 OK</span>
-<span class="badge badge-bad">1 Issues</span>
-<span class="badge badge-pending">16 Pending</span></div>
+  <div class="badges"><span class="badge badge-bad">1 Issues</span>
+<span class="badge badge-pending">24 Pending</span></div>
 </header>
 <section class="card" style="border-left-color: #3498db">
     <h2>Nodes</h2>
@@ -57,27 +56,34 @@
 <li><span class="dot ">&#x25CB;</span> nats: <code>nats:2.14.2-alpine</code><p class="note">report-server: <code>beingyash/report-server:v0.1.0</code> + <code>git-sync:v4.2.1</code></p></li></ul>
   </section>
 <section class="card" style="border-left-color: #e74c3c">
-    <h2>Flux Status — CRITICAL</h2>
-    <ul><li><span class="dot ">&#x25CB;</span> <code>flux-system</code>: GitHub's SSH host key changed or known_hosts is stale → <code>ssh-keyscan github.com</code> + update secret</li>
-<li><span class="dot dot-bad">&#x2717;</span> <code>jane-chart</code> / <code>report-server-chart</code>: HTTPS clone without auth hits GitHub TLS error (possibly rate limiting or IP allowlist). Need <code>bearer token</code> auth in GitRepository spec.</li></ul>
+    <h2>Flux Status — RESOLVED ✓</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> Worker node <code>oracle-cp</code> had <code>abysmallab.in</code> in its DNS search domains from Tailscale MagicDNS.</li>
+<li><span class="dot ">&#x25CB;</span> <code>*.abysmallab.in</code> wildcard resolves to <code>oracle-cp</code> itself (140.238.165.62).</li>
+<li><span class="dot ">&#x25CB;</span> With <code>ndots:5</code>, pod queries like <code>github.com</code> were suffixed to <code>github.com.abysmallab.in</code>, resolving back to the worker node.</li>
+<li><span class="dot dot-bad">&#x2717;</span> This caused both <code>tls: internal error</code> (HTTPS) and <code>knownhosts: key mismatch</code> (SSH) because connections were hitting local Caddy/Traefik instead of GitHub.</li>
+<li><span class="dot ">&#x25CB;</span> Control-plane node was already protected by <code>resolvConf: /etc/resolv.clean.conf</code> in kubelet config; worker node was using <code>/run/systemd/resolve/resolv.conf</code>.<p class="note"><strong>Fix applied:</strong></p></li>
+<li><span class="dot ">&#x25CB;</span> Created <code>/etc/resolv.clean.conf</code> on <code>oracle-cp</code> with only <code>nameserver 127.0.0.53</code> and no search domains.</li>
+<li><span class="dot ">&#x25CB;</span> Updated <code>/var/lib/kubelet/config.yaml</code> on <code>oracle-cp</code> to use <code>resolvConf: /etc/resolv.clean.conf</code>.</li>
+<li><span class="dot ">&#x25CB;</span> Restarted kubelet; recreated source-controller pod; switched <code>jane-chart</code> back to SSH URL.</li>
+<li><span class="dot ">&#x25CB;</span> Updated <code>ansible/add-worker.yml</code> so future workers get the same clean resolv.conf.</li></ul>
   </section>
 <section class="card" style="border-left-color: #3498db">
     <h2>Known Issues</h2>
     <ul><li><span class="dot ">&#x25CB;</span> Only <code>traefik</code> has LoadBalancer service (EXTERNAL-IP <code>&lt;pending&gt;</code>) — no MetalLB (bare-metal)</li>
-<li><span class="dot ">&#x25CB;</span> Traffic reaches node via NodePort: HTTP <code>32580</code>, HTTPS <code>32305</code></li>
-<li><span class="dot dot-good">&#x2713;</span> Stale <code>jane-speech-traefik</code> svc: <strong>already cleaned up</strong> ✓<p class="note">### Monitoring — major gap</p></li>
-<li><span class="dot ">&#x25CB;</span> metrics-server installed (node metrics) but can't reach <code>oracle-cp</code> (unknown resources)</li>
-<li><span class="dot ">&#x25CB;</span> No Prometheus / Grafana / Loki / Alertmanager</li>
-<li><span class="dot ">&#x25CB;</span> No ServiceMonitor / PodMonitor CRDs</li>
-<li><span class="dot ">&#x25CB;</span> No log aggregation, dashboards, or alerting<p class="note">### Flannel + second node</p></li>
-<li><span class="dot ">&#x25CB;</span> <code>oracle-cp</code> on different subnet (100.112.18.84 vs 10.0.0.160). Pod-to-pod across nodes needs Flannel overlay to be verified.</li></ul>
+<li><span class="dot ">&#x25CB;</span> Traffic reaches node via NodePort: HTTP <code>32580</code>, HTTPS <code>32305</code><p class="note">### Flux GitRepository — resolved ✓</p></li>
+<li><span class="dot ">&#x25CB;</span> Cause: Tailscale MagicDNS search domain <code>abysmallab.in</code> + wildcard DNS caused pod DNS to resolve <code>github.com</code> back to worker node.</li>
+<li><span class="dot ">&#x25CB;</span> Fix: kubelet on worker uses <code>/etc/resolv.clean.conf</code> (no search domains).<p class="note">### Monitoring — resolved ✓</p></li>
+<li><span class="dot ">&#x25CB;</span> metrics-server: working for both nodes</li>
+<li><span class="dot ">&#x25CB;</span> kube-prometheus-stack: 7/7 pods running</li>
+<li><span class="dot ">&#x25CB;</span> Grafana at <code>grafana.yash.abysmallab.in</code><p class="note">### Cross-node networking — resolved ✓</p></li>
+<li><span class="dot ">&#x25CB;</span> Pod-to-pod across nodes working</li>
+<li><span class="dot ">&#x25CB;</span> Routing fix: ip rule 5255 persisted via systemd</li></ul>
   </section>
 <section class="card" style="border-left-color: #3498db">
     <h2>Next</h2>
-    <ul><li><span class="dot ">&#x25CB;</span> <strong>Fix Flux GitRepository</strong> — regenerate known_hosts for SSH key, add auth token for HTTPS repos</li>
-<li><span class="dot ">&#x25CB;</span> Flux reconcile → Jane pods update to 0.1.16</li>
-<li><span class="dot ">&#x25CB;</span> Deploy monitoring stack (multi-arch)</li>
-<li><span class="dot ">&#x25CB;</span> Verify cross-node pod networking</li></ul>
+    <ul><li><span class="dot ">&#x25CB;</span> Sub-project 3: NetworkPolicies + PDBs</li>
+<li><span class="dot ">&#x25CB;</span> Sub-project 4: Longhorn storage</li>
+<li><span class="dot ">&#x25CB;</span> Sub-project 5: Image multi-arch cleanup</li></ul>
   </section>
 </body>
 </html>
