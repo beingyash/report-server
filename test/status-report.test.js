@@ -154,7 +154,10 @@ describe('generateAll integration', () => {
       skipGit: true,
     });
 
-    assert.deepStrictEqual(result, ['myproject']);
+    assert.strictEqual(result.length, 1);
+    assert.strictEqual(result[0].project, 'myproject');
+    assert.strictEqual(result[0].good, 1);
+    assert.strictEqual(result[0].bad, 0);
 
     const statusDir = path.join(reportsDir, 'myproject', 'status');
     const html = fs.readFileSync(path.join(statusDir, 'index.html'), 'utf-8');
@@ -168,6 +171,10 @@ describe('generateAll integration', () => {
     assert.strictEqual(meta.status.good, 1);
     assert.strictEqual(meta.status.bad, 0);
     assert.strictEqual(meta.status.pending, 0);
+
+    const rootIndex = path.join(tmp, 'report-server', 'index.html');
+    assert(fs.existsSync(rootIndex), 'root index.html should exist');
+    assert(fs.readFileSync(rootIndex, 'utf-8').includes('Infra Status'));
 
     fs.rmSync(tmp, { recursive: true });
   });
