@@ -1,0 +1,279 @@
+﻿diff --git a/index.html b/index.html
+new file mode 100644
+index 0000000..c97c424
+--- /dev/null
++++ b/index.html
+@@ -0,0 +1,74 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++<meta charset="UTF-8">
++<meta name="viewport" content="width=device-width, initial-scale=1.0">
++<title>Infra Status</title>
++<style>
++  * { box-sizing: border-box; margin: 0; padding: 0; }
++  body { font-family: system-ui, -apple-system, sans-serif; background: #0f1115; color: #e6e8eb; min-height: 100vh; }
++  .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
++  header { margin-bottom: 2rem; }
++  header h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
++  .subtitle { color: #9aa0a8; font-size: 0.875rem; }
++  .summary-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
++  .badge { padding: 0.25em 0.7em; border-radius: 14px; font-size: 0.78rem; font-weight: 600; line-height: 1.4; display: inline-block; }
++  .badge-good { background: #30a46c22; color: #30a46c; border: 1px solid #30a46c44; }
++  .badge-bad { background: #e5484d22; color: #e5484d; border: 1px solid #e5484d44; }
++  .badge-pending { background: #5b8def22; color: #5b8def; border: 1px solid #5b8def44; }
++  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
++  .card { background: #181b21; border-radius: 10px; padding: 1.25rem 1.5rem; border-left: 4px solid #2a2f37; box-shadow: 0 1px 2px rgba(0,0,0,.4); transition: box-shadow 0.15s, transform 0.15s; }
++  .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.35); transform: translateY(-2px); }
++  .card h2 { font-size: 1.05rem; color: #e6e8eb; margin-bottom: 0.3rem; }
++  .meta { color: #9aa0a8; font-size: 0.82rem; margin-bottom: 0.75rem; }
++  .status-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
++  .empty { color: #9aa0a8; text-align: center; padding: 3rem; }
++  .footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #2a2f37; text-align: center; }
++  .footer a { color: #5b8def; text-decoration: none; font-size: 0.875rem; }
++  .footer a:hover { text-decoration: underline; }
++</style>
++</head>
++<body>
++<div class="container">
++  <header>
++    <h1>Infra Status</h1>
++    <p class="subtitle">3 projects ΓÇö updated 2026-07-21</p>
++    <div class="summary-row">
++      <span class="badge badge-good">9 OK</span>
++      <span class="badge badge-bad">2 Issues</span>
++      <span class="badge badge-pending">63 Pending</span>
++    </div>
++  </header>
++  <div class="grid"><a href="/jane/status/" class="card" style="border-left-color: #5b8def; text-decoration: none; color: inherit;">
++      <h2>jane</h2>
++      <p class="meta">Last updated 2026-07-21</p>
++      <div class="status-row">
++        <span class="badge badge-good">7 OK</span>
++        
++        <span class="badge badge-pending">3 Pending</span>
++      </div>
++    </a>
++<a href="/kubernetes-deploy/status/" class="card" style="border-left-color: #e5484d; text-decoration: none; color: inherit;">
++      <h2>kubernetes-deploy</h2>
++      <p class="meta">Last updated 2026-07-21</p>
++      <div class="status-row">
++        
++        <span class="badge badge-bad">1 Issue</span>
++        <span class="badge badge-pending">52 Pending</span>
++      </div>
++    </a>
++<a href="/report-server/status/" class="card" style="border-left-color: #e5484d; text-decoration: none; color: inherit;">
++      <h2>report-server</h2>
++      <p class="meta">Last updated 2026-07-21</p>
++      <div class="status-row">
++        <span class="badge badge-good">2 OK</span>
++        <span class="badge badge-bad">1 Issue</span>
++        <span class="badge badge-pending">8 Pending</span>
++      </div>
++    </a></div>
++  <div class="footer">
++    <a href="/reports/">View reports listing &raquo;</a>
++  </div>
++</div>
++</body>
++</html>
+\ No newline at end of file
+diff --git a/reports/kubernetes-deploy/status/index.html b/reports/kubernetes-deploy/status/index.html
+index d412bc9..36c6759 100644
+--- a/reports/kubernetes-deploy/status/index.html
++++ b/reports/kubernetes-deploy/status/index.html
+@@ -31,21 +31,21 @@
+   code { background: #eee; padding: 0.12em 0.4em; border-radius: 3px; font-size: 0.9em; }
+   strong { color: #222; }
+   .empty { color: #888; font-style: italic; text-align: center; padding: 2rem; }
+ </style>
+ </head>
+ <body>
+ <header>
+   <h1>kubernetes-deploy</h1>
+   <div class="meta">Last updated 2026-07-21</div>
+   <div class="badges"><span class="badge badge-bad">1 Issues</span>
+-<span class="badge badge-pending">24 Pending</span></div>
++<span class="badge badge-pending">52 Pending</span></div>
+ </header>
+ <section class="card" style="border-left-color: #3498db">
+     <h2>Nodes</h2>
+     <ul></ul>
+   </section>
+ <section class="card" style="border-left-color: #3498db">
+     <h2>Installed Components</h2>
+     <ul></ul>
+   </section>
+ <section class="card" style="border-left-color: #3498db">
+@@ -72,18 +72,62 @@
+     <ul><li><span class="dot ">&#x25CB;</span> Only <code>traefik</code> has LoadBalancer service (EXTERNAL-IP <code>&lt;pending&gt;</code>) ΓÇö no MetalLB (bare-metal)</li>
+ <li><span class="dot ">&#x25CB;</span> Traffic reaches node via NodePort: HTTP <code>32580</code>, HTTPS <code>32305</code><p class="note">### Flux GitRepository ΓÇö resolved Γ£ô</p></li>
+ <li><span class="dot ">&#x25CB;</span> Cause: Tailscale MagicDNS search domain <code>abysmallab.in</code> + wildcard DNS caused pod DNS to resolve <code>github.com</code> back to worker node.</li>
+ <li><span class="dot ">&#x25CB;</span> Fix: kubelet on worker uses <code>/etc/resolv.clean.conf</code> (no search domains).<p class="note">### Monitoring ΓÇö resolved Γ£ô</p></li>
+ <li><span class="dot ">&#x25CB;</span> metrics-server: working for both nodes</li>
+ <li><span class="dot ">&#x25CB;</span> kube-prometheus-stack: 7/7 pods running</li>
+ <li><span class="dot ">&#x25CB;</span> Grafana at <code>grafana.yash.abysmallab.in</code><p class="note">### Cross-node networking ΓÇö resolved Γ£ô</p></li>
+ <li><span class="dot ">&#x25CB;</span> Pod-to-pod across nodes working</li>
+ <li><span class="dot ">&#x25CB;</span> Routing fix: ip rule 5255 persisted via systemd</li></ul>
+   </section>
++<section class="card" style="border-left-color: #3498db">
++    <h2>Sub-project 3: Security &amp; Resilience ΓÇö DONE Γ£ô</h2>
++    <ul><li><span class="dot ">&#x25CB;</span> Default-deny ingress applied to: jane, pocketid, traefik-system, cert-manager, default, monitoring, kube-system, sealed-secrets</li>
++<li><span class="dot ">&#x25CB;</span> flux-system skipped (already has its own policies)</li>
++<li><span class="dot ">&#x25CB;</span> Per-namespace allow rules tailored to app needs:<p class="note">- <strong>jane:</strong> traefik-system (80,3000,8000), intra-namespace, monitoring scraping
++- <strong>pocketid:</strong> traefik-system on :1411
++- <strong>traefik-system:</strong> monitoring scraping on :9100, dashboard on :8080 (external traffic not restricted by NP)
++- <strong>cert-manager:</strong> webhook from all, monitoring scraping, intra-namespace
++- <strong>default:</strong> traefik-system on :3000 (report-server), monitoring scraping
++- <strong>monitoring:</strong> grafana from traefik, intra-namespace, prometheus API
++- <strong>kube-system:</strong> DNS from all, intra-namespace, monitoring scraping
++- <strong>sealed-secrets:</strong> API from all, monitoring scraping### PodDisruptionBudgets (minAvailable: 1)</p></li>
++<li><span class="dot ">&#x25CB;</span> jane/bridge-pdb, jane/pwa-pdb, jane/speech-pdb</li>
++<li><span class="dot ">&#x25CB;</span> pocketid/pocketid-pdb</li>
++<li><span class="dot ">&#x25CB;</span> traefik-system/traefik-pdb<p class="note">### Verification</p></li>
++<li><span class="dot ">&#x25CB;</span> All app pods Running</li>
++<li><span class="dot ">&#x25CB;</span> Ingress endpoints reachable: id.yash.abysmallab.in (200), jane.yash.abysmallab.in (200), reports.yash.abysmallab.in (200), grafana.yash.abysmallab.in (302)</li>
++<li><span class="dot ">&#x25CB;</span> DNS resolution, external connectivity, Flux gitrepositories all Ready</li>
++<li><span class="dot ">&#x25CB;</span> Prometheus targets: 14 UP, 9 DOWN (down targets likely pre-existing ΓÇö control-plane scraping auth)</li>
++<li><span class="dot ">&#x25CB;</span> Rollback: <code>kubectl delete networkpolicy --all -n &lt;ns&gt;</code> per namespace<p class="note">### Manifests</p></li>
++<li><span class="dot ">&#x25CB;</span> <code>netpol/</code> ΓÇö 9 YAML files covering all namespaces</li>
++<li><span class="dot ">&#x25CB;</span> <code>pdb/</code> ΓÇö 3 YAML files (jane combined, pocketid, traefik)</li></ul>
++  </section>
++<section class="card" style="border-left-color: #3498db">
++    <h2>Sub-project 4: Storage Durability (Longhorn) ΓÇö DONE Γ£ô</h2>
++    <ul><li><span class="dot ">&#x25CB;</span> Longhorn v1.12.0 installed via Helm (<code>longhorn/longhorn</code> chart)</li>
++<li><span class="dot ">&#x25CB;</span> <code>open-iscsi</code> and <code>nfs-common</code> pre-installed on both nodes</li>
++<li><span class="dot ">&#x25CB;</span> Default StorageClass: <code>longhorn</code> (2 replicas, Immediate binding mode)</li>
++<li><span class="dot ">&#x25CB;</span> <code>local-path</code> de-prioritized (no longer default, kept as fallback)<p class="note">### PVC Migration</p></li>
++<li><span class="dot ">&#x25CB;</span> <strong>pocketid/pocketid-data</strong> (5Gi SQLite):<p class="note">- Backed up <code>/app/data/pocket-id.db</code> ΓåÆ <code>/tmp/pocketid-backup.sqlite3</code>
++- Scaled down, deleted old local-path PVC, created new with <code>storageClassName: longhorn</code>
++- Scaled up ΓåÆ pod healthy, ingress HTTP 200</p></li>
++<li><span class="dot ">&#x25CB;</span> <strong>jane/nats-js-nats-0</strong> (10Gi JetStream):<p class="note">- Scaled down, deleted old local-path PVC, created new with <code>storageClassName: longhorn</code>
++- Scaled up ΓåÆ pod Running 1/1, NATS HTTP 200</p></li>
++<li><span class="dot ">&#x25CB;</span> <strong>monitoring/prometheus</strong> left on <code>local-path</code> (ephemeral per spec; migrate later if needed)<p class="note">### Volume Health</p></li>
++<li><span class="dot ">&#x25CB;</span> Both Longhorn volumes <code>attached</code>, <code>degraded</code> robustness (3rd replica <code>stopped</code> ΓÇö only 2 nodes available)</li>
++<li><span class="dot ">&#x25CB;</span> Replicas: 2 running per volume (one per node), 1 stopped pending third node</li>
++<li><span class="dot ">&#x25CB;</span> Acceptable for lab environment<p class="note">### Known Issue: CP Node DiskPressure</p></li>
++<li><span class="dot ">&#x25CB;</span> CP node (<code>marketgenie-market-genie</code>) had transient DiskPressure after Longhorn install</li>
++<li><span class="dot ">&#x25CB;</span> Evicted Longhorn CSI/instance-manager pods on CP</li>
++<li><span class="dot ">&#x25CB;</span> Resolved by pruning containerd images + journal vacuum</li>
++<li><span class="dot ">&#x25CB;</span> CSI plugin now Running on both nodes</li>
++<li><span class="dot ">&#x25CB;</span> Root cause: 45GB root disk with 24GB containerd images. Monitor over time.</li></ul>
++  </section>
+ <section class="card" style="border-left-color: #3498db">
+     <h2>Next</h2>
+-    <ul><li><span class="dot ">&#x25CB;</span> Sub-project 3: NetworkPolicies + PDBs</li>
+-<li><span class="dot ">&#x25CB;</span> Sub-project 4: Longhorn storage</li>
++    <ul><li><span class="dot ">&#x25CB;</span> ~~Sub-project 3: NetworkPolicies + PDBs~~ Γ£ô</li>
++<li><span class="dot ">&#x25CB;</span> ~~Sub-project 4: Longhorn storage~~ Γ£ô</li>
+ <li><span class="dot ">&#x25CB;</span> Sub-project 5: Image multi-arch cleanup</li></ul>
+   </section>
+ </body>
+ </html>
+\ No newline at end of file
+diff --git a/reports/kubernetes-deploy/status/report.json b/reports/kubernetes-deploy/status/report.json
+index 92db2e1..b1ab476 100644
+--- a/reports/kubernetes-deploy/status/report.json
++++ b/reports/kubernetes-deploy/status/report.json
+@@ -1,10 +1,10 @@
+ {
+   "title": "kubernetes-deploy Status",
+   "project": "kubernetes-deploy",
+   "date": "2026-07-21",
+   "status": {
+     "good": 0,
+     "bad": 1,
+-    "pending": 24
++    "pending": 52
+   }
+ }
+diff --git a/scripts/generate-status-report.js b/scripts/generate-status-report.js
+index 714261a..aec8c22 100644
+--- a/scripts/generate-status-report.js
++++ b/scripts/generate-status-report.js
+@@ -189,21 +189,21 @@ function generateStatusHtml(project, stateMd) {
+ </header>
+ ${sectionCards}
+ </body>
+ </html>`;
+ }
+ 
+ function generateAll(opts) {
+   const projectsDir = opts.projectsDir || PROJECTS_DIR;
+   const repoDir = opts.repoDir || REPO_DIR;
+   const projects = listProjects(projectsDir);
+-  const generated = [];
++  const projectsData = [];
+ 
+   for (const project of projects) {
+     const stateMd = readStateMd(projectsDir, project);
+     if (!stateMd) continue;
+ 
+     const reportDir = path.join(repoDir, 'reports', project, 'status');
+     fs.mkdirSync(reportDir, { recursive: true });
+ 
+     const html = generateStatusHtml(project, stateMd);
+     fs.writeFileSync(path.join(reportDir, 'index.html'), html);
+@@ -222,28 +222,30 @@ function generateAll(opts) {
+     }
+ 
+     const reportMeta = {
+       title: `${project} Status`,
+       project,
+       date: new Date().toISOString().split('T')[0],
+       status: { good: goodCount, bad: badCount, pending: pendingCount },
+     };
+     fs.writeFileSync(path.join(reportDir, 'report.json'), JSON.stringify(reportMeta, null, 2) + '\n');
+ 
+-    generated.push(project);
++    projectsData.push({ project, good: goodCount, bad: badCount, pending: pendingCount, date: reportMeta.date, title: reportMeta.title });
+   }
+ 
++  generateRootIndex(repoDir, projectsData);
++
+   if (!opts.skipGit) {
+-    commitAndPush(repoDir, generated);
++    commitAndPush(repoDir, projectsData.map(p => p.project));
+   }
+ 
+-  return generated;
++  return projectsData;
+ }
+ 
+ function commitAndPush(repoDir, projects) {
+   if (projects.length === 0) {
+     console.log('No projects with STATE.md found.');
+     return;
+   }
+ 
+   const paths = projects.map(p => `reports/${p}/status/`);
+ 
+@@ -261,24 +263,25 @@ function commitAndPush(repoDir, projects) {
+       console.error(`Retry: cd "${repoDir}" && git push`);
+     }
+   } catch (err) {
+     console.error(`Commit failed (reports written locally): ${err.message}`);
+   }
+ }
+ 
+ if (require.main === module) {
+   console.log('Scanning projects...');
+   const projects = generateAll({});
+-  console.log(`Generated status for: ${projects.join(', ') || 'none'}`);
++  const projectNames = projects.map(p => p.project);
++  console.log(`Generated status for: ${projectNames.join(', ') || 'none'}`);
+ 
+   for (const p of projects) {
+-    console.log(`https://reports.yash.abysmallab.in/${p}/status/`);
++    console.log(`https://reports.yash.abysmallab.in/${p.project}/status/`);
+   }
+ }
+ 
+ function generateRootIndex(repoDir, projectsData) {
+   const totalGood = projectsData.reduce((s, p) => s + p.good, 0);
+   const totalBad = projectsData.reduce((s, p) => s + p.bad, 0);
+   const totalPending = projectsData.reduce((s, p) => s + p.pending, 0);
+   const count = projectsData.length;
+   const latestDate = projectsData.map(p => p.date).sort().reverse()[0] || '';
+ 

@@ -1,0 +1,17 @@
+﻿diff --git a/scripts/generate-status-report.js b/scripts/generate-status-report.js
+index aec8c22..9ee4f06 100644
+--- a/scripts/generate-status-report.js
++++ b/scripts/generate-status-report.js
+@@ -245,11 +245,11 @@ function commitAndPush(repoDir, projects) {
+   if (projects.length === 0) {
+     console.log('No projects with STATE.md found.');
+     return;
+   }
+ 
+-  const paths = projects.map(p => `reports/${p}/status/`);
++  const paths = [...projects.map(p => `reports/${p}/status/`), 'index.html'];
+ 
+   try {
+     spawnSync('git', ['-C', repoDir, 'add', ...paths], { encoding: 'utf-8', stdio: 'pipe' });
+     const msg = `status: update project status for ${projects.join(', ')}`;
+     const commit = spawnSync('git', ['-C', repoDir, 'commit', '-m', msg], { encoding: 'utf-8', stdio: 'pipe' });

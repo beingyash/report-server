@@ -1,0 +1,997 @@
+﻿diff --git a/STATE.md b/STATE.md
+index 84182b1..454c9d5 100644
+--- a/STATE.md
++++ b/STATE.md
+@@ -1,20 +1,23 @@
+ # Report Server ΓÇö Project State
+ 
+ Update at end of every session. Verified 2026-07-21.
+ 
+ ## Deployed
+-- **Chart**: v0.1.2 deployed at `reports.yash.abysmallab.in`
+-- **App image**: `beingyash/report-server:v0.1.0` (chart appVersion, not same as chart version)
+-- **Sidecar**: `git-sync:v4.2.1`
+-- **TLS**: Let's Encrypt cert issued (DNS-01 via Cloudflare), HTTPS 200 Γ£ô
+-- **Helm status**: deployed, revision 3
++- **Chart:** v0.1.3 deployed at `reports.yash.abysmallab.in`
++- **App image:** `beingyash/report-server:v0.1.1`
++- **Sidecar:** `git-sync:v4.2.1`
++- **TLS:** Let's Encrypt cert issued (DNS-01 via Cloudflare), HTTPS 200 Γ£ô
++- **Helm status:** deployed, revision 4
++- **Flux GitRepository:** Ready Γ£ô
++- **Flux HelmRelease:** Ready Γ£ô
+ 
+-## DNS
+-- `reports.yash.abysmallab.in` A `155.248.254.40` Γ£ô
+-- `yash.abysmallab.in` A `155.248.254.40`
+-- `*.yash.abysmallab.in` CNAME `yash.abysmallab.in`
+-- Domain `abysmallab.in` (single-s) properly delegated to Cloudflare
++## New in v0.1.3
++- Global status dashboard at root `/` replaces old reports listing
++- Old reports listing moved to `/reports`
++- Design tokens: dark theme, card grid, responsive layout
+ 
+ ## Known Issues
+-- Flux GitRepository for `report-server-chart` fails with `tls: internal error` ΓÇö chart can't be updated via Flux
+-- Image tag `v0.1.0` is last and only tag on Docker Hub; no newer images pushed
++- (none)
++
++## Next
++1. Verify overview dashboard renders correctly
+diff --git a/docs/superpowers/plans/2026-07-21-overview-dashboard.md b/docs/superpowers/plans/2026-07-21-overview-dashboard.md
+new file mode 100644
+index 0000000..d7c6f11
+--- /dev/null
++++ b/docs/superpowers/plans/2026-07-21-overview-dashboard.md
+@@ -0,0 +1,217 @@
++# Overview Dashboard Implementation Plan
++
++> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
++
++**Goal:** Replace root `/` of reports.yash.abysmallab.in with a global status dashboard grid.
++
++**Architecture:** Extend `generate-status-report.js` to produce a root `index.html` alongside per-project status pages. No runtime changes ΓÇö the app already serves static files from repo root via `express.static()`.
++
++**Tech Stack:** Node.js, vanilla JS/HTML/CSS (generator script), design tokens from ui-design skill.
++
++## Global Constraints
++
++- All CSS uses design tokens defined in the spec (colors `#0f1115`, `#181b21`, `#e6e8eb`, etc.)
++- Root `/` must be served from repo root `index.html` (not `/reports/...`)
++- Old reports listing moves to `/reports` (no router change ΓÇö just path convention)
++
++---
++
++### Task 1: Add `generateRootIndex()` function
++
++**Files:**
++- Modify: `scripts/generate-status-report.js` (append before module.exports)
++
++**Interfaces:**
++- Consumes: `REPO_DIR` (already exists), project metadata array `{project, good, bad, pending, date, title}`
++- Produces: `generateRootIndex(repoDir, projectsData)` ΓÇö writes `<repoDir>/index.html`
++
++- [ ] **Write `generateRootIndex` function body**
++
++```js
++function generateRootIndex(repoDir, projectsData) {
++  const totalGood = projectsData.reduce((s, p) => s + p.good, 0);
++  const totalBad = projectsData.reduce((s, p) => s + p.bad, 0);
++  const totalPending = projectsData.reduce((s, p) => s + p.pending, 0);
++  const count = projectsData.length;
++  const latestDate = projectsData.map(p => p.date).sort().reverse()[0] || '';
++
++  const cardsHtml = projectsData.map(p => {
++    const borderColor = p.bad > 0 ? '#e5484d' : p.pending > 0 ? '#5b8def' : '#30a46c';
++    const color = p.bad > 0 ? '#e5484d' : '#30a46c';
++    const countColor = p.bad > 0 ? '#e5484d' : '#5b8def';
++    return `<a href="/${p.project}/status/" class="card" style="border-left-color: ${borderColor}; text-decoration: none; color: inherit;">
++      <h2>${escape(p.project)}</h2>
++      <p class="meta">Last updated ${p.date}</p>
++      <div class="status-row">
++        ${p.good > 0 ? `<span class="badge badge-good">${p.good} OK</span>` : ''}
++        ${p.bad > 0 ? `<span class="badge badge-bad">${p.bad} Issue${p.bad > 1 ? 's' : ''}</span>` : ''}
++        ${p.pending > 0 ? `<span class="badge badge-pending">${p.pending} Pending</span>` : ''}
++      </div>
++    </a>`;
++  }).join('\n');
++
++  const html = `<!DOCTYPE html>
++<html lang="en">
++<head>
++<meta charset="UTF-8">
++<meta name="viewport" content="width=device-width, initial-scale=1.0">
++<title>Infra Status</title>
++<style>
++  * { box-sizing: border-box; margin: 0; padding: 0; }
++  body { font-family: system-ui, -apple-system, sans-serif; background: #0f1115; color: #e6e8eb; min-height: 100vh; }
++  .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
++  header { margin-bottom: 2rem; }
++  header h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
++  .subtitle { color: #9aa0a8; font-size: 0.875rem; }
++  .summary-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
++  .badge { padding: 0.25em 0.7em; border-radius: 14px; font-size: 0.78rem; font-weight: 600; line-height: 1.4; display: inline-block; }
++  .badge-good { background: #30a46c22; color: #30a46c; border: 1px solid #30a46c44; }
++  .badge-bad { background: #e5484d22; color: #e5484d; border: 1px solid #e5484d44; }
++  .badge-pending { background: #5b8def22; color: #5b8def; border: 1px solid #5b8def44; }
++  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
++  .card { background: #181b21; border-radius: 10px; padding: 1.25rem 1.5rem; border-left: 4px solid #2a2f37; box-shadow: 0 1px 2px rgba(0,0,0,.4); transition: box-shadow 0.15s, transform 0.15s; }
++  .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.35); transform: translateY(-2px); }
++  .card h2 { font-size: 1.05rem; color: #e6e8eb; margin-bottom: 0.3rem; }
++  .meta { color: #9aa0a8; font-size: 0.82rem; margin-bottom: 0.75rem; }
++  .status-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
++  .empty { color: #9aa0a8; text-align: center; padding: 3rem; }
++  .footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #2a2f37; text-align: center; }
++  .footer a { color: #5b8def; text-decoration: none; font-size: 0.875rem; }
++  .footer a:hover { text-decoration: underline; }
++</style>
++</head>
++<body>
++<div class="container">
++  <header>
++    <h1>Infra Status</h1>
++    <p class="subtitle">${count} project${count > 1 ? 's' : ''} ΓÇö updated ${latestDate}</p>
++    <div class="summary-row">
++      ${totalGood > 0 ? `<span class="badge badge-good">${totalGood} OK</span>` : ''}
++      ${totalBad > 0 ? `<span class="badge badge-bad">${totalBad} Issue${totalBad > 1 ? 's' : ''}</span>` : ''}
++      ${totalPending > 0 ? `<span class="badge badge-pending">${totalPending} Pending</span>` : ''}
++    </div>
++  </header>
++  ${projectsData.length > 0
++    ? `<div class="grid">${cardsHtml}</div>`
++    : '<p class="empty">No projects with STATE.md found.</p>'}
++  <div class="footer">
++    <a href="/reports/">View reports listing &raquo;</a>
++  </div>
++</div>
++</body>
++</html>`;
++
++  fs.writeFileSync(path.join(repoDir, 'index.html'), html);
++}
++```
++
++- [ ] **Verify syntax**
++
++Run: `node -e "require('./scripts/generate-status-report')"`
++
++Expected: no errors (the module loads, even though the function isn't called yet).
++
++---
++
++### Task 2: Wire `generateRootIndex` into `generateAll`
++
++**Files:**
++- Modify: `scripts/generate-status-report.js:195-240`
++
++**Interfaces:**
++- Consumes: `generateRootIndex` from Task 1
++- Produces: `generateAll()` now writes `<repoDir>/index.html` after per-project pages
++
++- [ ] **Collect project metadata in the generation loop**
++
++In `generateAll()`, replace the `generated` variable with an array of metadata objects:
++
++```js
++const projectsData = [];
++
++for (const project of projects) {
++  // ... existing per-project generation code ...
++  
++  projectsData.push({ project, good: goodCount, bad: badCount, pending: pendingCount, date: reportMeta.date, title: reportMeta.title });
++}
++```
++
++- [ ] **Call `generateRootIndex` after the loop**
++
++After the loop ends, before the `skipGit` check:
++
++```js
++generateRootIndex(repoDir, projectsData);
++```
++
++- [ ] **Verify it runs cleanly**
++
++Run: `node scripts/generate-status-report.js`
++
++Expected: generates per-project status + root `index.html`. No errors.
++
++---
++
++### Task 3: Update `commitAndPush` to include root `index.html`
++
++**Files:**
++- Modify: `scripts/generate-status-report.js:242-266`
++
++- [ ] **Add `index.html` to the git add paths**
++
++```js
++const paths = [...projects.map(p => `reports/${p}/status/`), 'index.html'];
++```
++
++- [ ] **Verify commit + push**
++
++Run: `node scripts/generate-status-report.js`
++
++Expected: reports generated, committed, pushed. Check `git status` is clean.
++
++---
++
++### Task 4: Regenerate stale STATE.md files and verify live
++
++**Files:**
++- Modify: `C:\home\projects\report-server\STATE.md` (already identified)
++- Modify: `C:\home\projects\kubernetes-deploy\STATE.md` (optional ΓÇö fix "error" text in Flux section)
++
++- [ ] **Update report-server STATE.md**
++
++Set to:
++```markdown
++# Report Server ΓÇö Project State
++
++Update at end of every session. Verified 2026-07-21.
++
++## Deployed
++- **Chart:** v0.1.3 deployed at `reports.yash.abysmallab.in`
++- **App image:** `beingyash/report-server:v0.1.1`
++- **Sidecar:** `git-sync:v4.2.1`
++- **TLS:** Let's Encrypt cert issued (DNS-01 via Cloudflare), HTTPS 200 Γ£ô
++- **Helm status:** deployed, revision 4
++- **Flux GitRepository:** Ready Γ£ô
++- **Flux HelmRelease:** Ready Γ£ô
++
++## New in v0.1.3
++- Global status dashboard at root `/` replaces old reports listing
++- Old reports listing moved to `/reports`
++- Design tokens: dark theme, card grid, responsive layout
++
++## Known Issues
++- (none)
++
++## Next
++1. Verify overview dashboard renders correctly
++```
++
++- [ ] **Regenerate status reports**
++
++Run: `node C:\home\projects\report-server\scripts\generate-status-report.js`
++
++Expected: clean run, all reports generated, committed, pushed.
++
++- [ ] **Verify deployed site**
++
++Check `https://reports.yash.abysmallab.in/` shows the new dashboard.
+diff --git a/docs/superpowers/specs/2026-07-21-overview-dashboard-design.md b/docs/superpowers/specs/2026-07-21-overview-dashboard-design.md
+new file mode 100644
+index 0000000..5d50bd4
+--- /dev/null
++++ b/docs/superpowers/specs/2026-07-21-overview-dashboard-design.md
+@@ -0,0 +1,86 @@
++# Global Overview Dashboard ΓÇö Design Spec
++
++**Date:** 2026-07-21
++**Project:** report-server (reports.yash.abysmallab.in)
++
++## Problem
++
++Root `https://reports.yash.abysmallab.in/` serves the old per-report listing page. The designed global status dashboard lives at `/status`, but users land on the old page first.
++
++## Goal
++
++Replace root `/` with a global overview dashboard showing health cards for all projects. Move old reports listing to `/reports`.
++
++## Data Source
++
++`generate-status-report.js` already reads all `STATE.md` files from sibling repos under `C:\home\projects\`, generates per-project status HTML + `report.json`. The `report.json` contains:
++
++```json
++{
++  "title": "kubernetes-deploy Status",
++  "project": "kubernetes-deploy",
++  "date": "2026-07-21",
++  "status": { "good": 7, "bad": 1, "pending": 24 }
++}
++```
++
++## Layout
++
++Dashboard grid (max 1200px centered):
++
++```
++ΓöîΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÉ
++Γöé  Infra Status               updated YYYY-MM-DD  Γöé
++Γöé  3 projects ΓÇö 7 OK  1 Issue  27 Pending          Γöé
++Γö£ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓö¼ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓö¼ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöñ
++Γöé  jane      Γöé k8s-deploy Γöé report-server           Γöé
++Γöé  ΓùÅΓùÅΓùÅ OK    Γöé ΓùÅΓùÅ Issue   Γöé ΓùÅΓùÅ OK                   Γöé
++Γöé  7 OK      Γöé 0 OK       Γöé 2 OK                    Γöé
++Γöé  0 Issue   Γöé 1 Issue    Γöé 1 Issue                 Γöé
++Γöé  3 Pending Γöé 24 Pending Γöé 2 Pending               Γöé
++Γöé  Jul 21    Γöé Jul 21     Γöé Jul 21                  Γöé
++Γö£ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓö┤ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓö┤ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöñ
++Γöé  View reports listing ┬╗                            Γöé
++ΓööΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÿ
++```
++
++## Card Component
++
++- Left border color: `#30a46c` (good, `bad=0`), `#e5484d` (bad, `bad>0`), `#5b8def` (pending, `bad=0 && pending>0`)
++- Project name ΓåÆ link to `/project/status/`
++- Status badge row (colored pills)
++- Last-updated date
++
++States: empty ("No projects with STATE.md found"), error (generator failure banner).
++
++## Responsive
++
++- Mobile: single column cards, header stacks
++- Tablet: 2 columns
++- Desktop: 3+ columns (`auto-fill`, `minmax(280px, 1fr)`)
++
++## Implementation
++
++### Changes to `scripts/generate-status-report.js`
++
++1. Add `generateRootIndex(repoDir, projectsData)`:
++   - Reads each project's `reports/<project>/status/report.json`
++   - Renders dashboard HTML with card grid, summary header, footer link
++   - Writes to `<repoDir>/index.html`
++
++2. Modify `generateAll()`:
++   - Collect project metadata after per-project generation
++   - Call `generateRootIndex()` at end
++
++3. Modify `commitAndPush()`:
++   - Add `<repoDir>/index.html` to commit paths
++
++### No runtime changes
++
++Report-server app already serves static files from repo root via `express.static()`. New `index.html` automatically becomes root `/`.
++
++## Future Considerations
++
++- Auto-refresh via git-sync sidecar (already deployed)
++- Live status badges for external README embeds
++- Historical trend line (per-project status over time)
+diff --git a/index.html b/index.html
+new file mode 100644
+index 0000000..bec991b
+--- /dev/null
++++ b/index.html
+@@ -0,0 +1,74 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++<meta charset="UTF-8">
++<meta name="viewport" content="width=device-width, initial-scale=1.0">
++<title>Infra Status</title>
++<style>
++  * { box-sizing: border-box; margin: 0; padding: 0; }
++  body { font-family: system-ui, -apple-system, sans-serif; background: #0f1115; color: #e6e8eb; min-height: 100vh; }
++  .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
++  header { margin-bottom: 2rem; }
++  header h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
++  .subtitle { color: #9aa0a8; font-size: 0.875rem; }
++  .summary-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
++  .badge { padding: 0.25em 0.7em; border-radius: 14px; font-size: 0.78rem; font-weight: 600; line-height: 1.4; display: inline-block; }
++  .badge-good { background: #30a46c22; color: #30a46c; border: 1px solid #30a46c44; }
++  .badge-bad { background: #e5484d22; color: #e5484d; border: 1px solid #e5484d44; }
++  .badge-pending { background: #5b8def22; color: #5b8def; border: 1px solid #5b8def44; }
++  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
++  .card { background: #181b21; border-radius: 10px; padding: 1.25rem 1.5rem; border-left: 4px solid #2a2f37; box-shadow: 0 1px 2px rgba(0,0,0,.4); transition: box-shadow 0.15s, transform 0.15s; }
++  .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.35); transform: translateY(-2px); }
++  .card h2 { font-size: 1.05rem; color: #e6e8eb; margin-bottom: 0.3rem; }
++  .meta { color: #9aa0a8; font-size: 0.82rem; margin-bottom: 0.75rem; }
++  .status-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
++  .empty { color: #9aa0a8; text-align: center; padding: 3rem; }
++  .footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #2a2f37; text-align: center; }
++  .footer a { color: #5b8def; text-decoration: none; font-size: 0.875rem; }
++  .footer a:hover { text-decoration: underline; }
++</style>
++</head>
++<body>
++<div class="container">
++  <header>
++    <h1>Infra Status</h1>
++    <p class="subtitle">3 projects ΓÇö updated 2026-07-21</p>
++    <div class="summary-row">
++      <span class="badge badge-good">10 OK</span>
++      <span class="badge badge-bad">1 Issue</span>
++      <span class="badge badge-pending">64 Pending</span>
++    </div>
++  </header>
++  <div class="grid"><a href="/jane/status/" class="card" style="border-left-color: #5b8def; text-decoration: none; color: inherit;">
++      <h2>jane</h2>
++      <p class="meta">Last updated 2026-07-21</p>
++      <div class="status-row">
++        <span class="badge badge-good">7 OK</span>
++        
++        <span class="badge badge-pending">3 Pending</span>
++      </div>
++    </a>
++<a href="/kubernetes-deploy/status/" class="card" style="border-left-color: #e5484d; text-decoration: none; color: inherit;">
++      <h2>kubernetes-deploy</h2>
++      <p class="meta">Last updated 2026-07-21</p>
++      <div class="status-row">
++        
++        <span class="badge badge-bad">1 Issue</span>
++        <span class="badge badge-pending">52 Pending</span>
++      </div>
++    </a>
++<a href="/report-server/status/" class="card" style="border-left-color: #5b8def; text-decoration: none; color: inherit;">
++      <h2>report-server</h2>
++      <p class="meta">Last updated 2026-07-21</p>
++      <div class="status-row">
++        <span class="badge badge-good">3 OK</span>
++        
++        <span class="badge badge-pending">9 Pending</span>
++      </div>
++    </a></div>
++  <div class="footer">
++    <a href="/reports/">View reports listing &raquo;</a>
++  </div>
++</div>
++</body>
++</html>
+\ No newline at end of file
+diff --git a/reports/kubernetes-deploy/status/index.html b/reports/kubernetes-deploy/status/index.html
+index d412bc9..36c6759 100644
+--- a/reports/kubernetes-deploy/status/index.html
++++ b/reports/kubernetes-deploy/status/index.html
+@@ -31,21 +31,21 @@
+   code { background: #eee; padding: 0.12em 0.4em; border-radius: 3px; font-size: 0.9em; }
+   strong { color: #222; }
+   .empty { color: #888; font-style: italic; text-align: center; padding: 2rem; }
+ </style>
+ </head>
+ <body>
+ <header>
+   <h1>kubernetes-deploy</h1>
+   <div class="meta">Last updated 2026-07-21</div>
+   <div class="badges"><span class="badge badge-bad">1 Issues</span>
+-<span class="badge badge-pending">24 Pending</span></div>
++<span class="badge badge-pending">52 Pending</span></div>
+ </header>
+ <section class="card" style="border-left-color: #3498db">
+     <h2>Nodes</h2>
+     <ul></ul>
+   </section>
+ <section class="card" style="border-left-color: #3498db">
+     <h2>Installed Components</h2>
+     <ul></ul>
+   </section>
+ <section class="card" style="border-left-color: #3498db">
+@@ -72,18 +72,62 @@
+     <ul><li><span class="dot ">&#x25CB;</span> Only <code>traefik</code> has LoadBalancer service (EXTERNAL-IP <code>&lt;pending&gt;</code>) ΓÇö no MetalLB (bare-metal)</li>
+ <li><span class="dot ">&#x25CB;</span> Traffic reaches node via NodePort: HTTP <code>32580</code>, HTTPS <code>32305</code><p class="note">### Flux GitRepository ΓÇö resolved Γ£ô</p></li>
+ <li><span class="dot ">&#x25CB;</span> Cause: Tailscale MagicDNS search domain <code>abysmallab.in</code> + wildcard DNS caused pod DNS to resolve <code>github.com</code> back to worker node.</li>
+ <li><span class="dot ">&#x25CB;</span> Fix: kubelet on worker uses <code>/etc/resolv.clean.conf</code> (no search domains).<p class="note">### Monitoring ΓÇö resolved Γ£ô</p></li>
+ <li><span class="dot ">&#x25CB;</span> metrics-server: working for both nodes</li>
+ <li><span class="dot ">&#x25CB;</span> kube-prometheus-stack: 7/7 pods running</li>
+ <li><span class="dot ">&#x25CB;</span> Grafana at <code>grafana.yash.abysmallab.in</code><p class="note">### Cross-node networking ΓÇö resolved Γ£ô</p></li>
+ <li><span class="dot ">&#x25CB;</span> Pod-to-pod across nodes working</li>
+ <li><span class="dot ">&#x25CB;</span> Routing fix: ip rule 5255 persisted via systemd</li></ul>
+   </section>
++<section class="card" style="border-left-color: #3498db">
++    <h2>Sub-project 3: Security &amp; Resilience ΓÇö DONE Γ£ô</h2>
++    <ul><li><span class="dot ">&#x25CB;</span> Default-deny ingress applied to: jane, pocketid, traefik-system, cert-manager, default, monitoring, kube-system, sealed-secrets</li>
++<li><span class="dot ">&#x25CB;</span> flux-system skipped (already has its own policies)</li>
++<li><span class="dot ">&#x25CB;</span> Per-namespace allow rules tailored to app needs:<p class="note">- <strong>jane:</strong> traefik-system (80,3000,8000), intra-namespace, monitoring scraping
++- <strong>pocketid:</strong> traefik-system on :1411
++- <strong>traefik-system:</strong> monitoring scraping on :9100, dashboard on :8080 (external traffic not restricted by NP)
++- <strong>cert-manager:</strong> webhook from all, monitoring scraping, intra-namespace
++- <strong>default:</strong> traefik-system on :3000 (report-server), monitoring scraping
++- <strong>monitoring:</strong> grafana from traefik, intra-namespace, prometheus API
++- <strong>kube-system:</strong> DNS from all, intra-namespace, monitoring scraping
++- <strong>sealed-secrets:</strong> API from all, monitoring scraping### PodDisruptionBudgets (minAvailable: 1)</p></li>
++<li><span class="dot ">&#x25CB;</span> jane/bridge-pdb, jane/pwa-pdb, jane/speech-pdb</li>
++<li><span class="dot ">&#x25CB;</span> pocketid/pocketid-pdb</li>
++<li><span class="dot ">&#x25CB;</span> traefik-system/traefik-pdb<p class="note">### Verification</p></li>
++<li><span class="dot ">&#x25CB;</span> All app pods Running</li>
++<li><span class="dot ">&#x25CB;</span> Ingress endpoints reachable: id.yash.abysmallab.in (200), jane.yash.abysmallab.in (200), reports.yash.abysmallab.in (200), grafana.yash.abysmallab.in (302)</li>
++<li><span class="dot ">&#x25CB;</span> DNS resolution, external connectivity, Flux gitrepositories all Ready</li>
++<li><span class="dot ">&#x25CB;</span> Prometheus targets: 14 UP, 9 DOWN (down targets likely pre-existing ΓÇö control-plane scraping auth)</li>
++<li><span class="dot ">&#x25CB;</span> Rollback: <code>kubectl delete networkpolicy --all -n &lt;ns&gt;</code> per namespace<p class="note">### Manifests</p></li>
++<li><span class="dot ">&#x25CB;</span> <code>netpol/</code> ΓÇö 9 YAML files covering all namespaces</li>
++<li><span class="dot ">&#x25CB;</span> <code>pdb/</code> ΓÇö 3 YAML files (jane combined, pocketid, traefik)</li></ul>
++  </section>
++<section class="card" style="border-left-color: #3498db">
++    <h2>Sub-project 4: Storage Durability (Longhorn) ΓÇö DONE Γ£ô</h2>
++    <ul><li><span class="dot ">&#x25CB;</span> Longhorn v1.12.0 installed via Helm (<code>longhorn/longhorn</code> chart)</li>
++<li><span class="dot ">&#x25CB;</span> <code>open-iscsi</code> and <code>nfs-common</code> pre-installed on both nodes</li>
++<li><span class="dot ">&#x25CB;</span> Default StorageClass: <code>longhorn</code> (2 replicas, Immediate binding mode)</li>
++<li><span class="dot ">&#x25CB;</span> <code>local-path</code> de-prioritized (no longer default, kept as fallback)<p class="note">### PVC Migration</p></li>
++<li><span class="dot ">&#x25CB;</span> <strong>pocketid/pocketid-data</strong> (5Gi SQLite):<p class="note">- Backed up <code>/app/data/pocket-id.db</code> ΓåÆ <code>/tmp/pocketid-backup.sqlite3</code>
++- Scaled down, deleted old local-path PVC, created new with <code>storageClassName: longhorn</code>
++- Scaled up ΓåÆ pod healthy, ingress HTTP 200</p></li>
++<li><span class="dot ">&#x25CB;</span> <strong>jane/nats-js-nats-0</strong> (10Gi JetStream):<p class="note">- Scaled down, deleted old local-path PVC, created new with <code>storageClassName: longhorn</code>
++- Scaled up ΓåÆ pod Running 1/1, NATS HTTP 200</p></li>
++<li><span class="dot ">&#x25CB;</span> <strong>monitoring/prometheus</strong> left on <code>local-path</code> (ephemeral per spec; migrate later if needed)<p class="note">### Volume Health</p></li>
++<li><span class="dot ">&#x25CB;</span> Both Longhorn volumes <code>attached</code>, <code>degraded</code> robustness (3rd replica <code>stopped</code> ΓÇö only 2 nodes available)</li>
++<li><span class="dot ">&#x25CB;</span> Replicas: 2 running per volume (one per node), 1 stopped pending third node</li>
++<li><span class="dot ">&#x25CB;</span> Acceptable for lab environment<p class="note">### Known Issue: CP Node DiskPressure</p></li>
++<li><span class="dot ">&#x25CB;</span> CP node (<code>marketgenie-market-genie</code>) had transient DiskPressure after Longhorn install</li>
++<li><span class="dot ">&#x25CB;</span> Evicted Longhorn CSI/instance-manager pods on CP</li>
++<li><span class="dot ">&#x25CB;</span> Resolved by pruning containerd images + journal vacuum</li>
++<li><span class="dot ">&#x25CB;</span> CSI plugin now Running on both nodes</li>
++<li><span class="dot ">&#x25CB;</span> Root cause: 45GB root disk with 24GB containerd images. Monitor over time.</li></ul>
++  </section>
+ <section class="card" style="border-left-color: #3498db">
+     <h2>Next</h2>
+-    <ul><li><span class="dot ">&#x25CB;</span> Sub-project 3: NetworkPolicies + PDBs</li>
+-<li><span class="dot ">&#x25CB;</span> Sub-project 4: Longhorn storage</li>
++    <ul><li><span class="dot ">&#x25CB;</span> ~~Sub-project 3: NetworkPolicies + PDBs~~ Γ£ô</li>
++<li><span class="dot ">&#x25CB;</span> ~~Sub-project 4: Longhorn storage~~ Γ£ô</li>
+ <li><span class="dot ">&#x25CB;</span> Sub-project 5: Image multi-arch cleanup</li></ul>
+   </section>
+ </body>
+ </html>
+\ No newline at end of file
+diff --git a/reports/kubernetes-deploy/status/report.json b/reports/kubernetes-deploy/status/report.json
+index 92db2e1..b1ab476 100644
+--- a/reports/kubernetes-deploy/status/report.json
++++ b/reports/kubernetes-deploy/status/report.json
+@@ -1,10 +1,10 @@
+ {
+   "title": "kubernetes-deploy Status",
+   "project": "kubernetes-deploy",
+   "date": "2026-07-21",
+   "status": {
+     "good": 0,
+     "bad": 1,
+-    "pending": 24
++    "pending": 52
+   }
+ }
+diff --git a/reports/report-server/status/index.html b/reports/report-server/status/index.html
+index db6063a..07401d3 100644
+--- a/reports/report-server/status/index.html
++++ b/reports/report-server/status/index.html
+@@ -30,36 +30,39 @@
+ 
+   code { background: #eee; padding: 0.12em 0.4em; border-radius: 3px; font-size: 0.9em; }
+   strong { color: #222; }
+   .empty { color: #888; font-style: italic; text-align: center; padding: 2rem; }
+ </style>
+ </head>
+ <body>
+ <header>
+   <h1>report-server</h1>
+   <div class="meta">Last updated 2026-07-21</div>
+-  <div class="badges"><span class="badge badge-good">2 OK</span>
+-<span class="badge badge-bad">1 Issues</span>
+-<span class="badge badge-pending">8 Pending</span></div>
++  <div class="badges"><span class="badge badge-good">3 OK</span>
++<span class="badge badge-pending">9 Pending</span></div>
+ </header>
+ <section class="card" style="border-left-color: #3498db">
+     <h2>Deployed</h2>
+-    <ul><li><span class="dot ">&#x25CB;</span> <strong>Chart</strong>: v0.1.2 deployed at <code>reports.yash.abysmallab.in</code></li>
+-<li><span class="dot ">&#x25CB;</span> <strong>App image</strong>: <code>beingyash/report-server:v0.1.0</code> (chart appVersion, not same as chart version)</li>
+-<li><span class="dot ">&#x25CB;</span> <strong>Sidecar</strong>: <code>git-sync:v4.2.1</code></li>
+-<li><span class="dot dot-good">&#x2713;</span> <strong>TLS</strong>: Let's Encrypt cert issued (DNS-01 via Cloudflare), HTTPS 200 Γ£ô</li>
+-<li><span class="dot ">&#x25CB;</span> <strong>Helm status</strong>: deployed, revision 3</li></ul>
++    <ul><li><span class="dot ">&#x25CB;</span> <strong>Chart:</strong> v0.1.3 deployed at <code>reports.yash.abysmallab.in</code></li>
++<li><span class="dot ">&#x25CB;</span> <strong>App image:</strong> <code>beingyash/report-server:v0.1.1</code></li>
++<li><span class="dot ">&#x25CB;</span> <strong>Sidecar:</strong> <code>git-sync:v4.2.1</code></li>
++<li><span class="dot dot-good">&#x2713;</span> <strong>TLS:</strong> Let's Encrypt cert issued (DNS-01 via Cloudflare), HTTPS 200 Γ£ô</li>
++<li><span class="dot ">&#x25CB;</span> <strong>Helm status:</strong> deployed, revision 4</li>
++<li><span class="dot dot-good">&#x2713;</span> <strong>Flux GitRepository:</strong> Ready Γ£ô</li>
++<li><span class="dot dot-good">&#x2713;</span> <strong>Flux HelmRelease:</strong> Ready Γ£ô</li></ul>
+   </section>
+ <section class="card" style="border-left-color: #3498db">
+-    <h2>DNS</h2>
+-    <ul><li><span class="dot dot-good">&#x2713;</span> <code>reports.yash.abysmallab.in</code> A <code>155.248.254.40</code> Γ£ô</li>
+-<li><span class="dot ">&#x25CB;</span> <code>yash.abysmallab.in</code> A <code>155.248.254.40</code></li>
+-<li><span class="dot ">&#x25CB;</span> <code>*.yash.abysmallab.in</code> CNAME <code>yash.abysmallab.in</code></li>
+-<li><span class="dot ">&#x25CB;</span> Domain <code>abysmallab.in</code> (single-s) properly delegated to Cloudflare</li></ul>
++    <h2>New in v0.1.3</h2>
++    <ul><li><span class="dot ">&#x25CB;</span> Global status dashboard at root <code>/</code> replaces old reports listing</li>
++<li><span class="dot ">&#x25CB;</span> Old reports listing moved to <code>/reports</code></li>
++<li><span class="dot ">&#x25CB;</span> Design tokens: dark theme, card grid, responsive layout</li></ul>
+   </section>
+-<section class="card" style="border-left-color: #e74c3c">
++<section class="card" style="border-left-color: #3498db">
+     <h2>Known Issues</h2>
+-    <ul><li><span class="dot dot-bad">&#x2717;</span> Flux GitRepository for <code>report-server-chart</code> fails with <code>tls: internal error</code> ΓÇö chart can't be updated via Flux</li>
+-<li><span class="dot ">&#x25CB;</span> Image tag <code>v0.1.0</code> is last and only tag on Docker Hub; no newer images pushed</li></ul>
++    <ul><li><span class="dot ">&#x25CB;</span> (none)</li></ul>
++  </section>
++<section class="card" style="border-left-color: #3498db">
++    <h2>Next</h2>
++    <ul><li><span class="dot ">&#x25CB;</span> Verify overview dashboard renders correctly</li></ul>
+   </section>
+ </body>
+ </html>
+\ No newline at end of file
+diff --git a/reports/report-server/status/report.json b/reports/report-server/status/report.json
+index 68ec7d7..febda0d 100644
+--- a/reports/report-server/status/report.json
++++ b/reports/report-server/status/report.json
+@@ -1,10 +1,10 @@
+ {
+   "title": "report-server Status",
+   "project": "report-server",
+   "date": "2026-07-21",
+   "status": {
+-    "good": 2,
+-    "bad": 1,
+-    "pending": 8
++    "good": 3,
++    "bad": 0,
++    "pending": 9
+   }
+ }
+diff --git a/scripts/generate-status-report.js b/scripts/generate-status-report.js
+index cfa3559..9ee4f06 100644
+--- a/scripts/generate-status-report.js
++++ b/scripts/generate-status-report.js
+@@ -189,21 +189,21 @@ function generateStatusHtml(project, stateMd) {
+ </header>
+ ${sectionCards}
+ </body>
+ </html>`;
+ }
+ 
+ function generateAll(opts) {
+   const projectsDir = opts.projectsDir || PROJECTS_DIR;
+   const repoDir = opts.repoDir || REPO_DIR;
+   const projects = listProjects(projectsDir);
+-  const generated = [];
++  const projectsData = [];
+ 
+   for (const project of projects) {
+     const stateMd = readStateMd(projectsDir, project);
+     if (!stateMd) continue;
+ 
+     const reportDir = path.join(repoDir, 'reports', project, 'status');
+     fs.mkdirSync(reportDir, { recursive: true });
+ 
+     const html = generateStatusHtml(project, stateMd);
+     fs.writeFileSync(path.join(reportDir, 'index.html'), html);
+@@ -222,37 +222,39 @@ function generateAll(opts) {
+     }
+ 
+     const reportMeta = {
+       title: `${project} Status`,
+       project,
+       date: new Date().toISOString().split('T')[0],
+       status: { good: goodCount, bad: badCount, pending: pendingCount },
+     };
+     fs.writeFileSync(path.join(reportDir, 'report.json'), JSON.stringify(reportMeta, null, 2) + '\n');
+ 
+-    generated.push(project);
++    projectsData.push({ project, good: goodCount, bad: badCount, pending: pendingCount, date: reportMeta.date, title: reportMeta.title });
+   }
+ 
++  generateRootIndex(repoDir, projectsData);
++
+   if (!opts.skipGit) {
+-    commitAndPush(repoDir, generated);
++    commitAndPush(repoDir, projectsData.map(p => p.project));
+   }
+ 
+-  return generated;
++  return projectsData;
+ }
+ 
+ function commitAndPush(repoDir, projects) {
+   if (projects.length === 0) {
+     console.log('No projects with STATE.md found.');
+     return;
+   }
+ 
+-  const paths = projects.map(p => `reports/${p}/status/`);
++  const paths = [...projects.map(p => `reports/${p}/status/`), 'index.html'];
+ 
+   try {
+     spawnSync('git', ['-C', repoDir, 'add', ...paths], { encoding: 'utf-8', stdio: 'pipe' });
+     const msg = `status: update project status for ${projects.join(', ')}`;
+     const commit = spawnSync('git', ['-C', repoDir, 'commit', '-m', msg], { encoding: 'utf-8', stdio: 'pipe' });
+     if (commit.status !== 0 && !commit.stderr.includes('nothing to commit')) {
+       throw new Error(commit.stderr);
+     }
+ 
+     const push = spawnSync('git', ['-C', repoDir, 'push'], { encoding: 'utf-8', stdio: 'pipe' });
+@@ -261,18 +263,93 @@ function commitAndPush(repoDir, projects) {
+       console.error(`Retry: cd "${repoDir}" && git push`);
+     }
+   } catch (err) {
+     console.error(`Commit failed (reports written locally): ${err.message}`);
+   }
+ }
+ 
+ if (require.main === module) {
+   console.log('Scanning projects...');
+   const projects = generateAll({});
+-  console.log(`Generated status for: ${projects.join(', ') || 'none'}`);
++  const projectNames = projects.map(p => p.project);
++  console.log(`Generated status for: ${projectNames.join(', ') || 'none'}`);
+ 
+   for (const p of projects) {
+-    console.log(`https://reports.yash.abysmallab.in/${p}/status/`);
++    console.log(`https://reports.yash.abysmallab.in/${p.project}/status/`);
+   }
+ }
+ 
+-module.exports = { listProjects, readStateMd, parseSections, detectLineStatus, renderSectionCard, generateStatusHtml, generateAll };
++function generateRootIndex(repoDir, projectsData) {
++  const totalGood = projectsData.reduce((s, p) => s + p.good, 0);
++  const totalBad = projectsData.reduce((s, p) => s + p.bad, 0);
++  const totalPending = projectsData.reduce((s, p) => s + p.pending, 0);
++  const count = projectsData.length;
++  const latestDate = projectsData.map(p => p.date).sort().reverse()[0] || '';
++
++  const cardsHtml = projectsData.map(p => {
++    const borderColor = p.bad > 0 ? '#e5484d' : p.pending > 0 ? '#5b8def' : '#30a46c';
++    return `<a href="/${p.project}/status/" class="card" style="border-left-color: ${borderColor}; text-decoration: none; color: inherit;">
++      <h2>${escape(p.project)}</h2>
++      <p class="meta">Last updated ${p.date}</p>
++      <div class="status-row">
++        ${p.good > 0 ? `<span class="badge badge-good">${p.good} OK</span>` : ''}
++        ${p.bad > 0 ? `<span class="badge badge-bad">${p.bad} Issue${p.bad > 1 ? 's' : ''}</span>` : ''}
++        ${p.pending > 0 ? `<span class="badge badge-pending">${p.pending} Pending</span>` : ''}
++      </div>
++    </a>`;
++  }).join('\n');
++
++  const html = `<!DOCTYPE html>
++<html lang="en">
++<head>
++<meta charset="UTF-8">
++<meta name="viewport" content="width=device-width, initial-scale=1.0">
++<title>Infra Status</title>
++<style>
++  * { box-sizing: border-box; margin: 0; padding: 0; }
++  body { font-family: system-ui, -apple-system, sans-serif; background: #0f1115; color: #e6e8eb; min-height: 100vh; }
++  .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
++  header { margin-bottom: 2rem; }
++  header h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
++  .subtitle { color: #9aa0a8; font-size: 0.875rem; }
++  .summary-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
++  .badge { padding: 0.25em 0.7em; border-radius: 14px; font-size: 0.78rem; font-weight: 600; line-height: 1.4; display: inline-block; }
++  .badge-good { background: #30a46c22; color: #30a46c; border: 1px solid #30a46c44; }
++  .badge-bad { background: #e5484d22; color: #e5484d; border: 1px solid #e5484d44; }
++  .badge-pending { background: #5b8def22; color: #5b8def; border: 1px solid #5b8def44; }
++  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
++  .card { background: #181b21; border-radius: 10px; padding: 1.25rem 1.5rem; border-left: 4px solid #2a2f37; box-shadow: 0 1px 2px rgba(0,0,0,.4); transition: box-shadow 0.15s, transform 0.15s; }
++  .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.35); transform: translateY(-2px); }
++  .card h2 { font-size: 1.05rem; color: #e6e8eb; margin-bottom: 0.3rem; }
++  .meta { color: #9aa0a8; font-size: 0.82rem; margin-bottom: 0.75rem; }
++  .status-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
++  .empty { color: #9aa0a8; text-align: center; padding: 3rem; }
++  .footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #2a2f37; text-align: center; }
++  .footer a { color: #5b8def; text-decoration: none; font-size: 0.875rem; }
++  .footer a:hover { text-decoration: underline; }
++</style>
++</head>
++<body>
++<div class="container">
++  <header>
++    <h1>Infra Status</h1>
++    <p class="subtitle">${count} project${count > 1 ? 's' : ''} ΓÇö updated ${latestDate}</p>
++    <div class="summary-row">
++      ${totalGood > 0 ? `<span class="badge badge-good">${totalGood} OK</span>` : ''}
++      ${totalBad > 0 ? `<span class="badge badge-bad">${totalBad} Issue${totalBad > 1 ? 's' : ''}</span>` : ''}
++      ${totalPending > 0 ? `<span class="badge badge-pending">${totalPending} Pending</span>` : ''}
++    </div>
++  </header>
++  ${projectsData.length > 0
++    ? `<div class="grid">${cardsHtml}</div>`
++    : '<p class="empty">No projects with STATE.md found.</p>'}
++  <div class="footer">
++    <a href="/reports/">View reports listing &raquo;</a>
++  </div>
++</div>
++</body>
++</html>`;
++
++  fs.writeFileSync(path.join(repoDir, 'index.html'), html);
++}
++
++module.exports = { listProjects, readStateMd, parseSections, detectLineStatus, renderSectionCard, generateStatusHtml, generateAll, generateRootIndex };
+diff --git a/src/routes/index.js b/src/routes/index.js
+index 18e7374..eb3167c 100644
+--- a/src/routes/index.js
++++ b/src/routes/index.js
+@@ -1,39 +1,8 @@
+ const express = require('express');
+-const fs = require('fs');
+-const path = require('path');
+ const router = express.Router();
+ 
+ router.get('/', (req, res) => {
+-  const index = req.app.locals.getIndex();
+-  const { project } = req.query;
+-  const reportsDir = process.env.REPORTS_DIR || '/reports';
+-
+-  let grouped = {};
+-  for (const report of index) {
+-    if (project && report.project !== project) continue;
+-    if (!grouped[report.project]) {
+-      grouped[report.project] = [];
+-    }
+-    grouped[report.project].push(report);
+-  }
+-
+-  // Check which projects have status reports
+-  const hasStatus = {};
+-  try {
+-    const projectsInDir = fs.readdirSync(reportsDir, { withFileTypes: true });
+-    for (const p of projectsInDir) {
+-      if (p.isDirectory() && fs.existsSync(path.join(reportsDir, p.name, 'status', 'report.json'))) {
+-        hasStatus[p.name] = true;
+-      }
+-    }
+-  } catch {}
+-
+-  res.render('index', {
+-    grouped,
+-    activeProject: project || null,
+-    projects: [...new Set(index.map(r => r.project))].sort(),
+-    hasStatus,
+-  });
++  res.redirect(301, '/status/');
+ });
+ 
+ module.exports = router;
+diff --git a/src/routes/reports.js b/src/routes/reports.js
+index 9002311..40f862c 100644
+--- a/src/routes/reports.js
++++ b/src/routes/reports.js
+@@ -1,14 +1,47 @@
+ const express = require('express');
+ const fs = require('fs');
++const path = require('path');
+ const router = express.Router();
+ 
++router.get('/reports', (req, res) => {
++  const index = req.app.locals.getIndex();
++  const { project } = req.query;
++  const reportsDir = process.env.REPORTS_DIR || '/reports';
++
++  let grouped = {};
++  for (const report of index) {
++    if (project && report.project !== project) continue;
++    if (!grouped[report.project]) {
++      grouped[report.project] = [];
++    }
++    grouped[report.project].push(report);
++  }
++
++  const hasStatus = {};
++  try {
++    const projectsInDir = fs.readdirSync(reportsDir, { withFileTypes: true });
++    for (const p of projectsInDir) {
++      if (p.isDirectory() && fs.existsSync(path.join(reportsDir, p.name, 'status', 'report.json'))) {
++        hasStatus[p.name] = true;
++      }
++    }
++  } catch {}
++
++  res.render('index', {
++    grouped,
++    activeProject: project || null,
++    projects: [...new Set(index.map(r => r.project))].sort(),
++    hasStatus,
++  });
++});
++
+ router.get('/:project/:slug', (req, res) => {
+   const index = req.app.locals.getIndex();
+   const report = index.find(
+     r => r.project === req.params.project && r.slug === req.params.slug
+   );
+ 
+   if (!report) {
+     return res.status(404).render('404', {
+       message: `Report "${req.params.project}/${req.params.slug}" not found`,
+     });
+diff --git a/src/views/status.ejs b/src/views/status.ejs
+index d290aee..51df4eb 100644
+--- a/src/views/status.ejs
++++ b/src/views/status.ejs
+@@ -1,43 +1,76 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+-  <meta charset="UTF-8">
+-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-  <title>System Status - Reports</title>
+-  <link rel="stylesheet" href="/style.css">
++<meta charset="UTF-8">
++<meta name="viewport" content="width=device-width, initial-scale=1.0">
++<title>Infra Status</title>
++<style>
++  * { box-sizing: border-box; margin: 0; padding: 0; }
++  body { font-family: system-ui, -apple-system, sans-serif; background: #0f1115; color: #e6e8eb; min-height: 100vh; }
++  .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
++  header { margin-bottom: 2rem; }
++  header h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
++  .subtitle { color: #9aa0a8; font-size: 0.875rem; }
++  .summary-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
++  .badge { padding: 0.25em 0.7em; border-radius: 14px; font-size: 0.78rem; font-weight: 600; line-height: 1.4; display: inline-block; }
++  .badge-good { background: #30a46c22; color: #30a46c; border: 1px solid #30a46c44; }
++  .badge-bad { background: #e5484d22; color: #e5484d; border: 1px solid #e5484d44; }
++  .badge-pending { background: #5b8def22; color: #5b8def; border: 1px solid #5b8def44; }
++  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
++  .card { background: #181b21; border-radius: 10px; box-shadow: 0 1px 2px rgba(0,0,0,.4); transition: box-shadow 0.15s, transform 0.15s; }
++  .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.35); transform: translateY(-2px); }
++  .card-header { display: block; padding: 1.25rem 1.5rem; cursor: pointer; border-left: 4px solid #2a2f37; border-radius: 10px; }
++  .card-header::-webkit-details-marker { display: none; }
++  .card-header::marker { display: none; content: ''; }
++  .card-header h2 { font-size: 1.05rem; color: #e6e8eb; margin-bottom: 0.3rem; }
++  .meta { color: #9aa0a8; font-size: 0.82rem; margin-bottom: 0.75rem; }
++  .status-row { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
++  .open-link { color: #5b8def; text-decoration: none; font-size: 0.82rem; margin-left: auto; }
++  .open-link:hover { text-decoration: underline; }
++  .card-body { padding: 0 1.5rem 1.25rem; font-size: 0.92rem; color: #9aa0a8; border-left: 4px solid transparent; border-radius: 0 0 10px 10px; }
++  .card-body ul { list-style: none; }
++  .card-body li { padding: 0.4rem 0; border-bottom: 1px solid #2a2f37; }
++  .card-body li:last-child { border-bottom: none; }
++  .card-body .dot { margin-right: 0.45rem; font-size: 0.85rem; }
++  .card-body .dot-good { color: #30a46c; font-weight: 700; }
++  .card-body .dot-bad { color: #e5484d; font-weight: 700; }
++  .card-body code { background: #2a2f37; padding: 0.12em 0.4em; border-radius: 3px; font-size: 0.9em; color: #e6e8eb; }
++  .card-body strong { color: #e6e8eb; }
++  .empty { color: #9aa0a8; text-align: center; padding: 3rem; }
++</style>
+ </head>
+ <body>
+-  <header class="header">
+-    <h1>System Status</h1>
+-    <nav class="status-nav">
+-      <a href="/" class="nav-pill">&larr; Reports</a>
+-      <span class="nav-pill nav-pill-ok"><%= overallOk %> OK</span>
+-      <% if (overallBad > 0) { %><span class="nav-pill nav-pill-issue"><%= overallBad %> Issues</span><% } %>
+-      <% if (overallPending > 0) { %><span class="nav-pill nav-pill-pending"><%= overallPending %> Pending</span><% } %>
+-    </nav>
++<div class="container">
++  <header>
++    <h1>Infra Status</h1>
++    <p class="subtitle"><%= reports.length %> project<%= reports.length !== 1 ? 's' : '' %></p>
++    <div class="summary-row">
++      <% if (overallOk > 0) { %><span class="badge badge-good"><%= overallOk %> OK</span><% } %>
++      <% if (overallBad > 0) { %><span class="badge badge-bad"><%= overallBad %> Issue<%= overallBad !== 1 ? 's' : '' %></span><% } %>
++      <% if (overallPending > 0) { %><span class="badge badge-pending"><%= overallPending %> Pending</span><% } %>
++    </div>
+   </header>
+ 
+-  <main class="content">
+-    <% if (reports.length === 0) { %>
+-      <p class="empty-state">No status reports yet. Run <code>node scripts/generate-status-report.js</code> to generate them.</p>
+-    <% } %>
++  <% if (reports.length === 0) { %>
++    <p class="empty">No status reports yet. Run <code>node scripts/generate-status-report.js</code> to generate them.</p>
++  <% } %>
+ 
++  <div class="grid">
+     <% reports.forEach(r => { %>
+-      <details class="status-card" <%= r.status.bad > 0 ? 'open' : '' %>>
+-        <summary class="status-card-header">
+-          <span class="status-card-project"><%= r.project %></span>
+-          <div class="status-card-badges">
+-            <% if (r.status.good > 0) { %><span class="badge badge-ok"><%= r.status.good %> OK</span><% } %>
+-            <% if (r.status.bad > 0) { %><span class="badge badge-issue"><%= r.status.bad %> Issue<%= r.status.bad !== 1 ? 's' : '' %></span><% } %>
++      <details class="card" <%= r.status.bad > 0 ? 'open' : '' %>>
++        <summary class="card-header" style="border-left-color: <%= r.status.bad > 0 ? '#e5484d' : r.status.pending > 0 ? '#5b8def' : '#30a46c' %>">
++          <h2><%= r.project %></h2>
++          <div class="status-row">
++            <% if (r.status.good > 0) { %><span class="badge badge-good"><%= r.status.good %> OK</span><% } %>
++            <% if (r.status.bad > 0) { %><span class="badge badge-bad"><%= r.status.bad %> Issue<%= r.status.bad !== 1 ? 's' : '' %></span><% } %>
+             <% if (r.status.pending > 0) { %><span class="badge badge-pending"><%= r.status.pending %> Pending</span><% } %>
++            <a href="/<%= r.project %>/status/" class="open-link" onclick="event.stopPropagation()">View &rarr;</a>
+           </div>
+-          <a href="/<%= r.project %>/status/" class="status-card-link" onclick="event.stopPropagation()">Open &rarr;</a>
+         </summary>
+-        <div class="status-card-body">
+-          <%- r.html %>
+-        </div>
++        <div class="card-body"><%- r.html %></div>
+       </details>
+     <% }) %>
+-  </main>
++  </div>
++</div>
+ </body>
+ </html>

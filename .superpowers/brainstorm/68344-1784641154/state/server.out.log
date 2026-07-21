@@ -1,0 +1,2 @@
+{"type":"server-started","port":64950,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:64950/?key=cb5269500f1be2d2190e22ce163ae2899ec05b2d5312eb84ed00c31cdfbfa537","screen_dir":"C:\\home\\projects\\report-server\\.superpowers\\brainstorm\\68344-1784641154\\content","state_dir":"C:\\home\\projects\\report-server\\.superpowers\\brainstorm\\68344-1784641154\\state","idle_timeout_ms":14400000}
+{"type":"server-stopped","reason":"idle timeout"}
