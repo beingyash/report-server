@@ -5,58 +5,61 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>report-server — Project Status</title>
 <style>
-  body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; background: #fff; }
-  h1 { border-bottom: 2px solid #e5e5e5; padding-bottom: 0.5rem; }
-  .meta { color: #666; font-size: 0.9rem; margin-bottom: 2rem; }
-  code { background: #f0f0f0; padding: 0.1em 0.3em; border-radius: 3px; font-size: 0.9em; }
-  pre { background: #f5f5f5; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; background: #f5f6f8; }
+  header { background: #fff; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  header h1 { font-size: 1.4rem; color: #111; margin-bottom: 0.3rem; }
+  .meta { color: #888; font-size: 0.82rem; margin-bottom: 0.75rem; }
+  .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .badge { padding: 0.25em 0.7em; border-radius: 14px; font-size: 0.78rem; font-weight: 600; line-height: 1.4; }
+  .badge-good { background: #d4edda; color: #155724; }
+  .badge-bad { background: #f8d7da; color: #721c24; }
+  .badge-pending { background: #d1ecf1; color: #0c5460; }
+
+  .card { background: #fff; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; border-left: 4px solid #ddd; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .card h2 { font-size: 1.05rem; color: #333; margin-bottom: 0.75rem; }
+  .card ul { list-style: none; }
+  .card li { padding: 0.4rem 0; font-size: 0.92rem; color: #444; border-bottom: 1px solid #f2f2f2; }
+  .card li:last-child { border-bottom: none; }
+
+  .dot { margin-right: 0.45rem; font-size: 0.85rem; }
+  .dot-good { color: #27ae60; font-weight: 700; }
+  .dot-bad { color: #e74c3c; font-weight: 700; }
+
+  .note { font-size: 0.82rem; color: #888; margin-top: 0.25rem; margin-left: 1.1rem; }
+
+  code { background: #eee; padding: 0.12em 0.4em; border-radius: 3px; font-size: 0.9em; }
+  strong { color: #222; }
+  .empty { color: #888; font-style: italic; text-align: center; padding: 2rem; }
 </style>
 </head>
 <body>
-<h1>report-server — Project Status</h1>
-<p class="meta">Last updated: 2026-07-21</p>
-<h1>Report Server — Project State</h1>
-
-<p>Update at end of every session. Verified 2026-07-21.</p>
-
-<h2>Deployed</h2>
-<ul>
-<li><strong>Chart</strong>: v0.1.2 deployed at <code>reports.yash.abysmallab.in</code></li>
-</ul>
-<ul>
-<li><strong>App image</strong>: <code>beingyash/report-server:v0.1.0</code> (chart appVersion, not same as chart version)</li>
-</ul>
-<ul>
-<li><strong>Sidecar</strong>: <code>git-sync:v4.2.1</code></li>
-</ul>
-<ul>
-<li><strong>TLS</strong>: Let's Encrypt cert issued (DNS-01 via Cloudflare), HTTPS 200 ✓</li>
-</ul>
-<ul>
-<li><strong>Helm status</strong>: deployed, revision 3</li>
-</ul>
-
-<h2>DNS</h2>
-<ul>
-<li><code>reports.yash.abysmallab.in</code> A <code>155.248.254.40</code> ✓</li>
-</ul>
-<ul>
-<li><code>yash.abysmallab.in</code> A <code>155.248.254.40</code></li>
-</ul>
-<ul>
-<li><code>*.yash.abysmallab.in</code> CNAME <code>yash.abysmallab.in</code></li>
-</ul>
-<ul>
-<li>Domain <code>abysmallab.in</code> (single-s) properly delegated to Cloudflare</li>
-</ul>
-
-<h2>Known Issues</h2>
-<ul>
-<li>Flux GitRepository for <code>report-server-chart</code> fails with <code>tls: internal error</code> — chart can't be updated via Flux</li>
-</ul>
-<ul>
-<li>Image tag <code>v0.1.0</code> is last and only tag on Docker Hub; no newer images pushed</li>
-</ul>
-
+<header>
+  <h1>report-server</h1>
+  <div class="meta">Last updated 2026-07-21</div>
+  <div class="badges"><span class="badge badge-good">2 OK</span>
+<span class="badge badge-bad">1 Issues</span>
+<span class="badge badge-pending">8 Pending</span></div>
+</header>
+<section class="card" style="border-left-color: #3498db">
+    <h2>Deployed</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> <strong>Chart</strong>: v0.1.2 deployed at <code>reports.yash.abysmallab.in</code></li>
+<li><span class="dot ">&#x25CB;</span> <strong>App image</strong>: <code>beingyash/report-server:v0.1.0</code> (chart appVersion, not same as chart version)</li>
+<li><span class="dot ">&#x25CB;</span> <strong>Sidecar</strong>: <code>git-sync:v4.2.1</code></li>
+<li><span class="dot dot-good">&#x2713;</span> <strong>TLS</strong>: Let's Encrypt cert issued (DNS-01 via Cloudflare), HTTPS 200 ✓</li>
+<li><span class="dot ">&#x25CB;</span> <strong>Helm status</strong>: deployed, revision 3</li></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
+    <h2>DNS</h2>
+    <ul><li><span class="dot dot-good">&#x2713;</span> <code>reports.yash.abysmallab.in</code> A <code>155.248.254.40</code> ✓</li>
+<li><span class="dot ">&#x25CB;</span> <code>yash.abysmallab.in</code> A <code>155.248.254.40</code></li>
+<li><span class="dot ">&#x25CB;</span> <code>*.yash.abysmallab.in</code> CNAME <code>yash.abysmallab.in</code></li>
+<li><span class="dot ">&#x25CB;</span> Domain <code>abysmallab.in</code> (single-s) properly delegated to Cloudflare</li></ul>
+  </section>
+<section class="card" style="border-left-color: #e74c3c">
+    <h2>Known Issues</h2>
+    <ul><li><span class="dot dot-bad">&#x2717;</span> Flux GitRepository for <code>report-server-chart</code> fails with <code>tls: internal error</code> — chart can't be updated via Flux</li>
+<li><span class="dot ">&#x25CB;</span> Image tag <code>v0.1.0</code> is last and only tag on Docker Hub; no newer images pushed</li></ul>
+  </section>
 </body>
 </html>

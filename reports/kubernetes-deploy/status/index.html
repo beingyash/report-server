@@ -5,132 +5,79 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>kubernetes-deploy — Project Status</title>
 <style>
-  body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; background: #fff; }
-  h1 { border-bottom: 2px solid #e5e5e5; padding-bottom: 0.5rem; }
-  .meta { color: #666; font-size: 0.9rem; margin-bottom: 2rem; }
-  code { background: #f0f0f0; padding: 0.1em 0.3em; border-radius: 3px; font-size: 0.9em; }
-  pre { background: #f5f5f5; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; background: #f5f6f8; }
+  header { background: #fff; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  header h1 { font-size: 1.4rem; color: #111; margin-bottom: 0.3rem; }
+  .meta { color: #888; font-size: 0.82rem; margin-bottom: 0.75rem; }
+  .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .badge { padding: 0.25em 0.7em; border-radius: 14px; font-size: 0.78rem; font-weight: 600; line-height: 1.4; }
+  .badge-good { background: #d4edda; color: #155724; }
+  .badge-bad { background: #f8d7da; color: #721c24; }
+  .badge-pending { background: #d1ecf1; color: #0c5460; }
+
+  .card { background: #fff; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; border-left: 4px solid #ddd; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .card h2 { font-size: 1.05rem; color: #333; margin-bottom: 0.75rem; }
+  .card ul { list-style: none; }
+  .card li { padding: 0.4rem 0; font-size: 0.92rem; color: #444; border-bottom: 1px solid #f2f2f2; }
+  .card li:last-child { border-bottom: none; }
+
+  .dot { margin-right: 0.45rem; font-size: 0.85rem; }
+  .dot-good { color: #27ae60; font-weight: 700; }
+  .dot-bad { color: #e74c3c; font-weight: 700; }
+
+  .note { font-size: 0.82rem; color: #888; margin-top: 0.25rem; margin-left: 1.1rem; }
+
+  code { background: #eee; padding: 0.12em 0.4em; border-radius: 3px; font-size: 0.9em; }
+  strong { color: #222; }
+  .empty { color: #888; font-style: italic; text-align: center; padding: 2rem; }
 </style>
 </head>
 <body>
-<h1>kubernetes-deploy — Project Status</h1>
-<p class="meta">Last updated: 2026-07-21</p>
-<h1>Kubernetes Deploy — Cluster State</h1>
-
-<p>Update at end of every session. Verified 2026-07-21.</p>
-
-<h2>Nodes</h2>
-
-<p>| Name | Role | Status | Arch | IP | Container Runtime |</p>
-<p>|---|---|---|---|---|---|</p>
-<p>| <code>marketgenie-market-genie</code> | control-plane | Ready | arm64 | 10.0.0.160 | containerd 2.2.1 |</p>
-<p>| <code>oracle-cp</code> | worker (no role label) | Ready | arm64 | 100.112.18.84 | containerd 2.2.6 |</p>
-
-<p>Control-plane restarts since last reboot (kernel update): kube-controller-manager <strong>15</strong>, kube-scheduler <strong>18</strong>, etcd/apiserver 1 each.</p>
-
-<h2>Installed Components</h2>
-
-<p>| Namespace | Component | Status |</p>
-<p>|---|---|---|</p>
-<p>| <code>kube-system</code> | coredns×2, kube-proxy, etcd, apiserver, scheduler, controller-mgr | ok |</p>
-<p>| <code>kube-system</code> | local-path-provisioner v0.0.30 | ok |</p>
-<p>| <code>kube-system</code> | metrics-server v3.13.1 (new) | ok |</p>
-<p>| <code>kube-flannel</code> | kube-flannel-ds (×2 — one per node) | ok |</p>
-<p>| <code>cert-manager</code> | controller + cainjector + webhook v1.21.0 | ok |</p>
-<p>| <code>sealed-secrets</code> | controller v0.0.30 | ok |</p>
-<p>| <code>flux-system</code> | source / kustomize / helm / image-automation / image-reflector / notification | ⚠️ broken |</p>
-<p>| <code>traefik-system</code> | traefik v3.7.6 (chart 41.0.2) | ok |</p>
-<p>| <code>pocketid</code> | pocketid v2, SQLite PVC 5Gi bound | ok |</p>
-<p>| <code>jane</code> | bridge, pwa, speech, nats×2 + headless (PVC 10Gi) | ok (old images) |</p>
-<p>| <code>default</code> | report-server + git-sync sidecar | ok |</p>
-
-<p>Helm releases: cert-manager, jane (v8, 0.1.16), local-path-provisioner, metrics-server, pocketid, report-server, traefik.</p>
-
-<h2>Running Image Versions</h2>
-
-<p>Jane pods stuck on cached Flux revision — NOT updated to 0.1.16 yet:</p>
-<ul>
-<li>bridge: <code>jane-bridge:0.1.14</code> (with <code>jane-opencode:0.1.13</code> sidecar)</li>
-</ul>
-<ul>
-<li>pwa: <code>jane-pwa:0.1.13</code></li>
-</ul>
-<ul>
-<li>speech: <code>jane-speech:0.1.13</code></li>
-</ul>
-<ul>
-<li>nats: <code>nats:2.14.2-alpine</code></li>
-</ul>
-
-<p>report-server: <code>beingyash/report-server:v0.1.0</code> + <code>git-sync:v4.2.1</code></p>
-
-<h2>Flux Status — CRITICAL</h2>
-
-<p><strong>All three GitRepositories are failing:</strong></p>
-
-<p>| GitRepository | URL | Error |</p>
-<p>|---|---|---|</p>
-<p>| <code>flux-system</code> | ssh://git@github.com/beingyash/kubernetes-deploy | ssh: handshake failed: knownhosts: key mismatch |</p>
-<p>| <code>jane-chart</code> | https://github.com/beingyash/jane.git | tls: internal error (GitHub TLS issue) |</p>
-<p>| <code>report-server-chart</code> | https://github.com/beingyash/report-server.git | tls: internal error |</p>
-
-<p><strong>Image automation works</strong> (last run 2026-07-21T09:43:09Z) — Flux detects tags and pushes to git. All image policies resolved to 0.1.16.</p>
-
-<p><strong>Kustomization uses cached artifact</strong> — last applied <code>master@sha1:93695c9</code> (latest commit before broken sync). Flux can apply cached state but can't fetch new revisions.</p>
-
-<p><strong>Why broken:</strong></p>
-<ul>
-<li><code>flux-system</code>: GitHub's SSH host key changed or known_hosts is stale → <code>ssh-keyscan github.com</code> + update secret</li>
-</ul>
-<ul>
-<li><code>jane-chart</code> / <code>report-server-chart</code>: HTTPS clone without auth hits GitHub TLS error (possibly rate limiting or IP allowlist). Need <code>bearer token</code> auth in GitRepository spec.</li>
-</ul>
-
-<h2>Known Issues</h2>
-
-<h3>LoadBalancer gap</h3>
-<ul>
-<li>Only <code>traefik</code> has LoadBalancer service (EXTERNAL-IP <code>&lt;pending&gt;</code>) — no MetalLB (bare-metal)</li>
-</ul>
-<ul>
-<li>Traffic reaches node via NodePort: HTTP <code>32580</code>, HTTPS <code>32305</code></li>
-</ul>
-<ul>
-<li>Stale <code>jane-speech-traefik</code> svc: <strong>already cleaned up</strong> ✓</li>
-</ul>
-
-<h3>Monitoring — major gap</h3>
-<ul>
-<li>metrics-server installed (node metrics) but can't reach <code>oracle-cp</code> (unknown resources)</li>
-</ul>
-<ul>
-<li>No Prometheus / Grafana / Loki / Alertmanager</li>
-</ul>
-<ul>
-<li>No ServiceMonitor / PodMonitor CRDs</li>
-</ul>
-<ul>
-<li>No log aggregation, dashboards, or alerting</li>
-</ul>
-
-<h3>Flannel + second node</h3>
-<ul>
-<li><code>oracle-cp</code> on different subnet (100.112.18.84 vs 10.0.0.160). Pod-to-pod across nodes needs Flannel overlay to be verified.</li>
-</ul>
-
-<h2>Next</h2>
-<ul>
-<li><strong>Fix Flux GitRepository</strong> — regenerate known_hosts for SSH key, add auth token for HTTPS repos</li>
-</ul>
-<ul>
-<li>Flux reconcile → Jane pods update to 0.1.16</li>
-</ul>
-<ul>
-<li>Deploy monitoring stack (multi-arch)</li>
-</ul>
-<ul>
-<li>Verify cross-node pod networking</li>
-</ul>
-
+<header>
+  <h1>kubernetes-deploy</h1>
+  <div class="meta">Last updated 2026-07-21</div>
+  <div class="badges"><span class="badge badge-good">1 OK</span>
+<span class="badge badge-bad">1 Issues</span>
+<span class="badge badge-pending">16 Pending</span></div>
+</header>
+<section class="card" style="border-left-color: #3498db">
+    <h2>Nodes</h2>
+    <ul></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
+    <h2>Installed Components</h2>
+    <ul></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
+    <h2>Running Image Versions</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> bridge: <code>jane-bridge:0.1.14</code> (with <code>jane-opencode:0.1.13</code> sidecar)</li>
+<li><span class="dot ">&#x25CB;</span> pwa: <code>jane-pwa:0.1.13</code></li>
+<li><span class="dot ">&#x25CB;</span> speech: <code>jane-speech:0.1.13</code></li>
+<li><span class="dot ">&#x25CB;</span> nats: <code>nats:2.14.2-alpine</code><p class="note">report-server: <code>beingyash/report-server:v0.1.0</code> + <code>git-sync:v4.2.1</code></p></li></ul>
+  </section>
+<section class="card" style="border-left-color: #e74c3c">
+    <h2>Flux Status — CRITICAL</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> <code>flux-system</code>: GitHub's SSH host key changed or known_hosts is stale → <code>ssh-keyscan github.com</code> + update secret</li>
+<li><span class="dot dot-bad">&#x2717;</span> <code>jane-chart</code> / <code>report-server-chart</code>: HTTPS clone without auth hits GitHub TLS error (possibly rate limiting or IP allowlist). Need <code>bearer token</code> auth in GitRepository spec.</li></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
+    <h2>Known Issues</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> Only <code>traefik</code> has LoadBalancer service (EXTERNAL-IP <code>&lt;pending&gt;</code>) — no MetalLB (bare-metal)</li>
+<li><span class="dot ">&#x25CB;</span> Traffic reaches node via NodePort: HTTP <code>32580</code>, HTTPS <code>32305</code></li>
+<li><span class="dot dot-good">&#x2713;</span> Stale <code>jane-speech-traefik</code> svc: <strong>already cleaned up</strong> ✓<p class="note">### Monitoring — major gap</p></li>
+<li><span class="dot ">&#x25CB;</span> metrics-server installed (node metrics) but can't reach <code>oracle-cp</code> (unknown resources)</li>
+<li><span class="dot ">&#x25CB;</span> No Prometheus / Grafana / Loki / Alertmanager</li>
+<li><span class="dot ">&#x25CB;</span> No ServiceMonitor / PodMonitor CRDs</li>
+<li><span class="dot ">&#x25CB;</span> No log aggregation, dashboards, or alerting<p class="note">### Flannel + second node</p></li>
+<li><span class="dot ">&#x25CB;</span> <code>oracle-cp</code> on different subnet (100.112.18.84 vs 10.0.0.160). Pod-to-pod across nodes needs Flannel overlay to be verified.</li></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
+    <h2>Next</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> <strong>Fix Flux GitRepository</strong> — regenerate known_hosts for SSH key, add auth token for HTTPS repos</li>
+<li><span class="dot ">&#x25CB;</span> Flux reconcile → Jane pods update to 0.1.16</li>
+<li><span class="dot ">&#x25CB;</span> Deploy monitoring stack (multi-arch)</li>
+<li><span class="dot ">&#x25CB;</span> Verify cross-node pod networking</li></ul>
+  </section>
 </body>
 </html>
