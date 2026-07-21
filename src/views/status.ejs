@@ -1,43 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>System Status - Reports</title>
-  <link rel="stylesheet" href="/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infra Status</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #0f1115; color: #e6e8eb; min-height: 100vh; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+  header { margin-bottom: 2rem; }
+  header h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+  .subtitle { color: #9aa0a8; font-size: 0.875rem; }
+  .summary-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+  .badge { padding: 0.25em 0.7em; border-radius: 14px; font-size: 0.78rem; font-weight: 600; line-height: 1.4; display: inline-block; }
+  .badge-good { background: #30a46c22; color: #30a46c; border: 1px solid #30a46c44; }
+  .badge-bad { background: #e5484d22; color: #e5484d; border: 1px solid #e5484d44; }
+  .badge-pending { background: #5b8def22; color: #5b8def; border: 1px solid #5b8def44; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+  .card { background: #181b21; border-radius: 10px; box-shadow: 0 1px 2px rgba(0,0,0,.4); transition: box-shadow 0.15s, transform 0.15s; }
+  .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.35); transform: translateY(-2px); }
+  .card-header { display: block; padding: 1.25rem 1.5rem; cursor: pointer; border-left: 4px solid #2a2f37; border-radius: 10px; }
+  .card-header::-webkit-details-marker { display: none; }
+  .card-header::marker { display: none; content: ''; }
+  .card-header h2 { font-size: 1.05rem; color: #e6e8eb; margin-bottom: 0.3rem; }
+  .meta { color: #9aa0a8; font-size: 0.82rem; margin-bottom: 0.75rem; }
+  .status-row { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+  .open-link { color: #5b8def; text-decoration: none; font-size: 0.82rem; margin-left: auto; }
+  .open-link:hover { text-decoration: underline; }
+  .card-body { padding: 0 1.5rem 1.25rem; font-size: 0.92rem; color: #9aa0a8; border-left: 4px solid transparent; border-radius: 0 0 10px 10px; }
+  .card-body ul { list-style: none; }
+  .card-body li { padding: 0.4rem 0; border-bottom: 1px solid #2a2f37; }
+  .card-body li:last-child { border-bottom: none; }
+  .card-body .dot { margin-right: 0.45rem; font-size: 0.85rem; }
+  .card-body .dot-good { color: #30a46c; font-weight: 700; }
+  .card-body .dot-bad { color: #e5484d; font-weight: 700; }
+  .card-body code { background: #2a2f37; padding: 0.12em 0.4em; border-radius: 3px; font-size: 0.9em; color: #e6e8eb; }
+  .card-body strong { color: #e6e8eb; }
+  .empty { color: #9aa0a8; text-align: center; padding: 3rem; }
+</style>
 </head>
 <body>
-  <header class="header">
-    <h1>System Status</h1>
-    <nav class="status-nav">
-      <a href="/" class="nav-pill">&larr; Reports</a>
-      <span class="nav-pill nav-pill-ok"><%= overallOk %> OK</span>
-      <% if (overallBad > 0) { %><span class="nav-pill nav-pill-issue"><%= overallBad %> Issues</span><% } %>
-      <% if (overallPending > 0) { %><span class="nav-pill nav-pill-pending"><%= overallPending %> Pending</span><% } %>
-    </nav>
+<div class="container">
+  <header>
+    <h1>Infra Status</h1>
+    <p class="subtitle"><%= reports.length %> project<%= reports.length !== 1 ? 's' : '' %></p>
+    <div class="summary-row">
+      <% if (overallOk > 0) { %><span class="badge badge-good"><%= overallOk %> OK</span><% } %>
+      <% if (overallBad > 0) { %><span class="badge badge-bad"><%= overallBad %> Issue<%= overallBad !== 1 ? 's' : '' %></span><% } %>
+      <% if (overallPending > 0) { %><span class="badge badge-pending"><%= overallPending %> Pending</span><% } %>
+    </div>
   </header>
 
-  <main class="content">
-    <% if (reports.length === 0) { %>
-      <p class="empty-state">No status reports yet. Run <code>node scripts/generate-status-report.js</code> to generate them.</p>
-    <% } %>
+  <% if (reports.length === 0) { %>
+    <p class="empty">No status reports yet. Run <code>node scripts/generate-status-report.js</code> to generate them.</p>
+  <% } %>
 
+  <div class="grid">
     <% reports.forEach(r => { %>
-      <details class="status-card" <%= r.status.bad > 0 ? 'open' : '' %>>
-        <summary class="status-card-header">
-          <span class="status-card-project"><%= r.project %></span>
-          <div class="status-card-badges">
-            <% if (r.status.good > 0) { %><span class="badge badge-ok"><%= r.status.good %> OK</span><% } %>
-            <% if (r.status.bad > 0) { %><span class="badge badge-issue"><%= r.status.bad %> Issue<%= r.status.bad !== 1 ? 's' : '' %></span><% } %>
+      <details class="card" <%= r.status.bad > 0 ? 'open' : '' %>>
+        <summary class="card-header" style="border-left-color: <%= r.status.bad > 0 ? '#e5484d' : r.status.pending > 0 ? '#5b8def' : '#30a46c' %>">
+          <h2><%= r.project %></h2>
+          <div class="status-row">
+            <% if (r.status.good > 0) { %><span class="badge badge-good"><%= r.status.good %> OK</span><% } %>
+            <% if (r.status.bad > 0) { %><span class="badge badge-bad"><%= r.status.bad %> Issue<%= r.status.bad !== 1 ? 's' : '' %></span><% } %>
             <% if (r.status.pending > 0) { %><span class="badge badge-pending"><%= r.status.pending %> Pending</span><% } %>
+            <a href="/<%= r.project %>/status/" class="open-link" onclick="event.stopPropagation()">View &rarr;</a>
           </div>
-          <a href="/<%= r.project %>/status/" class="status-card-link" onclick="event.stopPropagation()">Open &rarr;</a>
         </summary>
-        <div class="status-card-body">
-          <%- r.html %>
-        </div>
+        <div class="card-body"><%- r.html %></div>
       </details>
     <% }) %>
-  </main>
+  </div>
+</div>
 </body>
 </html>
