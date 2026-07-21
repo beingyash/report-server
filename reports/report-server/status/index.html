@@ -38,31 +38,36 @@
   <h1>report-server</h1>
   <div class="meta">Last updated 2026-07-21</div>
   <div class="badges"><span class="badge badge-good">3 OK</span>
-<span class="badge badge-pending">9 Pending</span></div>
+<span class="badge badge-pending">14 Pending</span></div>
 </header>
 <section class="card" style="border-left-color: #3498db">
     <h2>Deployed</h2>
     <ul><li><span class="dot ">&#x25CB;</span> <strong>Chart:</strong> v0.1.3 deployed at <code>reports.yash.abysmallab.in</code></li>
-<li><span class="dot ">&#x25CB;</span> <strong>App image:</strong> <code>beingyash/report-server:v0.1.1</code></li>
+<li><span class="dot ">&#x25CB;</span> <strong>App image:</strong> <code>beingyash/report-server:v0.1.3</code></li>
 <li><span class="dot ">&#x25CB;</span> <strong>Sidecar:</strong> <code>git-sync:v4.2.1</code></li>
 <li><span class="dot dot-good">&#x2713;</span> <strong>TLS:</strong> Let's Encrypt cert issued (DNS-01 via Cloudflare), HTTPS 200 ✓</li>
-<li><span class="dot ">&#x25CB;</span> <strong>Helm status:</strong> deployed, revision 4</li>
+<li><span class="dot ">&#x25CB;</span> <strong>Helm status:</strong> deployed, revision 7</li>
 <li><span class="dot dot-good">&#x2713;</span> <strong>Flux GitRepository:</strong> Ready ✓</li>
-<li><span class="dot dot-good">&#x2713;</span> <strong>Flux HelmRelease:</strong> Ready ✓</li></ul>
+<li><span class="dot dot-good">&#x2713;</span> <strong>Flux HelmRelease:</strong> Ready ✓</li>
+<li><span class="dot ">&#x25CB;</span> <strong>Node:</strong> Both nodes arm64</li>
+<li><span class="dot ">&#x25CB;</span> <strong>Docker:</strong> Image built and loaded into containerd on both nodes (not pushed to hub)</li></ul>
   </section>
 <section class="card" style="border-left-color: #3498db">
-    <h2>New in v0.1.3</h2>
-    <ul><li><span class="dot ">&#x25CB;</span> Global status dashboard at root <code>/</code> replaces old reports listing</li>
-<li><span class="dot ">&#x25CB;</span> Old reports listing moved to <code>/reports</code></li>
-<li><span class="dot ">&#x25CB;</span> Design tokens: dark theme, card grid, responsive layout</li></ul>
+    <h2>Features (v0.1.3)</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> <code>GET /</code> → 301 to <code>/status/</code></li>
+<li><span class="dot ">&#x25CB;</span> <code>GET /status/</code> → simplified dark theme card grid with per-project health badges</li>
+<li><span class="dot ">&#x25CB;</span> <code>GET /reports</code> → old reports listing</li>
+<li><span class="dot ">&#x25CB;</span> Generator produces <code>index.html</code> at repo root (backup, not served)</li>
+<li><span class="dot ">&#x25CB;</span> Design tokens: dark theme (#0f1115 bg, #181b21 cards, #e6e8eb text)</li></ul>
   </section>
 <section class="card" style="border-left-color: #3498db">
     <h2>Known Issues</h2>
-    <ul><li><span class="dot ">&#x25CB;</span> (none)</li></ul>
+    <ul><li><span class="dot ">&#x25CB;</span> Docker image not pushed to hub — Flux suspended to prevent revert. Need to <code>docker push</code> or set up CI.</li></ul>
   </section>
 <section class="card" style="border-left-color: #3498db">
     <h2>Next</h2>
-    <ul><li><span class="dot ">&#x25CB;</span> Verify overview dashboard renders correctly</li></ul>
+    <ul><li><span class="dot ">&#x25CB;</span> Push v0.1.3 to Docker Hub and resume Flux</li>
+<li><span class="dot ">&#x25CB;</span> Clean up obsolete <code>generateRootIndex</code> (static file not served)</li></ul>
   </section>
 </body>
 </html>
