@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B.Sc. Colleges in Jaipur Under ₹70,000</title>
+<style>
+:root {
+  --green: #16a34a; --yellow: #ca8a04; --orange: #ea580c;
+  --bg: #f8fafc; --card-bg: #fff; --text: #1e293b; --muted: #64748b;
+  --border: #e2e8f0; --badge-govt: #dbeafe; --badge-private: #fef3c7;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f172a; --card-bg: #1e293b; --text: #e2e8f0;
+    --muted: #94a3b8; --border: #334155;
+    --badge-govt: #1e3a5f; --badge-private: #3b2f1a;
+  }
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+       background: var(--bg); color: var(--text); line-height: 1.6; padding: 2rem; }
+.container { max-width: 1100px; margin: 0 auto; }
+h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+.subtitle { color: var(--muted); margin-bottom: 1.5rem; font-size: 0.9rem; }
+.filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.filter-tag { background: var(--border); padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.8rem; }
+.summary { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+.summary-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 0.5rem;
+                padding: 1rem 1.5rem; flex: 1; min-width: 140px; }
+.summary-card .num { font-size: 1.5rem; font-weight: 700; }
+.summary-card .label { font-size: 0.8rem; color: var(--muted); }
+
+.college-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 0.5rem;
+                padding: 1.5rem; margin-bottom: 1.5rem; }
+.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
+.college-name { font-size: 1.2rem; font-weight: 600; }
+.type-badge { padding: 0.2rem 0.6rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+.type-govt { background: var(--badge-govt); color: #2563eb; }
+.type-private { background: var(--badge-private); color: #d97706; }
+.fee-bar-container { margin-bottom: 1rem; }
+.fee-bar { height: 1.5rem; border-radius: 0.25rem; display: flex; align-items: center;
+           padding-left: 0.5rem; font-size: 0.8rem; color: #fff; font-weight: 600; min-width: fit-content; }
+.fee-bar.green { background: var(--green); }
+.fee-bar.yellow { background: var(--yellow); }
+.fee-bar.orange { background: var(--orange); }
+.fee-bar.gray { background: var(--muted); }
+.course-table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; font-size: 0.9rem; }
+.course-table th { text-align: left; padding: 0.5rem; border-bottom: 2px solid var(--border);
+                   color: var(--muted); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; }
+.course-table td { padding: 0.5rem; border-bottom: 1px solid var(--border); }
+.course-table tr:last-child td { border-bottom: none; }
+.accred-badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 0.25rem;
+                background: var(--border); font-size: 0.75rem; margin-right: 0.25rem; }
+.meta-grid { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.85rem; color: var(--muted); }
+.meta-item { display: flex; align-items: center; gap: 0.25rem; }
+
+.comp-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 2rem; }
+.comp-table th { text-align: left; padding: 0.5rem; border-bottom: 2px solid var(--border);
+                  color: var(--muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
+.comp-table td { padding: 0.5rem; border-bottom: 1px solid var(--border); }
+.comp-table tr:hover td { background: rgba(0,0,0,0.02); }
+
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border);
+         font-size: 0.75rem; color: var(--muted); }
+
+@media print {
+  body { padding: 0; }
+  .college-card { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>B.Sc. Colleges in Jaipur Under ₹70,000</h1>
+  <p class="subtitle">Generated 22 July 2026 &middot; Data as of 2026-07-22</p>
+
+  <div class="filters">
+    <span class="filter-tag">Fee ≤ ₹70,000</span>
+<span class="filter-tag">Jaipur, Rajasthan</span>
+<span class="filter-tag">B.Sc.</span>
+  </div>
+
+  <div class="summary">
+    <div class="summary-card">
+      <div class="num">9</div>
+      <div class="label">Colleges</div>
+    </div>
+    <div class="summary-card">
+      <div class="num">35</div>
+      <div class="label">B.Sc. Programs</div>
+    </div>
+    <div class="summary-card">
+      <div class="num">₹10,000-₹70,000</div>
+      <div class="label">Fee Range (₹/yr)</div>
+    </div>
+    <div class="summary-card">
+      <div class="num">7 / 2</div>
+      <div class="label">Govt / Private</div>
+    </div>
+  </div>
+
+  
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">University of Rajasthan</span>
+          <a href="https://univraj.org" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-govt">government</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar green" style="width:17%">
+          ₹12,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Sc. Physics</td>
+        <td>3 yrs</td>
+        <td>₹12,000</td>
+        <td>12th PCM 50%</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Chemistry</td>
+        <td>3 yrs</td>
+        <td>₹12,000</td>
+        <td>12th PCM/PCB 50%</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Mathematics</td>
+        <td>3 yrs</td>
+        <td>₹12,000</td>
+        <td>12th PCM 50%</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Botany</td>
+        <td>3 yrs</td>
+        <td>₹12,000</td>
+        <td>12th PCB 50%</td>
+        <td>60</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Zoology</td>
+        <td>3 yrs</td>
+        <td>₹12,000</td>
+        <td>12th PCB 50%</td>
+        <td>60</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Biotechnology</td>
+        <td>3 yrs</td>
+        <td>₹12,000</td>
+        <td>12th PCB 50%</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item"><span class="accred-badge">NAAC: A+</span><span class="accred-badge">NIRF_RANK: 65</span><span class="accred-badge">RECOGNITION: UGC</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,50,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys, Wipro</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">S.S. Jain Subodh PG College</span>
+          <a href="https://subodhpgcollege.com" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-govt">government</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar green" style="width:21%">
+          ₹15,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Sc. Physics</td>
+        <td>3 yrs</td>
+        <td>₹15,000</td>
+        <td>12th PCM 48%</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Chemistry</td>
+        <td>3 yrs</td>
+        <td>₹15,000</td>
+        <td>12th PCM/PCB 48%</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Mathematics</td>
+        <td>3 yrs</td>
+        <td>₹15,000</td>
+        <td>12th PCM 48%</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Computer Science</td>
+        <td>3 yrs</td>
+        <td>₹18,000</td>
+        <td>12th PCM 50%</td>
+        <td>60</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Botany</td>
+        <td>3 yrs</td>
+        <td>₹15,000</td>
+        <td>12th PCB 48%</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item"><span class="accred-badge">NAAC: A</span><span class="accred-badge">RECOGNITION: UGC</span></div>
+        <div class="meta-item"><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span></div>
+        <div class="meta-item">Avg Package: ₹3,00,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">St. Xavier's College</span>
+          <a href="https://stxaviersjaipur.org" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-govt">government</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar green" style="width:26%">
+          ₹18,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Sc. Computer Science</td>
+        <td>3 yrs</td>
+        <td>₹20,000</td>
+        <td>12th PCM 50%</td>
+        <td>60</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Physics</td>
+        <td>3 yrs</td>
+        <td>₹18,000</td>
+        <td>12th PCM 50%</td>
+        <td>60</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Chemistry</td>
+        <td>3 yrs</td>
+        <td>₹18,000</td>
+        <td>12th PCM/PCB 50%</td>
+        <td>60</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Mathematics</td>
+        <td>3 yrs</td>
+        <td>₹18,000</td>
+        <td>12th PCM 50%</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item"><span class="accred-badge">NAAC: A</span><span class="accred-badge">RECOGNITION: UGC</span></div>
+        <div class="meta-item"><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹2,80,000</div>
+        <div class="meta-item">Recruiters: TCS</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Kanoria PG Mahila Mahavidyalaya</span>
+          <a href="https://kanoriacollege.com" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-govt">government</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar green" style="width:17%">
+          ₹12,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Sc. Home Science</td>
+        <td>3 yrs</td>
+        <td>₹12,000</td>
+        <td>12th 45%</td>
+        <td>60</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Computer Science</td>
+        <td>3 yrs</td>
+        <td>₹15,000</td>
+        <td>12th PCM 50%</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item"><span class="accred-badge">NAAC: B+</span><span class="accred-badge">RECOGNITION: UGC</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span></div>
+        <div class="meta-item">Placement data N/A</div>
+        
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Maharani's College</span>
+          <a href="https://maharanicollegejaipur.com" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-govt">government</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar green" style="width:14%">
+          ₹10,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Sc. Physics</td>
+        <td>3 yrs</td>
+        <td>₹10,000</td>
+        <td>12th PCM 48%</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Chemistry</td>
+        <td>3 yrs</td>
+        <td>₹10,000</td>
+        <td>12th PCM/PCB 48%</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Mathematics</td>
+        <td>3 yrs</td>
+        <td>₹10,000</td>
+        <td>12th PCM 48%</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Botany</td>
+        <td>3 yrs</td>
+        <td>₹10,000</td>
+        <td>12th PCB 48%</td>
+        <td>60</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Zoology</td>
+        <td>3 yrs</td>
+        <td>₹10,000</td>
+        <td>12th PCB 48%</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item"><span class="accred-badge">NAAC: A</span><span class="accred-badge">RECOGNITION: UGC</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span></div>
+        <div class="meta-item">Avg Package: ₹2,50,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Maharaja College</span>
+          <a href="https://maharajacollegejaipur.com" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-govt">government</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar green" style="width:14%">
+          ₹10,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Sc. Physics</td>
+        <td>3 yrs</td>
+        <td>₹10,000</td>
+        <td>12th PCM 48%</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Chemistry</td>
+        <td>3 yrs</td>
+        <td>₹10,000</td>
+        <td>12th PCM/PCB 48%</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Mathematics</td>
+        <td>3 yrs</td>
+        <td>₹10,000</td>
+        <td>12th PCM 48%</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Computer Science</td>
+        <td>3 yrs</td>
+        <td>₹12,000</td>
+        <td>12th PCM 50%</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item"><span class="accred-badge">NAAC: B++</span><span class="accred-badge">RECOGNITION: UGC</span></div>
+        <div class="meta-item"><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span></div>
+        <div class="meta-item">Avg Package: ₹2,80,000</div>
+        <div class="meta-item">Recruiters: TCS</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">S.D. College</span>
+          <a href="https://sdcollegejaipur.ac.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-govt">government</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar green" style="width:21%">
+          ₹15,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Sc. Physics</td>
+        <td>3 yrs</td>
+        <td>₹15,000</td>
+        <td>12th PCM 48%</td>
+        <td>60</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Chemistry</td>
+        <td>3 yrs</td>
+        <td>₹15,000</td>
+        <td>12th PCM/PCB 48%</td>
+        <td>60</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Mathematics</td>
+        <td>3 yrs</td>
+        <td>₹15,000</td>
+        <td>12th PCM 48%</td>
+        <td>60</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Computer Science</td>
+        <td>3 yrs</td>
+        <td>₹18,000</td>
+        <td>12th PCM 50%</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item"><span class="accred-badge">NAAC: A</span><span class="accred-badge">RECOGNITION: UGC</span></div>
+        <div class="meta-item"><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,00,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">JECRC University</span>
+          <a href="https://jecrcuniversity.edu.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:93%">
+          ₹65,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Sc. Computer Science</td>
+        <td>3 yrs</td>
+        <td>₹65,000</td>
+        <td>12th PCM 50%</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Information Technology</td>
+        <td>3 yrs</td>
+        <td>₹65,000</td>
+        <td>12th PCM 50%</td>
+        <td>60</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Biotechnology</td>
+        <td>3 yrs</td>
+        <td>₹65,000</td>
+        <td>12th PCB 50%</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item"><span class="accred-badge">NAAC: A</span><span class="accred-badge">RECOGNITION: UGC</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span><span class="accred-badge">cafeteria</span></div>
+        <div class="meta-item">Avg Package: ₹4,50,000</div>
+        <div class="meta-item">Recruiters: Amazon, Microsoft, TCS</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Poornima University</span>
+          <a href="https://poornima.edu.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:100%">
+          ₹70,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Sc. Computer Science</td>
+        <td>3 yrs</td>
+        <td>₹70,000</td>
+        <td>12th PCM 50%</td>
+        <td>60</td>
+      </tr>
+    
+      <tr>
+        <td>B.Sc. Information Technology</td>
+        <td>3 yrs</td>
+        <td>₹70,000</td>
+        <td>12th PCM 50%</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item"><span class="accred-badge">NAAC: B+</span><span class="accred-badge">RECOGNITION: UGC</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹4,00,000</div>
+        <div class="meta-item">Recruiters: Infosys, TCS, Wipro</div>
+      </div>
+    </div>
+
+  
+    <h2 style="margin-top:2rem;margin-bottom:1rem;">Comparison</h2>
+    <table class="comp-table">
+      <thead><tr><th>College</th><th>Min Fee</th><th>NAAC</th><th>Avg Package</th><th>Courses</th></tr></thead>
+      <tbody><tr>
+      <td>University of Rajasthan</td>
+      <td>₹12,000</td>
+      <td>A+</td>
+      <td>₹3,50,000</td>
+      <td>B.Sc. Physics, B.Sc. Chemistry, B.Sc. Mathematics, B.Sc. Botany, B.Sc. Zoology, B.Sc. Biotechnology</td>
+    </tr>
+<tr>
+      <td>S.S. Jain Subodh PG College</td>
+      <td>₹15,000</td>
+      <td>A</td>
+      <td>₹3,00,000</td>
+      <td>B.Sc. Physics, B.Sc. Chemistry, B.Sc. Mathematics, B.Sc. Computer Science, B.Sc. Botany</td>
+    </tr>
+<tr>
+      <td>St. Xavier's College</td>
+      <td>₹18,000</td>
+      <td>A</td>
+      <td>₹2,80,000</td>
+      <td>B.Sc. Computer Science, B.Sc. Physics, B.Sc. Chemistry, B.Sc. Mathematics</td>
+    </tr>
+<tr>
+      <td>Kanoria PG Mahila Mahavidyalaya</td>
+      <td>₹12,000</td>
+      <td>B+</td>
+      <td>—</td>
+      <td>B.Sc. Home Science, B.Sc. Computer Science</td>
+    </tr>
+<tr>
+      <td>Maharani's College</td>
+      <td>₹10,000</td>
+      <td>A</td>
+      <td>₹2,50,000</td>
+      <td>B.Sc. Physics, B.Sc. Chemistry, B.Sc. Mathematics, B.Sc. Botany, B.Sc. Zoology</td>
+    </tr>
+<tr>
+      <td>Maharaja College</td>
+      <td>₹10,000</td>
+      <td>B++</td>
+      <td>₹2,80,000</td>
+      <td>B.Sc. Physics, B.Sc. Chemistry, B.Sc. Mathematics, B.Sc. Computer Science</td>
+    </tr>
+<tr>
+      <td>S.D. College</td>
+      <td>₹15,000</td>
+      <td>A</td>
+      <td>₹3,00,000</td>
+      <td>B.Sc. Physics, B.Sc. Chemistry, B.Sc. Mathematics, B.Sc. Computer Science</td>
+    </tr>
+<tr>
+      <td>JECRC University</td>
+      <td>₹65,000</td>
+      <td>A</td>
+      <td>₹4,50,000</td>
+      <td>B.Sc. Computer Science, B.Sc. Information Technology, B.Sc. Biotechnology</td>
+    </tr>
+<tr>
+      <td>Poornima University</td>
+      <td>₹70,000</td>
+      <td>B+</td>
+      <td>₹4,00,000</td>
+      <td>B.Sc. Computer Science, B.Sc. Information Technology</td>
+    </tr></tbody>
+    </table>
+
+  <footer>
+    <p>Data sourced from college websites and Rajasthan University affiliation lists. Verify fees and eligibility with the college before applying. Report generated by <strong>Counselor</strong>.</p>
+    <p>Report ID: cslr-mrw2p9lt-7e3443</p>
+  </footer>
+</div>
+</body>
+</html>
