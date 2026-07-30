@@ -11,7 +11,7 @@ Update at end of every session. Verified 2026-07-21.
 - **Flux GitRepository:** Ready ✓
 - **Flux HelmRelease:** Ready ✓
 - **Node:** Both nodes arm64
-- **Docker:** Image built and loaded into containerd on both nodes (not pushed to hub)
+- **Docker:** Multi-arch image (amd64+arm64) pushed to Docker Hub as `beingyash/report-server:v0.1.3`
 
 ## Features (v0.1.3)
 - `GET /` → 301 to `/status/`
@@ -21,8 +21,8 @@ Update at end of every session. Verified 2026-07-21.
 - Design tokens: dark theme (#0f1115 bg, #181b21 cards, #e6e8eb text)
 
 ## Known Issues
-- Docker image not pushed to hub — Flux suspended to prevent revert. Need to `docker push` or set up CI.
+- None
 
 ## Next
-1. Push v0.1.3 to Docker Hub and resume Flux
-2. Clean up obsolete `generateRootIndex` (static file not served)
+1. Clean up obsolete `generateRootIndex` (static file not served)
+2. Set up CI pipeline for automated builds
