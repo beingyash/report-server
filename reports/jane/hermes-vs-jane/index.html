@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hermes vs Jane: Would Hermes Alone Have Sufficed?</title>
+<style>
+  :root {
+    --bg: #0f1117; --panel: #171a23; --panel2: #1d2130;
+    --ink: #e6e8ee; --muted: #9aa3b5; --line: #2a2f3f;
+    --accent: #7aa2f7; --good: #9ece6a; --warn: #e0af68; --bad: #f7768e;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.65 "Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { font-size: 30px; line-height: 1.25; margin: 0 0 6px; }
+  h2 { font-size: 22px; margin: 44px 0 12px; padding-bottom: 6px;
+    border-bottom: 1px solid var(--line); color: var(--accent); }
+  h3 { font-size: 17px; margin: 26px 0 8px; }
+  p { margin: 10px 0; }
+  .sub { color: var(--muted); font-size: 14px; margin-bottom: 26px; }
+  .verdict { background: linear-gradient(135deg,#1a2332,#17202a);
+    border: 1px solid #2c3d55; border-left: 4px solid var(--accent);
+    border-radius: 10px; padding: 18px 22px; margin: 22px 0; }
+  .verdict h3 { margin-top: 0; }
+  .verdict p { margin: 8px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 14px 0 20px; font-size: 14.5px; }
+  th, td { text-align: left; padding: 9px 12px; border: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--panel2); color: var(--accent); font-weight: 600; }
+  tr:nth-child(even) td { background: #14161f; }
+  code { background: #232838; padding: 1px 6px; border-radius: 4px;
+    font: 13px Consolas, monospace; color: #b4befe; }
+  .good { color: var(--good); font-weight: 600; }
+  .warn { color: var(--warn); font-weight: 600; }
+  .bad { color: var(--bad); font-weight: 600; }
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 20px;
+    font-size: 13px; font-weight: 600; }
+  .pill.yes { background: #22301f; color: var(--good); border: 1px solid #3c4f2f; }
+  .pill.no  { background: #331f23; color: var(--bad);  border: 1px solid #52303a; }
+  .pill.partial { background: #332a1d; color: var(--warn); border: 1px solid #52401f; }
+  blockquote { margin: 14px 0; padding: 10px 16px; border-left: 3px solid var(--line);
+    background: var(--panel); color: var(--muted); border-radius: 0 8px 8px 0; }
+  ul { margin: 8px 0 16px; padding-left: 22px; }
+  li { margin: 5px 0; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+  .card { background: var(--panel); border: 1px solid var(--line);
+    border-radius: 10px; padding: 16px 18px; }
+  .card h4 { margin: 0 0 8px; font-size: 15px; }
+  .foot { margin-top: 50px; padding-top: 14px; border-top: 1px solid var(--line);
+    color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Hermes vs Jane: Would Hermes Alone Have Sufficed?</h1>
+<p class="sub">Critical technical analysis of building a cluster-native Jarvis/Friday from scratch (Jane) vs deploying Hermes Agent alone in a pod. Project: <code>jane</code> &middot; 2026-08-03</p>
+
+<div class="verdict">
+<h3>TL;DR verdict</h3>
+<p><strong>Partial yes, with sharp separation.</strong> If the goal is <em>agentic devops + software development</em> &mdash; an assistant that can execute on the cluster, write code, run pipelines &mdash; a bare Hermes pod would have delivered roughly <strong>85&ndash;90% of the value</strong> with a fraction of the build effort. Jane's <em>custom agent layer</em> (turn orchestrator, dispatch handler, pipeline executor, progress manager, six workers, personality engine) was genuinely redundant: the project's own rearchitecture specs deleted ~2,000 lines of it the moment Hermes arrived.</p>
+<p>But if the goal includes the <strong>Friday experience</strong> &mdash; live voice conversation, wake word, a web UI, identity and permission tiers &mdash; Hermes alone would <em>not</em> have been enough. Hermes ships zero voice stack, no browser UI, no multi-user auth, and no per-tier permission model. Those are real gaps, and Jane correctly owns them.</p>
+<p><strong>What was wasted:</strong> building the agent brain by hand. <strong>What was worth building:</strong> voice pipeline, PWA, PocketID auth + permission tiers, MCP tool server. <strong>What was arguably over-built for a single-user home lab:</strong> NATS as a central event bus, six background workers, a multi-runtime adapter registry, and a custom personality engine &mdash; all now replaced or superseded by Hermes-native features.</p>
+</div>
+
+<h2>1. The question, stated precisely</h2>
+<p>Counterfactual: instead of building the Jane stack (bridge, speech service, PWA, Helm chart, guardians, NATS), would deploying <code>hermes-agent</code> (Nous Research, v0.19.0) as a single pod have achieved:</p>
+<ul>
+<li>A Jarvis/Friday-style assistant living in the Kubernetes cluster</li>
+<li>Complete &ldquo;execute anything&rdquo; control over the cluster</li>
+<li>Software development driven through opencode</li>
+<li>End-to-end devops (git &rarr; CI &rarr; deploy)</li>
+</ul>
+<p>This is not hypothetical: Jane is <em>already</em> mid-migration to exactly this conclusion. Since 2026-07-25, the bridge has been re-architected so Hermes is the brain and the bridge is a thin gateway (<code>config.ts</code>: <code>primary: "hermes"</code>; <code>hermes-adapter.ts</code> calls the Hermes runs API; <code>hermes gateway run</code> on :8642 is the deployed brain). The report below evaluates the counterfactual as if that decision had been made <em>first</em>, and separates what Hermes natively covers from what Jane genuinely had to add.</p>
+
+<h2>2. What Hermes actually provides out of the box</h2>
+<p>Evidence base: the repo's own deployment (<code>deploy/hermes/Dockerfile</code> pins <code>hermes-agent==0.19.0</code>; <code>entrypoint.sh</code> runs <code>hermes gateway run</code>, installs a mem0 memory-provider plugin, copies a skill, and creates a daily cron) plus the 2026-07-30 &ldquo;Hermes as Brain&rdquo; spec, which documented the native surface after discovery.</p>
+
+<table>
+<tr><th>Native Hermes capability</th><th>What it covers</th><th>Jane equivalent (before rearchitecture)</th></tr>
+<tr><td>Agent loop (multi-turn, tool calling, subagents, reasoning)</td><td>Full orchestration engine</td><td><code>turn.ts</code> TurnOrchestrator + DispatchHandler + PipelineExecutor</td></tr>
+<tr><td>70+ tools: file, terminal, git, web, code, vision, document</td><td>&ldquo;Execute anything&rdquo; at the OS level</td><td>Custom <code>tool-registry.ts</code> + capabilities</td></tr>
+<tr><td>MCP <em>client</em></td><td>Discovers and calls any MCP server (kubectl, CI, home tools)</td><td>Custom tool dispatch</td></tr>
+<tr><td>Skills system (autonomous creation + self-improvement)</td><td>Reusable, versionable prompt+tool bundles</td><td>Planned from scratch (Plan B)</td></tr>
+<tr><td>Cron scheduler</td><td>Scheduled autonomous jobs</td><td>Research/proactive workers</td></tr>
+<tr><td>Memory: SQLite FTS5 sessions + pluggable memory provider</td><td>Conversation history + long-term memory (mem0 plugin used here)</td><td>6 workers (memory-writer, consolidation, backup, research, proactive)</td></tr>
+<tr><td>Messaging gateway: 20+ platforms (Telegram, Discord, Slack, Signal, WhatsApp)</td><td>Chat access with zero UI code</td><td>None &mdash; Jane has no messaging integration</td></tr>
+<tr><td>Approval system (<code>approval.py</code>)</td><td>Human gate on dangerous commands</td><td>Custom permission tiers (readonly/sandbox/devops/root)</td></tr>
+<tr><td>API server + OpenAI-compatible proxy</td><td>Programmatic access, model switching at runtime</td><td>opencode-client / pi-adapter / runtime-registry</td></tr>
+<tr><td>Multi-provider model routing</td><td>opencode-go, openrouter, copilot, custom vLLM, /model switch</td><td>Hard-wired opencode sidecar</td></tr>
+<tr><td>SOUL.md personality + /personality command</td><td>Stable identity + evolving character</td><td>Custom <code>personality/</code> engine</td></tr>
+<tr><td>Built-in backup, session compression, webhooks</td><td>Ops hygiene</td><td>backup-worker (custom)</td></tr>
+</table>
+
+<p>Two of these matter enormously for the counterfactual:</p>
+<ul>
+<li><strong>Terminal + git + file tools mean every CLI is reachable.</strong> Mount a kubeconfig, install <code>kubectl</code>/<code>helm</code>/<code>gh</code> in the image, and the agent can do full cluster ops and end-to-end devops with zero custom orchestration code. This is the entire &ldquo;execute anything on the cluster&rdquo; story, and it exists natively.</li>
+<li><strong>opencode is a first-class model provider.</strong> &ldquo;Software development via opencode&rdquo; becomes a config line (<code>provider: opencode-go</code>), not an adapter you write. Jane built <code>opencode-client.ts</code>; Hermes absorbed that job.</li>
+</ul>
+
+<h2>3. What Jane adds on top (and why each exists)</h2>
+<div class="grid">
+<div class="card"><h4>Voice pipeline &mdash; <span class="pill no">NOT in Hermes</span></h4>
+<p>STT (faster-whisper) + TTS (Piper) in <code>speech/</code>, wired through <code>speech-client.ts</code>. Hermes' messaging platforms have voice notes at best; none give a real-time voice loop with streaming TTS mid-response. A Jarvis/Friday by definition needs this. Non-negotiable for the vision; Hermes alone fails it.</p></div>
+<div class="card"><h4>PWA (browser UI) &mdash; <span class="pill no">NOT in Hermes</span></h4>
+<p>React + MUI client: mic capture, wake word, PTT, chat store, tool-progress cards, approval dialogs. Hermes has no web UI &mdash; CLI, API, and messaging only. If the assistant is a <em>companion app</em> rather than a Telegram bot, this is a real build.</p></div>
+<div class="card"><h4>PocketID OIDC auth + 4 permission tiers &mdash; <span class="pill partial">partially in Hermes</span></h4>
+<p>Hermes approval is binary (approve/deny a flagged command). Jane maps identity (JWT sub) to tiers (readonly &rarr; sandbox &rarr; devops &rarr; root) enforced at the WS layer <em>and</em> in the MCP tool server. For a home cluster where &ldquo;full devops&rdquo; means root-equivalent, tiered auth is a genuine safety addition, not gold-plating.</p></div>
+<div class="card"><h4>MCP <em>server</em> for Jane tools &mdash; <span class="pill partial">gateway needed</span></h4>
+<p>41 tools (B-code, git, time, monitoring, vision, document, learning, context, Vikunja, smart home, email, calendar, MQTT) exposed on bridge :3002. Hermes is an MCP <em>client</em>; the server side for custom capabilities is always yours to build &mdash; either as a Python Hermes plugin or an MCP server (Bridge chose TS).</p></div>
+<div class="card"><h4>Guardians (4 actors) + autonomous safety &mdash; <span class="pill partial">replicable in Hermes</span></h4>
+<p>Speech/bridge/infra/identity guardians watch and self-heal; <code>autonomous-safety.ts</code> adds dedup, rate limits, concurrency caps, circuit breakers. Hermes cron + webhooks + skills could approximate the <em>scheduling</em>, but the guardrail logic is custom work either way.</p></div>
+<div class="card"><h4>NATS event bus (10 streams) &mdash; <span class="pill partial">likely over-built</span></h4>
+<p>Decouples bridge &harr; speech events. Useful infra learning; for a single-user assistant it adds a moving part that Hermes cron/webhooks largely replace. The 2026-07-30 spec itself narrows NATS' role to speech events and consolidation.</p></div>
+</div>
+
+<h2>4. Answer per use case</h2>
+
+<table>
+<tr><th>Use case</th><th>Hermes alone sufficient?</th><th>Reason</th></tr>
+<tr><td>Software development via opencode</td><td><span class="pill yes">YES</span></td><td>opencode-go is a native Hermes provider; file/git/terminal tools cover the dev loop.</td></tr>
+<tr><td>End-to-end devops (git &rarr; CI &rarr; deploy)</td><td><span class="pill yes">YES</span></td><td>Terminal tool + mounted kubeconfig + git/gh/helm in image = full pipeline. Approval system gates destructive steps.</td></tr>
+<tr><td>&ldquo;Execute anything&rdquo; on the cluster</td><td><span class="pill yes">YES*</span></td><td>Terminal + MCP client reach any CLI. *Requires a guardrail layer (permissions/approval) you must still design; see risks.</td></tr>
+<tr><td>Jarvis/Friday voice assistant</td><td><span class="pill no">NO</span></td><td>No STT/TTS, no real-time voice loop, no wake word, no streaming TTS in a browser.</td></tr>
+<tr><td>Companion web app (UI, approval dialogs, tool progress)</td><td><span class="pill no">NO</span></td><td>No browser client ships with Hermes; messaging gateway is the only chat UX.</td></tr>
+<tr><td>Multi-user identity + tiered permissions</td><td><span class="pill partial">PARTIAL</span></td><td>Approval exists; user identity, tiers, and per-tool enforcement do not.</td></tr>
+<tr><td>Broadened reach (Telegram/Discord/Slack/Signal)</td><td><span class="pill yes">YES &mdash; and MORE</span></td><td>20+ platforms natively. Jane has none; &ldquo;more&rdquo; here is Hermes winning.</td></tr>
+</table>
+
+<p class="sub">*On the autonomy axis Hermes delivers <em>more</em> than the original Jane agent layer: self-improving skills, subagents, built-in backup, runtime model switching, multi-platform reach. The Jane-side wins are voice, UI, and authz &mdash; not agent mechanics.</p>
+
+<h2>5. Aspect-by-aspect critical analysis</h2>
+
+<h3>5.1 Capabilities</h3>
+<p>Hermes' breadth (70+ tools, MCP client, skills, cron, memory, messaging) covers nearly everything Jane planned under Plans A/B &mdash; the 2026-07-30 spec marks most Plan A/B tasks SUPERSEDED. The honest read: Jane was building, from scratch, an agent platform that already existed and was more mature (17k commits). The capabilities Jane kept that Hermes lacks are exactly the physical/experiential ones: voice, browser UI, and a tiered authz boundary around infrastructure control.</p>
+
+<h3>5.2 Effort and complexity</h3>
+<p>The strongest evidence: the rearchitecture spec (&ldquo;~2000 lines removed, ~100 lines added&rdquo;) deleted <code>turn.ts</code>, <code>dispatch-handler.ts</code>, <code>pipeline-executor.ts</code>, <code>progress-manager.ts</code>, <code>opencode-client.ts</code>, <code>pi-adapter.ts</code>, <code>personality/</code>, and all six workers. That is the exact surface the user asked &ldquo;would Hermes have covered?&rdquo; &mdash; and the project answered yes by deleting it. <span class="bad">The wasted-build cost was real: those files took days each, and their tests now ship in git history only.</span></p>
+<p>Conversely, the pieces that survived rearchitecture (WS server, speech client, auth, permissions, guardians, capabilities) are precisely the ones Hermes could not supply. The effort split was not misallocated <em>overall</em>; it was misallocated <em>in the agent layer</em>.</p>
+
+<h3>5.3 Safety (the strongest argument for Jane's layers)</h3>
+<p>Complete cluster control means a single hallucinated <code>kubectl delete</code> or unguarded <code>git push --force</code> can take down production. Jane's mitigation stack:</p>
+<ul>
+<li>Tiered auth (readonly/sandbox/devops/root) mapped from PocketID identity, enforced at WS <em>and</em> MCP tool layer</li>
+<li>Autonomous loop safety: dedup by event ID, rate limit (5/min/rule), concurrency cap (3), circuit breaker (3 failures &rarr; 5min cool-off)</li>
+<li>NATS <code>autonomous.audit</code> decision trace for forensics</li>
+</ul>
+<p>Hermes' <code>approval.py</code> is a per-command human gate &mdash; good, but binary and single-user. The 2026-07-30 plan-critique flagged exactly these gaps (git without safety gates, autonomous infinite loops, no cost control). <strong>Bottom line: a Hermes-only deployment is viable only if you add an authz/guardrail layer on top.</strong> That is not &ldquo;building Jane&rdquo;; it is a small, well-scoped addition.</p>
+
+<h3>5.4 Ops and maintenance</h3>
+<ul>
+<li><span class="warn">Image weight:</span> Hermes is Python &mdash; ~2&ndash;5GB vs Node ~200MB (noted in spec). Separate deployment with resource limits required.</li>
+<li><span class="warn">SQLite single-writer</span> &rarr; single replica (same constraint as PocketID). Acceptable for one user; rules out HA without redesign.</li>
+<li><span class="warn">Upstream churn:</span> pin <code>hermes-agent==0.19.0</code>; test upgrades. MIT but fast-moving.</li>
+<li><span class="good">Logging fix is trivial:</span> symlink <code>$HERMES_HOME/logs</code> &rarr; stdout; Loki picks it up.</li>
+<li><span class="good">Config-as-code:</span> skills, cron, and SOUL.md are files on a PVC / in the image &mdash; GitOps-friendly.</li>
+<li><span class="good">Fewer components to run:</span> Hermes-only replaces ~6 worker processes and a runtime registry with one pod.</li>
+</ul>
+
+<h3>5.5 Cost</h3>
+<p>Hermes-only eliminates: bridge agent-layer code, 6 workers, personality engine, multi-runtime adapters &mdash; ongoing maintenance and test burden. It keeps: model API costs (unchanged), storage (SQLite on PVC + mem0). The 2026-07-30 spec adds a needed cost control (MAX_LLM_CALLS_PER_HOUR) because autonomy multiplies LLM calls &mdash; a gap Jane had flagged but not yet closed. So Hermes-only is <em>cheaper to build and run</em>, but requires one new budget guard.</p>
+
+<h3>5.6 Extensibility</h3>
+<p>Hermes wins on breadth (MCP client, skills, provider routing) but constrains you to its plugin API (Python) and its session/storage model. Jane's TS MCP server keeps custom tools in one codebase with type safety and the tier check inline &mdash; a cleaner extension path for Jane-specific integrations (Vikunja, smart home, MQTT, calendar). For a home-lab with bespoke tools, a thin MCP gateway is still the right pattern; it just doesn't need to be 2,000 lines of orchestration.</p>
+
+<h3>5.7 Learning value (the honest counterweight)</h3>
+<p>Building Jane the long way produced durable platform assets: the self-hosted stack (mem0 server + plugin, PocketID, Flux + Helm chart, CI multi-arch pipeline, skills for patrick-jane-scholar), plus hard-won cluster knowledge (Flannel/CoreDNS, cert-manager token scoping, SQLite storage-class rules) that the infra context now codifies. None of that comes from installing <code>hermes-agent</code>. <span class="warn">So &ldquo;should have just done Hermes&rdquo; is correct for the <em>agent</em>, not for the <em>platform education</em>.</span> The economically rational path was: Hermes pod day 1 for the brain, invest the saved effort in the voice/UI/auth layers and the self-hosting platform &mdash; not in re-deriving an agent loop.</p>
+
+<h2>6. What the project already proved</h2>
+<blockquote>
+&ldquo;Hermes Agent (Nous Research) is a mature self-improving agent framework... Jane and Hermes are complementary, not competitive.&rdquo; &mdash; 2026-07-25 rearchitecture spec<br>
+&ldquo;This spec pivots the architecture: <strong>Hermes becomes the brain, Bridge becomes the gateway.</strong>&rdquo; &mdash; 2026-07-30 &ldquo;Hermes as Brain&rdquo; spec
+</blockquote>
+<p>Two specs, one conclusion, already implemented: deleted custom agent layer, <code>AGENT_PRIMARY=hermes</code>, <code>hermes-adapter.ts</code> driving the runs API, mem0 provider plugin, patrick-jane-scholar skill + daily cron, MCP server on bridge :3002 for Jane tools. The counterfactual the user is asking about is, in effect, <strong>the plan the project adopted &mdash; retroactively applied to the starting line.</strong></p>
+
+<h2>7. The minimal viable alternative (what should have been built)</h2>
+<ol>
+<li><strong>Hermes pod</strong> (hermes-agent, pinned) + PVC for <code>$HERMES_HOME</code> &mdash; the brain. Wire mem0 as memory provider, add skills + cron. <em>~1 day.</em></li>
+<li><strong>Thin voice gateway</strong> &mdash; STT/TTS service + WS endpoint translating speech &harr; Hermes runs API + SSE. <em>Keep this; it's the Friday part.</em></li>
+<li><strong>Small MCP server</strong> for Jane tools (Vikunja, smart home, MQTT, git/gh/kubectl wrappers) with tier checks. <em>Keep this.</em></li>
+<li><strong>OIDC auth + tier header</strong> (PocketID) mapped into Hermes via <code>X-Jane-Permission</code>, enforced by approval system + MCP layer. <em>Keep this.</em></li>
+<li><strong>Minimal PWA</strong> &mdash; chat + voice + approval dialogs. <em>Keep this, scoped.</em></li>
+<li><strong>Skip until needed:</strong> NATS central bus, six workers, multi-runtime registry, custom personality engine, custom pipeline/progress machinery.</li>
+</ol>
+<p>Rough net: <span class="good">~60&ndash;70% less code</span> than the as-built Jane, delivering the same assistant experience, because the agent brain was the biggest single chunk of rebuilt-from-scratch logic.</p>
+
+<h2>8. Risks of the Hermes-only path (if taken blind)</h2>
+<ul>
+<li><span class="bad">Unbounded cluster access.</span> Mounting a kubeconfig into an agent that can run any terminal command, without tiered authz + audit, turns a hallucination into an incident. Non-negotiable add-on.</li>
+<li><span class="bad">Autonomy feedback loops</span> (alert &rarr; diagnose &rarr; new alert &rarr; new session) without dedup/rate-limit/circuit-breaker. Documented in plan-critique.</li>
+<li><span class="warn">Cost runaway</span> from autonomous loops &mdash; needs a call budget.</li>
+<li><span class="warn">Voice expectation mismatch.</span> If the user expects &ldquo;Friday&rdquo; and ships Hermes alone, they get a Telegram bot &mdash; powerful, but not the vision.</li>
+<li><span class="warn">Single-writer SQLite</span> &mdash; no HA; acceptable for one user, a trap if scaled.</li>
+</ul>
+
+<h2>9. Bottom line</h2>
+<p><strong>Yes &mdash; for the agentic core.</strong> Hermes in a pod would have handled opencode-driven development, end-to-end devops, and &ldquo;execute anything&rdquo; on the cluster, plus delivered more (messaging reach, skills, subagents, model routing) than Jane's original custom agent layer. The rearchitecture that deleted that layer is the project's own admission.</p>
+<p><strong>No &mdash; for the assistant experience.</strong> Voice, browser UI, and tiered multi-user authorization are not in Hermes and never would be; those justify the speech service, PWA, auth, and MCP gateway.</p>
+<p><strong>Recommendation for the future:</strong> continue the current trajectory &mdash; Hermes as brain, Bridge as thin gateway &mdash; and treat any new capability as a <em>skill, cron job, or MCP tool</em> on Hermes rather than bridge orchestration code. Put the saved engineering time into the layers Hermes cannot provide: voice quality, UI, and permission UX.</p>
+
+<div class="foot">
+<p>Evidence map: <code>deploy/hermes/Dockerfile</code> (hermes-agent==0.19.0, mem0 plugin, skills) &middot; <code>deploy/hermes/entrypoint.sh</code> (gateway run, plugin install, daily cron) &middot; <code>bridge/src/index.ts</code> (current thin gateway: WS, auth, guardians, MCP :3002, autonomous loop) &middot; <code>bridge/src/config.ts</code> (primary=hermes) &middot; <code>bridge/src/hermes-adapter.ts</code> (runs API + SSE translation) &middot; specs: 2026-07-25-jane-hermes-rearchitecture, 2026-07-30-hermes-as-brain-design, 2026-07-30-plan-critique. Generated 2026-08-03 from repo state at commit ff9bb99.</p>
+</div>
+
+</div>
+</body>
+</html>
