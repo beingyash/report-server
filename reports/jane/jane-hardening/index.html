@@ -34,10 +34,6 @@
   .good { color: var(--good); font-weight: 600; }
   .warn { color: var(--warn); font-weight: 600; }
   .bad { color: var(--bad); font-weight: 600; }
-  .pill { display: inline-block; padding: 2px 10px; border-radius: 20px;
-    font-size: 13px; font-weight: 600; }
-  .pill.yes { background: #22301f; color: var(--good); border: 1px solid #3c4f2f; }
-  .pill.no  { background: #331f23; color: var(--bad);  border: 1px solid #52303a; }
   ul { padding-left: 22px; }
   li { margin: 6px 0; }
 </style>
@@ -45,12 +41,12 @@
 <body>
 <div class="wrap">
 <h1>Jane Hardening: NATS Removal + Seamless UX</h1>
-<p class="sub">Six-phase hardening — 2026-08-04 · jane repo master merged · kubernetes-deploy chart 0.1.66 staged (not yet deployed)</p>
+<p class="sub">Six-phase hardening — 2026-08-05 · jane repo master merged · deployed to cluster (chart 0.1.68, v81)</p>
 
 <div class="verdict">
 <h3>Summary</h3>
-<p>All 6 phases implemented. Phases 1-5 reviewed and merged to master (<code>a9f7de6</code>); Phase 6 (docs + e2e smoke) merged (<code>e6be180</code>). <span class="good">Testing: bridge 150, pwa 208, speech 8+1 skip, lint clean.</span> Deployment of the 0.1.66 chart + 0.1.55 images is staged and pending — code and chart are committed but not pushed to origin.</p>
-<p>Security posture: no CRITICAL findings in any phase review. MCP tier bypass fixed, internal-api :3003 JWT+CORS, hermes kubeconfig restricted SA (read-mostly).</p>
+<p>All 6 phases implemented and <span class="good">DEPLOYED</span>. Phases 1-5 reviewed and merged to master (<code>a9f7de6</code>); Phase 6 (docs + e2e smoke) merged (<code>e6be180</code>). Testing: bridge 150, pwa 208, speech 8+1 skip, lint clean. Released v0.1.55 (CI: test + multi-arch build/push + manifest merge all success); Flux deployed chart 0.1.68 (release v81) with backup + internal-api + metrics wiring.</p>
+<p>Live verification: backup CronJob runs (29.1M hermes-home + mem0 dump, restore drill validated 36/36 files), e2e smoke passes (NATS absent, webhook 401, /internal/memories 401-anonymous, Hermes healthy). Security posture: no CRITICAL in any phase review. MCP tier bypass fixed, internal-api :3003 JWT+CORS, hermes kubeconfig restricted SA (read-mostly).</p>
 </div>
 
 <h2>What changed</h2>
@@ -94,13 +90,15 @@
 <li>Dashboard: ServiceMonitor for bridge :9464 + Grafana panels (turn latency p50/p95, tool failures, LLM calls/h) — gated on <code>core.prometheus.enabled</code>.</li>
 </ul>
 
-<h2>Deferred until deploy (staged, not shipped)</h2>
+<h2>Deployed (verified live 2026-08-05)</h2>
 <table>
-<tr><th>Item</th><th>Why</th></tr>
-<tr><td>Chart 0.1.66 + images 0.1.55 (jane tag + CI build + kd push + Flux)</td><td>User chose to complete Phase 6 first; no pushes without explicit request</td></tr>
-<tr><td>T16 restore drill (scale hermes 0, restore from PVC, verify cron loads)</td><td>Needs live cluster</td></tr>
-<tr><td>T17 observability stack enable + panel verify</td><td>kube-prometheus-stack subchart + resource headroom on single node</td></tr>
-<tr><td>Offsite backup copy (rclone)</td><td>Spec D7 gate: offsite when remote configured</td></tr>
+<tr><th>Item</th><th>Status</th></tr>
+<tr><td>Chart 0.1.68 (v81) + images 0.1.55 via Flux</td><td class="good">DEPLOYED</td></tr>
+<tr><td>Bridge ports ws=3000 mcp=3002 internal=3003 metrics=9464; env JANE_MCP_PERMISSION=devops + SESSION_STORE_PATH</td><td class="good">VERIFIED</td></tr>
+<tr><td>Backup CronJob (hermes-home + mem0 dump) — fixed root perms (runAsUser:0, kd 73e5591)</td><td class="good">VERIFIED — 29.1M / 36 files, restore drill validated</td></tr>
+<tr><td>e2e smoke: NATS absent, webhook 401, /internal/memories 401-anon, Hermes health, TTS/STT</td><td class="good">PASS (WS steps need real token — manual)</td></tr>
+<tr><td>Observability stack (T17) — kube-prometheus-stack + Grafana panels</td><td class="warn">NOT enabled (core.prometheus.enabled=false — single-node headroom deferral)</td></tr>
+<tr><td>Offsite backup copy (rclone)</td><td class="warn">Pending remote config (D7 gate)</td></tr>
 </table>
 
 <h2>Known carries</h2>
@@ -117,12 +115,12 @@
 <tr><td>PWA tests</td><td class="good">208 passed</td></tr>
 <tr><td>Speech tests</td><td class="good">8 passed, 1 skipped (no torch)</td></tr>
 <tr><td>Lint (tsc --noEmit)</td><td class="good">0 errors (bridge + pwa)</td></tr>
-<tr><td>jane master</td><td><code>e6be180</code> (33 commits ahead of origin)</td></tr>
-<tr><td>kubernetes-deploy chart</td><td>0.1.66 staged, 4 commits ahead of origin</td></tr>
+<tr><td>jane master</td><td><code>39cd3cf</code> (pushed; v0.1.55 tag)</td></tr>
+<tr><td>kubernetes-deploy chart</td><td class="good">0.1.68 deployed via Flux (v81)</td></tr>
 <tr><td>Phase reviews</td><td>All APPROVED; no CRITICAL; 0 open IMPORTANT</td></tr>
 </table>
 
-<p style="margin-top:36px;color:var(--muted);font-size:13px">Generated 2026-08-04 · source: <code>docs/superpowers/plans/2026-08-03-jane-hardening.md</code> + design spec D2-D7</p>
+<p style="margin-top:36px;color:var(--muted);font-size:13px">Generated 2026-08-05 · source: <code>docs/superpowers/plans/2026-08-03-jane-hardening.md</code> + design spec D2-D7 + live deploy verification</p>
 </div>
 </body>
 </html>
