@@ -98,7 +98,7 @@
 <tr><td>Backup CronJob (hermes-home + mem0 dump) — fixed root perms (runAsUser:0, kd 73e5591)</td><td class="good">VERIFIED — 29.1M / 36 files, restore drill validated</td></tr>
 <tr><td>e2e smoke: NATS absent, webhook 401, /internal/memories 401-anon, Hermes health, TTS/STT</td><td class="good">PASS (WS steps need real token — manual)</td></tr>
 <tr><td>Observability stack (T17) — kube-prometheus-stack + Grafana panels</td><td class="warn">NOT enabled (core.prometheus.enabled=false — single-node headroom deferral)</td></tr>
-<tr><td>Offsite backup copy (rclone)</td><td class="warn">Pending remote config (D7 gate)</td></tr>
+<tr><td>Offsite backup copy — GitHub Contents API to beingyash/jane-backups (private)</td><td class="good">LIVE — 8.99MB hermes + 231KB mem0 per night, verified</td></tr>
 </table>
 
 <h2>Known carries</h2>
@@ -116,7 +116,7 @@
 <tr><td>Speech tests</td><td class="good">8 passed, 1 skipped (no torch)</td></tr>
 <tr><td>Lint (tsc --noEmit)</td><td class="good">0 errors (bridge + pwa)</td></tr>
 <tr><td>jane master</td><td><code>39cd3cf</code> (pushed; v0.1.55 tag)</td></tr>
-<tr><td>kubernetes-deploy chart</td><td class="good">0.1.68 deployed via Flux (v81)</td></tr>
+<tr><td>kubernetes-deploy chart</td><td class="good">0.1.70 deployed via Flux (v83)</td></tr>
 <tr><td>Phase reviews</td><td>All APPROVED; no CRITICAL; 0 open IMPORTANT</td></tr>
 </table>
 
