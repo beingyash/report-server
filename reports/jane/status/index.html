@@ -36,50 +36,62 @@
 <body>
 <header>
   <h1>jane</h1>
-  <div class="meta">Last updated 2026-07-21</div>
-  <div class="badges"><span class="badge badge-good">7 OK</span>
-<span class="badge badge-pending">14 Pending</span></div>
+  <div class="meta">Last updated 2026-08-02</div>
+  <div class="badges"><span class="badge badge-good">3 OK</span>
+<span class="badge badge-bad">1 Issues</span>
+<span class="badge badge-pending">30 Pending</span></div>
 </header>
-<section class="card" style="border-left-color: #27ae60">
+<section class="card" style="border-left-color: #3498db">
     <h2>Deployed</h2>
-    <ul><li><span class="dot dot-good">&#x2713;</span> v0.1.16 images on Docker Hub (multi-arch amd64+arm64) ✓</li>
-<li><span class="dot dot-good">&#x2713;</span> Chart bumped to 0.1.17 ✓</li>
-<li><span class="dot dot-good">&#x2713;</span> Flux image policies resolved to 0.1.16 ✓</li>
-<li><span class="dot dot-good">&#x2713;</span> Flux GitRepository Ready ✓</li>
-<li><span class="dot dot-good">&#x2713;</span> Jane pods updated to 0.1.16 ✓</li></ul>
+    <ul><li><span class="dot dot-good">&#x2713;</span> Chart v0.1.50 via Flux ✓ (HR v34, Helm upgrade succeeded)</li>
+<li><span class="dot dot-good">&#x2713;</span> All pods running ✓<p class="note">- bridge 1/1, nats 1/1, pwa 1/1, speech 1/1, vikunja 1/1, hermes 1/1</p></li>
+<li><span class="dot ">&#x25CB;</span> Bridge image: <code>beingyash/jane-bridge:0.1.45</code> (multi-arch, openssh-client, autonomous loop, MCP keepalive)</li>
+<li><span class="dot dot-good">&#x2713;</span> jane-identity repo cloned into workspace via SSH deploy key ✓</li></ul>
   </section>
 <section class="card" style="border-left-color: #3498db">
-    <h2>In Progress</h2>
-    <ul><li><span class="dot ">&#x25CB;</span> <strong>Kanban integration</strong> (PR #14, branch <code>feat/kanban-integration</code>): 17 files, 10 commits<p class="note">- Vikunja K8s manifests (7 templates), bridge capability, NATS worker, webhook handler
-- Workers wired: consolidation creates reflection tasks, proactive escalates alerts
-- <code>VIKUNJA_WEBHOOK_SECRET</code> sealed and deployed to <code>jane-bridge</code> secret
-- Blocked: Traefik crash-looping (<code>TLS options: jane-default</code> missing CRD)
-- Blocked: PocketID OIDC client registration needed (manual — web UI only)
-- Blocked: <code>VIKUNJA_API_TOKEN</code> needed after Vikunja deploy</p></li></ul>
+    <h2>MCP Tools (41 registered)</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> <strong>B1 Code (4):</strong> <code>code_read_file</code>, <code>code_write_file</code>, <code>code_patch_file</code>, <code>code_list_directory</code></li>
+<li><span class="dot ">&#x25CB;</span> <strong>B2 Git (4):</strong> <code>git_status</code>, <code>git_diff</code>, <code>git_commit</code>, <code>git_create_pr</code></li>
+<li><span class="dot ">&#x25CB;</span> <strong>B3 Time (4):</strong> <code>time_set_alarm</code>, <code>time_set_timer</code>, <code>time_list_alarms</code>, <code>time_cancel_alarm</code></li>
+<li><span class="dot ">&#x25CB;</span> <strong>B4 Monitoring (3):</strong> <code>monitoring_create_rule</code>, <code>monitoring_list_rules</code>, <code>monitoring_delete_rule</code></li>
+<li><span class="dot ">&#x25CB;</span> <strong>B6 Vision (1):</strong> <code>vision_analyze_image</code> (API mode — GPT-4o, sidecar optional)</li>
+<li><span class="dot ">&#x25CB;</span> <strong>B7 Document (1):</strong> <code>document_extract</code> (PDF/text extraction via sidecar)</li>
+<li><span class="dot ">&#x25CB;</span> <strong>B8 Learning (3):</strong> <code>learning_store_preference</code>, <code>learning_get_preferences</code>, <code>learning_reinforce_preference</code></li>
+<li><span class="dot ">&#x25CB;</span> <strong>B9 Context (3):</strong> <code>context_save</code>, <code>context_get</code>, <code>context_delete</code></li>
+<li><span class="dot ">&#x25CB;</span> <strong>Vikunja (10):</strong> <code>vikunja_health</code>, <code>vikunja_list_projects</code>, <code>vikunja_list_tasks</code>, <code>vikunja_create_task</code>, <code>vikunja_update_task</code>, <code>vikunja_move_task</code>, <code>vikunja_get_board</code>, <code>vikunja_add_comment</code>, <code>vikunja_find_or_create_project</code>, <code>vikunja_find_or_create_list</code></li>
+<li><span class="dot ">&#x25CB;</span> <strong>Other (8):</strong> <code>smarthome_list_devices</code>, <code>smarthome_control_device</code>, <code>calendar_list_events</code>, <code>email_list_recent</code>, <code>email_send</code>, <code>tasks_list</code>, <code>tasks_add</code>, <code>mqtt_publish</code></li>
+<li><span class="dot ">&#x25CB;</span> Permission gating: readonly/sandbox/devops/root tiers enforced</li></ul>
+  </section>
+<section class="card" style="border-left-color: #e74c3c">
+    <h2>Recently Fixed (this session)</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> <strong>jane-identity clone</strong> — init container clones to <code>/tmp</code>, moves <code>.git</code> + checks out. SSH deploy key with all 3 GitHub host keys. <code>openssh-client</code> added to Dockerfile.</li>
+<li><span class="dot ">&#x25CB;</span> <strong>Trigger server</strong> — bound to <code>0.0.0.0:3001</code> (was <code>127.0.0.1</code>). CronJob consolidation/research can now reach it.</li>
+<li><span class="dot ">&#x25CB;</span> <strong>Vikunja MCP revamp</strong> — <code>kanban_</code> → <code>vikunja_</code> prefix, 5 missing tools added, permission gating, webhook handler removed.</li>
+<li><span class="dot ">&#x25CB;</span> <strong>Git tools</strong> — B2 implemented with branch allowlist, dirty-tree guard, execFileSync no-shell.</li>
+<li><span class="dot ">&#x25CB;</span> <strong>Monitoring tools (B4)</strong> — <code>triggers.ts</code> + <code>monitoring.ts</code> implemented. NATS event-driven triggers with create/list/delete MCP tools. 33 total MCP tools.</li>
+<li><span class="dot ">&#x25CB;</span> <strong>Autonomous loop (B5)</strong> — <code>autonomous.ts</code> + <code>autonomous-safety.ts</code>. Consumes <code>trigger.fire</code> events, forwards to Hermes. Safety: dedup, rate limit (5/min), min interval (10s), concurrency cap (3), circuit breaker (3 failures → 5min cooldown). 77 tests pass.</li>
+<li><span class="dot ">&#x25CB;</span> <strong>Preference learning (B8)</strong> — <code>learning.ts</code> with mem0 integration. Store/reinforce/get preferences. Conflict detection via antonym patterns.</li>
+<li><span class="dot ">&#x25CB;</span> <strong>Context management (B9)</strong> — <code>context.ts</code> for cross-session task persistence. Save/resume/delete task context in mem0. 7-day TTL.</li>
+<li><span class="dot dot-bad">&#x2717;</span> <strong>MCP SSE keepalive</strong> — 30s keepalive comments on SSE stream, graceful reconnect (no force-close). No more <code>RemoteProtocolError</code> in Hermes logs.</li>
+<li><span class="dot ">&#x25CB;</span> <strong>Vision sidecar (B6)</strong> — <code>vision.ts</code> + Python FastAPI sidecar. API mode (GPT-4o) works without sidecar. Helm template ready, <code>vision.enabled: false</code> by default.</li>
+<li><span class="dot ">&#x25CB;</span> <strong>Document sidecar (B7)</strong> — <code>document.ts</code> + Python FastAPI sidecar with PyMuPDF. PDF/text extraction. Helm template ready, <code>document.enabled: false</code> by default.</li>
+<li><span class="dot ">&#x25CB;</span> <strong>Disk pressure cleared</strong> — containerd snapshot cleanup on worker node. 431 stale snapshots removed.</li>
+<li><span class="dot ">&#x25CB;</span> <strong>SealedSecret re-sealed</strong> — all 6 keys encrypted with current controller cert (cluster-wide scope). Controller now syncs successfully.</li></ul>
   </section>
 <section class="card" style="border-left-color: #3498db">
-    <h2>CI Status</h2>
-    <ul><li><span class="dot dot-good">&#x2713;</span> Speech tests: skip gracefully when torch absent ✓</li>
-<li><span class="dot dot-good">&#x2713;</span> <code>bump-chart</code> step: fixed (<code>git push origin HEAD:master</code>) ✓</li>
-<li><span class="dot ">&#x25CB;</span> Known: <code>opencode</code> image cross-repo pull perms (<code>OPENCODE_PAT</code> needed for Flux deploy key, not CI)</li></ul>
+    <h2>CronJobs</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> <code>jane-consolidation</code> (<em>/30 </em> <em> </em> *) — triggers reflect via HTTP POST to bridge:3001</li>
+<li><span class="dot ">&#x25CB;</span> <code>jane-research</code> (0 <em> </em> <em> </em>) — triggers research via HTTP POST to bridge:3001</li>
+<li><span class="dot ">&#x25CB;</span> <code>vikunja-backup</code> (0 3 <em> </em> *) — SQLite export daily</li></ul>
   </section>
 <section class="card" style="border-left-color: #3498db">
-    <h2>Cluster Health</h2>
-    <ul><li><span class="dot ">&#x25CB;</span> speech: crash-looping (10+ evictions, OOM)</li>
-<li><span class="dot ">&#x25CB;</span> traefik: crash-looping (<code>unknown TLS options: jane-default@kubernetescrd</code>)</li>
-<li><span class="dot ">&#x25CB;</span> bridge: 2/2 running (one pod)</li>
-<li><span class="dot ">&#x25CB;</span> NATS: running</li>
-<li><span class="dot ">&#x25CB;</span> pocketid: running</li>
-<li><span class="dot ">&#x25CB;</span> cert-manager: running</li></ul>
+    <h2>Known Issues</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> <strong>Worker disk pressure</strong> — containerd snapshots accumulate. Mitigated by weekly cleanup cron (Sun 03:00).</li></ul>
   </section>
 <section class="card" style="border-left-color: #3498db">
     <h2>Next</h2>
-    <ul><li><span class="dot ">&#x25CB;</span> Fix Traefik <code>jane-default</code> TLSOption CRD (blocking all ingress)</li>
-<li><span class="dot ">&#x25CB;</span> Fix speech OOM (adjust resource limits or model size)</li>
-<li><span class="dot ">&#x25CB;</span> Merge PR #14, deploy Vikunja</li>
-<li><span class="dot ">&#x25CB;</span> PocketID OIDC: register Vikunja client, set values</li>
-<li><span class="dot ">&#x25CB;</span> Create Vikunja API token, seal and deploy</li>
-<li><span class="dot ">&#x25CB;</span> Sub-project: NetworkPolicies + PDBs</li></ul>
+    <ul><li><span class="dot ">&#x25CB;</span> [ ] Build + push vision/document sidecar Docker images (when needed)</li>
+<li><span class="dot ">&#x25CB;</span> [ ] Deploy vision/document sidecars (enable in values.yaml)</li></ul>
   </section>
 </body>
 </html>

@@ -36,9 +36,10 @@
 <body>
 <header>
   <h1>kubernetes-deploy</h1>
-  <div class="meta">Last updated 2026-07-21</div>
-  <div class="badges"><span class="badge badge-bad">3 Issues</span>
-<span class="badge badge-pending">64 Pending</span></div>
+  <div class="meta">Last updated 2026-08-06</div>
+  <div class="badges"><span class="badge badge-good">1 OK</span>
+<span class="badge badge-bad">6 Issues</span>
+<span class="badge badge-pending">154 Pending</span></div>
 </header>
 <section class="card" style="border-left-color: #3498db">
     <h2>Nodes</h2>
@@ -70,11 +71,27 @@
 <section class="card" style="border-left-color: #3498db">
     <h2>Known Issues</h2>
     <ul><li><span class="dot ">&#x25CB;</span> Only <code>traefik</code> has LoadBalancer service (EXTERNAL-IP <code>&lt;pending&gt;</code>) — no MetalLB (bare-metal)</li>
-<li><span class="dot ">&#x25CB;</span> Traffic reaches node via NodePort: HTTP <code>32580</code>, HTTPS <code>32305</code><p class="note">### Flux GitRepository — resolved ✓</p></li>
+<li><span class="dot ">&#x25CB;</span> Traffic reaches node via NodePort: HTTP <code>32580</code>, HTTPS <code>32305</code></li>
+<li><span class="dot ">&#x25CB;</span> Acceptable for lab — MetalLB adds no value for this traffic model<p class="note">### Longhorn volumes <code>healthy</code> (was <code>degraded</code>)</p></li>
+<li><span class="dot ">&#x25CB;</span> Replica count reduced 3→2 (matches 2-node cluster). Both volumes now <strong>healthy</strong>.</li>
+<li><span class="dot ">&#x25CB;</span> CP storageReserved reduced 14GB→2GB. Worker storageReserved reduced 14GB→4GB.</li>
+<li><span class="dot ">&#x25CB;</span> 2 replicas per volume, one on each node.<p class="note">### CP Disk 37% full (was 84%)</p></li>
+<li><span class="dot ">&#x25CB;</span> 28GB free on 45GB root disk. Healthy.</li>
+<li><span class="dot ">&#x25CB;</span> Freed by: removed jane-speech image (2.9 GiB) + container GC cleaned overlayfs 24GB→12GB</li>
+<li><span class="dot ">&#x25CB;</span> Weekly auto-cleanup via cron (Sun 03:30): <code>scripts/cp-disk-cleanup.sh</code><p class="note">- Journal capped at 200M, apt cache cleaned, /tmp files &gt;7d deleted
+- Containerd image GC + content reference prune (~2-3GB per run)</p></li>
+<li><span class="dot ">&#x25CB;</span> PrometheusRule <code>disk-usage-alert</code> configured (warn 80%, critical 90%)</li>
+<li><span class="dot ">&#x25CB;</span> Manual kernel cleanup (if needed): <code>dpkg -l linux-image-* | grep ^ii | grep -v $(uname -r) | awk '{print $2}' | xargs apt-get remove --purge -y</code><p class="note">### Worker <code>oracle-cp</code> cordon + disk pressure (Task 1 incident, 2026-08-06)</p></li>
+<li><span class="dot ">&#x25CB;</span> <code>oracle-cp</code> was cordoned since 2026-08-03 (~3 days, undocumented reason) + disk at 92% → caused a PocketID outage during rollout restart.</li>
+<li><span class="dot ">&#x25CB;</span> Uncordoned + disk cleaned (69% now, containerd 16G → 9.7G).</li>
+<li><span class="dot ">&#x25CB;</span> Recommend: document cordon reasons; watch worker disk.<p class="note">### <code>worker-cleanup.sh</code> cron silently no-ops</p></li>
+<li><span class="dot ">&#x25CB;</span> <code>kubectl</code> on the worker has no kubeconfig (localhost:8080 refused) → <code>USED</code> image set comes back empty → images never pruned → disk filled to 92%.</li>
+<li><span class="dot ">&#x25CB;</span> Recommend: run image-collection from control-plane, or give the worker a kubeconfig.<p class="note">### Flux GitRepository — resolved ✓</p></li>
 <li><span class="dot ">&#x25CB;</span> Cause: Tailscale MagicDNS search domain <code>abysmallab.in</code> + wildcard DNS caused pod DNS to resolve <code>github.com</code> back to worker node.</li>
 <li><span class="dot ">&#x25CB;</span> Fix: kubelet on worker uses <code>/etc/resolv.clean.conf</code> (no search domains).<p class="note">### Monitoring — resolved ✓</p></li>
 <li><span class="dot ">&#x25CB;</span> metrics-server: working for both nodes</li>
 <li><span class="dot ">&#x25CB;</span> kube-prometheus-stack: 7/7 pods running</li>
+<li><span class="dot ">&#x25CB;</span> Prometheus targets: <strong>22/22 UP</strong> (was 14 UP, 9 DOWN)</li>
 <li><span class="dot ">&#x25CB;</span> Grafana at <code>grafana.yash.abysmallab.in</code><p class="note">### Cross-node networking — resolved ✓</p></li>
 <li><span class="dot ">&#x25CB;</span> Pod-to-pod across nodes working</li>
 <li><span class="dot ">&#x25CB;</span> Routing fix: ip rule 5255 persisted via systemd</li></ul>
@@ -97,7 +114,7 @@
 <li><span class="dot ">&#x25CB;</span> All app pods Running</li>
 <li><span class="dot ">&#x25CB;</span> Ingress endpoints reachable: id.yash.abysmallab.in (200), jane.yash.abysmallab.in (200), reports.yash.abysmallab.in (200), grafana.yash.abysmallab.in (302)</li>
 <li><span class="dot ">&#x25CB;</span> DNS resolution, external connectivity, Flux gitrepositories all Ready</li>
-<li><span class="dot ">&#x25CB;</span> Prometheus targets: 14 UP, 9 DOWN (down targets likely pre-existing — control-plane scraping auth)</li>
+<li><span class="dot ">&#x25CB;</span> Prometheus targets: 22/22 UP (100% — fixed 9 DOWN targets plus kube-proxy both nodes)</li>
 <li><span class="dot ">&#x25CB;</span> Rollback: <code>kubectl delete networkpolicy --all -n &lt;ns&gt;</code> per namespace<p class="note">### Manifests</p></li>
 <li><span class="dot ">&#x25CB;</span> <code>netpol/</code> — 9 YAML files covering all namespaces</li>
 <li><span class="dot ">&#x25CB;</span> <code>pdb/</code> — 3 YAML files (jane combined, pocketid, traefik)</li></ul>
@@ -114,14 +131,9 @@
 <li><span class="dot ">&#x25CB;</span> <strong>jane/nats-js-nats-0</strong> (10Gi JetStream):<p class="note">- Scaled down, deleted old local-path PVC, created new with <code>storageClassName: longhorn</code>
 - Scaled up → pod Running 1/1, NATS HTTP 200</p></li>
 <li><span class="dot ">&#x25CB;</span> <strong>monitoring/prometheus</strong> left on <code>local-path</code> (ephemeral per spec; migrate later if needed)<p class="note">### Volume Health</p></li>
-<li><span class="dot ">&#x25CB;</span> Both Longhorn volumes <code>attached</code>, <code>degraded</code> robustness (3rd replica <code>stopped</code> — only 2 nodes available)</li>
-<li><span class="dot ">&#x25CB;</span> Replicas: 2 running per volume (one per node), 1 stopped pending third node</li>
-<li><span class="dot ">&#x25CB;</span> Acceptable for lab environment<p class="note">### Known Issue: CP Node DiskPressure</p></li>
-<li><span class="dot ">&#x25CB;</span> CP node (<code>marketgenie-market-genie</code>) had transient DiskPressure after Longhorn install</li>
-<li><span class="dot ">&#x25CB;</span> Evicted Longhorn CSI/instance-manager pods on CP</li>
-<li><span class="dot ">&#x25CB;</span> Resolved by pruning containerd images + journal vacuum</li>
-<li><span class="dot ">&#x25CB;</span> CSI plugin now Running on both nodes</li>
-<li><span class="dot ">&#x25CB;</span> Root cause: 45GB root disk with 24GB containerd images. Monitor over time.</li></ul>
+<li><span class="dot ">&#x25CB;</span> Both Longhorn volumes <code>attached</code> and <code>healthy</code> (2 replicas, one per node).</li>
+<li><span class="dot ">&#x25CB;</span> Replica count: 2 (matches 2-node cluster). CP storageReserved 2GB, worker 4GB.</li>
+<li><span class="dot ">&#x25CB;</span> Prometheus data still on <code>local-path</code> — migrate to Longhorn for persistence if needed.</li></ul>
   </section>
 <section class="card" style="border-left-color: #3498db">
     <h2>Sub-project 5: Image Multi-Arch &amp; Version Bumps — ALREADY DONE ✓</h2>
@@ -145,11 +157,120 @@
 <li><span class="dot ">&#x25CB;</span> Monitor restart trends via Prometheus/Grafana; if &gt;1 restart/day, investigate<p class="note">liveness probe timing vs etcd startup ordering.</p></li></ul>
   </section>
 <section class="card" style="border-left-color: #3498db">
+    <h2>Session 2026-07-21 (Post-Hardening): Prometheus Fixes</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> Worker node labeled <code>node-role.kubernetes.io/worker=</code> (was <code>&lt;none&gt;</code>)</li>
+<li><span class="dot ">&#x25CB;</span> Disk usage PrometheusRule created (warn 80%, critical 90%)</li>
+<li><span class="dot ">&#x25CB;</span> iptables rules persisted (<code>netfilter-persistent</code>)</li>
+<li><span class="dot ">&#x25CB;</span> Node-exporter image switched to <code>prom/node-exporter:v1.8.2</code> (Docker Hub; quay.io unreachable from CP)</li>
+<li><span class="dot ">&#x25CB;</span> Node-exporter port changed to 9101 (avoided conflict with Docker container on worker)</li>
+<li><span class="dot ">&#x25CB;</span> Removed invalid nodeAffinity (<code>eks.amazonaws.com/compute-type</code> not present on this cluster)<p class="note">### Remaining Issues</p></li>
+<li><span class="dot ">&#x25CB;</span> <strong>LoadBalancer <code>&lt;pending&gt;</code></strong>: Intentional. NodePort fallback works (32580/32305).</li>
+<li><span class="dot ">&#x25CB;</span> <strong>DNAT rules source unknown</strong>: Removed and persisted. If re-added, investigate Docker port mapping on CP.</li>
+<li><span class="dot ">&#x25CB;</span> <strong>Jane consolidation/research cronjobs</strong>: Suspended (images removed from CP to free disk). Reactivate when needed.</li></ul>
+  </section>
+<section class="card" style="border-left-color: #e74c3c">
+    <h2>Session 2026-07-30: Actual Budget Deployment — DONE ✓</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> Design spec + implementation plan written</li>
+<li><span class="dot ">&#x25CB;</span> All manifests created, PocketID OIDC client registered</li>
+<li><span class="dot ">&#x25CB;</span> SealedSecret created for OIDC client secret</li>
+<li><span class="dot ">&#x25CB;</span> kustomize build verified (7 resources)</li>
+<li><span class="dot ">&#x25CB;</span> Flux sync: all resources created (deployment, service, PVC, ingress, sealed-secret, networkpolicies)</li>
+<li><span class="dot ">&#x25CB;</span> HTTPS working: <code>https://budget.yash.abysmallab.in/</code> → 200</li>
+<li><span class="dot ">&#x25CB;</span> Pod running: <code>actualbudget/actual-server:26.7.0</code>, OpenID configured, health UP</li>
+<li><span class="dot dot-bad">&#x2717;</span> TLS cert issued by letsencrypt-prod (DNS-01)</li>
+<li><span class="dot ">&#x25CB;</span> Fixed: removed <code>runAsNonRoot: true</code> (image runs as root)</li>
+<li><span class="dot ">&#x25CB;</span> Data migration: copied ~1.2 MB from Docker (Windows host) → PVC via temp pod</li>
+<li><span class="dot ">&#x25CB;</span> OIDC callback endpoint live: <code>/openid/callback</code> responds<p class="note">### Manifests</p></li>
+<li><span class="dot ">&#x25CB;</span> <code>clusters/production/actual-budget/</code> — all deployment manifests</li>
+<li><span class="dot ">&#x25CB;</span> <code>netpol/00-default-deny.yaml</code> — updated with <code>actual-budget</code> stanza<p class="note">### Notes</p></li>
+<li><span class="dot ">&#x25CB;</span> Docker container <code>app-actual-budget</code> stopped on Windows (Tailscale sidecar left running)</li>
+<li><span class="dot ">&#x25CB;</span> Budget data at <code>budget.yash.abysmallab.in</code> — OIDC login via PocketID</li>
+<li><span class="dot ">&#x25CB;</span> Image pinned to <code>26.7.0</code> (arm64-compatible, multi-arch)</li></ul>
+  </section>
+<section class="card" style="border-left-color: #e74c3c">
+    <h2>Session 2026-08-02: BookLore Deployment — DONE ✓</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> Design spec + implementation plan written</li>
+<li><span class="dot ">&#x25CB;</span> All manifests created (10 files in <code>clusters/production/booklore/</code>)</li>
+<li><span class="dot ">&#x25CB;</span> Raw Kustomize pattern matching actual-budget</li>
+<li><span class="dot ">&#x25CB;</span> MariaDB (linuxserver/mariadb:11.4.5) + BookLore (ghcr.io/booklore-app/booklore:latest v2.3.1)</li>
+<li><span class="dot ">&#x25CB;</span> SealedSecret for DB credentials</li>
+<li><span class="dot dot-bad">&#x2717;</span> TLS cert issued by letsencrypt-prod</li>
+<li><span class="dot ">&#x25CB;</span> HTTPS working: <code>https://booklore.yash.abysmallab.in/</code> → 200</li>
+<li><span class="dot ">&#x25CB;</span> Health check: <code>/api/v1/healthcheck</code> → <code>{"status":"UP"}</code></li>
+<li><span class="dot ">&#x25CB;</span> Both pods Running on <code>oracle-cp</code> worker node<p class="note">### Fixes during deployment</p></li>
+<li><span class="dot ">&#x25CB;</span> Added <code>BOOKLORE_PORT=6060</code> env var (Spring Boot port resolution)</li>
+<li><span class="dot ">&#x25CB;</span> Added <code>startupProbe</code> for Java cold start (5min grace)</li>
+<li><span class="dot ">&#x25CB;</span> Switched mariadb-data PVC from <code>longhorn</code> to <code>local-path</code> (Longhorn insufficient storage for 2-replica 5Gi volume)<p class="note">### Storage</p></li>
+<li><span class="dot ">&#x25CB;</span> <code>booklore-books</code> (10Gi, longhorn) — book library + app data</li>
+<li><span class="dot ">&#x25CB;</span> <code>booklore-mariadb-config</code> (1Gi, longhorn) — MariaDB init config</li>
+<li><span class="dot ">&#x25CB;</span> <code>booklore-mariadb-data</code> (5Gi, local-path) — MariaDB database<p class="note">### Network</p></li>
+<li><span class="dot ">&#x25CB;</span> Ingress: <code>booklore.yash.abysmallab.in</code>, Traefik, cert-manager</li>
+<li><span class="dot ">&#x25CB;</span> NetworkPolicy: default-deny + allow-intra-ns + allow-traefik-ingress:6060</li>
+<li><span class="dot ">&#x25CB;</span> No PocketID OIDC yet — configure via BookLore web UI post-deploy<p class="note">### Pending</p></li>
+<li><span class="dot ">&#x25CB;</span> PocketID OIDC configuration (web UI)</li>
+<li><span class="dot ">&#x25CB;</span> Data migration from ScaleTail compose (books + MariaDB dump)</li>
+<li><span class="dot ">&#x25CB;</span> Old Docker compose can be stopped after migration</li></ul>
+  </section>
+<section class="card" style="border-left-color: #e74c3c">
+    <h2>Session 2026-08-02: Headlamp Deployment — DONE ✓</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> Design spec + implementation plan written</li>
+<li><span class="dot ">&#x25CB;</span> PocketID OIDC client <code>headlamp</code> registered (client-id <code>e4911299-09f5-4791-a03f-3c6ae8585c61</code>) via sqlite3 DB manipulation; group <code>k8s-admins</code> created; admin user added</li>
+<li><span class="dot dot-bad">&#x2717;</span> kube-apiserver OIDC flags added on control-plane (<code>/etc/kubernetes/manifests/kube-apiserver.yaml</code>, backup <code>/root/kube-apiserver.yaml.bak-headlamp-*</code>): issuer <code>https://id.yash.abysmallab.in</code>, client-id above, username-claim <code>preferred_username</code>, groups-claim <code>groups</code>, empty username/groups prefixes</li>
+<li><span class="dot ">&#x25CB;</span> Flux GitOps deploy: HelmRepository <code>headlamp</code> + HelmRelease (chart 0.44.0) + SealedSecret <code>headlamp-oidc</code> + RBAC ClusterRoleBinding <code>headlamp-k8s-admins</code> (Group <code>k8s-admins</code> → cluster-admin) + NetworkPolicies</li>
+<li><span class="dot ">&#x25CB;</span> All manifests in <code>clusters/production/headlamp/</code>; <code>netpol/00-default-deny.yaml</code> updated with <code>headlamp</code> stanza</li>
+<li><span class="dot ">&#x25CB;</span> Pod Running 1/1, ingress ready, cert <code>headlamp-tls</code> READY, <code>https://headlamp.yash.abysmallab.in</code> → 200</li>
+<li><span class="dot ">&#x25CB;</span> Apiserver OIDC verified: client_credentials token correctly rejected (<code>claim "preferred_username" not present</code> — proves authenticator + JWKS fetch active)<p class="note">### Fixes during deployment</p></li>
+<li><span class="dot ">&#x25CB;</span> SealedSecret required <code>OIDC_USE_PKCE: "true"</code> key — chart emits <code>-oidc-use-pkce=$(OIDC_USE_PKCE)</code>; missing key caused CrashLoopBackOff (<code>invalid boolean value</code>)</li>
+<li><span class="dot ">&#x25CB;</span> HelmRelease Stalled (<code>RetriesExceeded</code>) from the crash-loop install; pod healthy after PKCE fix but Flux wouldn't clear stall until HelmRelease deleted + kustomization reconcile forced<p class="note">### Notes</p></li>
+<li><span class="dot ">&#x25CB;</span> OIDC via PocketID: only users in group <code>k8s-admins</code> get cluster-admin</li>
+<li><span class="dot ">&#x25CB;</span> PKCE must stay enabled (matches PocketID client <code>pkce_enabled=1</code>)<p class="note">### Pending</p></li>
+<li><span class="dot ">&#x25CB;</span> Interactive browser login test (login as <code>admin</code> → dashboard loads; RBAC negative test with non-member user)</li></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
+    <h2>Session 2026-08-03: Stirling-PDF Deployment — DONE ✓</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> Official Helm chart evaluated and rejected (persistence bug in v3.1.0 — PVC created but never mounted in container)</li>
+<li><span class="dot ">&#x25CB;</span> Raw kustomize manifests following abs/ pattern (7 files in <code>clusters/production/stirling-pdf/</code>)</li>
+<li><span class="dot ">&#x25CB;</span> Namespace <code>stirling-pdf</code>, PVC <code>stirling-pdf-config</code> (8Gi local-path), Deployment (stirlingtools/stirling-pdf:2.14.2, fsGroup 1000), Service (ClusterIP 8080), Ingress (<code>stirling-pdf.yash.abysmallab.in</code>, traefik, letsencrypt-prod), NetworkPolicies</li>
+<li><span class="dot ">&#x25CB;</span> Flux reconciled, pod Running 1/1, PVC Bound, TLS cert Ready</li>
+<li><span class="dot ">&#x25CB;</span> Health check: <code>https://stirling-pdf.yash.abysmallab.in/api/v1/info/status</code> → <code>{"version":"2.14.2","status":"UP"}</code><p class="note">### Notes</p></li>
+<li><span class="dot ">&#x25CB;</span> Auth: open (no login). Stirling-PDF native OIDC is paid Server-tier. Can enable local login via <code>SECURITY_ENABLELOGIN=true</code> env if needed.</li>
+<li><span class="dot dot-good">&#x2713;</span> Image: <code>stirlingtools/stirling-pdf:2.14.2</code> (Docker Hub, multi-arch arm64 ✓)</li>
+<li><span class="dot ">&#x25CB;</span> Resources: 512Mi request / 2Gi limit (Java + LibreOffice + OCR)</li></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
+    <h2>Session 2026-08-02: Cluster Remediation Sweep — DONE ✓</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> Control-plane node <code>marketgenie-market-genie</code> InternalIP is <strong><code>100.96.76.37</code> (Tailscale)</strong>, NOT <code>10.0.0.160</code>. <code>10.0.0.160</code> is DHCP-dynamic on <code>enp0s6</code> (lease expiring); worker <code>oracle-cp</code> can't route to it. Tailscale IPs are the <strong>intentional durable</strong> node IPs (kubelet <code>--node-ip</code> + apiserver <code>--advertise-address</code> migrated Jul 21).</li>
+<li><span class="dot ">&#x25CB;</span> VM kubeconfig switched <code>server: https://10.0.0.160:6443</code> → <code>https://100.96.76.37:6443</code>. Backup at <code>~/.kube/config.bak-10.0.0.160</code>. All controllers + HelmReleases verified healthy after switch.</li>
+<li><span class="dot ">&#x25CB;</span> Do NOT pin kubelet back to <code>10.0.0.160</code> — would break worker connectivity and expire with DHCP lease.<p class="note">### Fixed</p></li>
+<li><span class="dot ">&#x25CB;</span> <strong>jane HelmRelease UpgradeFailed (3d5h)</strong> — <code>cronjob-state-manager.yaml:1</code> nil pointer <code>.Values.cronjobs.stateManager.enabled</code>. Added <code>stateManager: {enabled: true, schedule: "0 <em>/6 </em> <em> </em>"}</code> to <code>charts/jane/values.yaml</code> defaults + <code>jane-global-values</code> ConfigMap. Chart bumped 0.1.52 → 0.1.53. HR now Ready=True (<code>jane.v49</code>).</li>
+<li><span class="dot ">&#x25CB;</span> <strong>actual-budget prometheus-exporter CrashLoopBackOff</strong> — exporter (<code>sakowicz/actual-budget-prometheus-exporter</code>) can't auth against OIDC-only Actual server (<code>@actual-app/api</code> password login broken with OIDC, actualbudget/actual#5351). Removed exporter sidecar + ServiceMonitor + metrics port. actual-budget pod now 1/1 Ready. Budget metrics in Grafana stopped.</li>
+<li><span class="dot ">&#x25CB;</span> <strong>monitoring admission jobs stuck (11d)</strong> — <code>kube-prometheus-stack-admission-create/-patch</code> hook jobs failed: SA <code>kube-prometheus-stack-admission</code> missing. Webhooks already active (10d) so jobs were redundant. Deleted both jobs.</li>
+<li><span class="dot ">&#x25CB;</span> <strong>orphaned HelmChart <code>jane-jane-speech</code></strong> — referenced nonexistent <code>GitRepository jane-chart</code> (15d, False). Deleted. All HelmCharts now True.</li>
+<li><span class="dot ">&#x25CB;</span> <strong>stale pod cleanup</strong> — deleted 49 Completed + 33 ContainerStatusUnknown + 22 Error + 2 Evicted (orphans from Tailscale node-IP migration). All deployments now 1/1 except marketgenie.<p class="note">### Remaining (external, not repo-fixable)</p></li>
+<li><span class="dot ">&#x25CB;</span> <strong>marketgenie ImagePullBackOff (11d)</strong> — <code>beingyash/marketgenie:latest</code> → Docker Hub <strong>404 (repo doesn't exist)</strong>. Both admin+core down. Not Flux-managed (installed via raw Helm). Fix in marketgenie CI: push to correct repo / fix image name.</li>
+<li><span class="dot ">&#x25CB;</span> <strong>Longhorn degraded volumes</strong> — <code>vikunja-data</code>, <code>actual-budget-data</code>, <code>jane-hermes-home</code> degraded; prometheus vol detached. Both nodes' Longhorn disks historically faulted (AGENTS.md). Volumes still attached, workloads running. Prefer <code>local-path</code> for new PVCs.</li></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
+    <h2>Session 2026-08-06: KitchenOwl Deployment — DONE ✓</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> KitchenOwl v0.7.10 deployed (all-in-one <code>tombursch/kitchenowl:v0.7.10</code> image), manifests in <code>clusters/production/kitchenowl/</code></li>
+<li><span class="dot ">&#x25CB;</span> PocketID OIDC client <code>kitchenowl</code> registered (pkce_enabled=0, client_secret_post)</li>
+<li><span class="dot ">&#x25CB;</span> SealedSecret <code>kitchenowl-oidc</code> (keys <code>JWT_SECRET_KEY</code>/<code>OIDC_CLIENT_ID</code>/<code>OIDC_CLIENT_SECRET</code>)</li>
+<li><span class="dot ">&#x25CB;</span> Strategy <code>Recreate</code> (SQLite app), no fsGroup, health path <code>/api/health/8M4F88S8ooi4sMbLBfkkV7ctWwgibW6V</code></li>
+<li><span class="dot ">&#x25CB;</span> NetworkPolicy default-deny applied manually to <code>kitchenowl</code> ns (netpol NOT Flux-managed — applied from <code>netpol/00-default-deny.yaml</code> directly)</li>
+<li><span class="dot ">&#x25CB;</span> Deployment verified: pod Running on <code>oracle-cp</code>, PVC Bound (5Gi local-path), TLS Ready, health 200 with <code>oidc_provider:["custom"]</code></li>
+<li><span class="dot ">&#x25CB;</span> Backup drill: online <code>VACUUM INTO</code> backup proven against live <code>/data/database.db</code> (229 KB test backup)<p class="note">### PocketID schema drift note</p></li>
+<li><span class="dot ">&#x25CB;</span> Original plan's <code>oidc_clients</code> INSERT column list was stale — live schema had drifted (no <code>access_token_duration_minutes</code>/<code>refresh_token_duration_minutes</code>; extra columns present). Handled via the T1 Step-4 fallback: current-schema INSERT in <code>scripts/kitchenowl/create-oidc-client.sh</code><p class="note">### Pending</p></li>
+<li><span class="dot ">&#x25CB;</span> Manual browser OIDC login test still to be done</li></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
+    <h2>Session 2026-08-07: KitchenOwl Removal — DONE ✓</h2>
+    <ul><li><span class="dot ">&#x25CB;</span> KitchenOwl removed via GitOps: manifests dir <code>clusters/production/kitchenowl/</code> deleted, entry removed from <code>clusters/production/kustomization.yaml</code>, netpol stanza removed from <code>netpol/00-default-deny.yaml</code>, row removed from installed-components table (history preserved above)</li>
+<li><span class="dot ">&#x25CB;</span> Flux prunes namespace <code>kitchenowl</code> + PVC <code>kitchenowl-data</code> (local-path, data deleted per user)</li>
+<li><span class="dot ">&#x25CB;</span> PocketID OIDC client + group rows left in place (user choice)</li></ul>
+  </section>
+<section class="card" style="border-left-color: #3498db">
     <h2>Next</h2>
-    <ul><li><span class="dot ">&#x25CB;</span> ~~Sub-project 3: NetworkPolicies + PDBs~~ ✓</li>
-<li><span class="dot ">&#x25CB;</span> ~~Sub-project 4: Longhorn storage~~ ✓</li>
-<li><span class="dot ">&#x25CB;</span> ~~Sub-project 5: Image multi-arch cleanup~~ ✓</li>
-<li><span class="dot ">&#x25CB;</span> ~~Sub-project 6: Control-Plane Restart Investigation~~ ✓<p class="note"><strong>All cluster hardening sub-projects complete.</strong></p></li></ul>
+    <ul></ul>
   </section>
 </body>
 </html>
