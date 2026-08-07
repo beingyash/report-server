@@ -37,18 +37,19 @@
 <header>
   <h1>sentiment-analysis</h1>
   <div class="meta">Last updated 2026-08-07</div>
-  <div class="badges"><span class="badge badge-good">21 OK</span>
+  <div class="badges"><span class="badge badge-good">23 OK</span>
 <span class="badge badge-bad">1 Issues</span>
 <span class="badge badge-pending">2 Pending</span></div>
 </header>
 <section class="card" style="border-left-color: #27ae60">
     <h2>Deployed services</h2>
-    <ul><li><span class="dot dot-good">&#x2713;</span> ✓ mediawatch-api running in cluster (mediawatch ns), image 0.1.13</li>
-<li><span class="dot dot-good">&#x2713;</span> ✓ mediawatch-worker running in cluster (mediawatch ns), image 0.1.13</li>
+    <ul><li><span class="dot dot-good">&#x2713;</span> ✓ mediawatch-api running in cluster (mediawatch ns), image 0.1.14</li>
+<li><span class="dot dot-good">&#x2713;</span> ✓ mediawatch-worker running in cluster (mediawatch ns), image 0.1.14</li>
 <li><span class="dot dot-good">&#x2713;</span> ✓ mediawatch-postgres-0 running</li>
 <li><span class="dot dot-good">&#x2713;</span> ✓ https://mediawatch.abysmallab.in/healthz → 200</li>
 <li><span class="dot dot-good">&#x2713;</span> ✓ SPA served at https://mediawatch.abysmallab.in/ (Astryx UI live)</li>
-<li><span class="dot dot-good">&#x2713;</span> ✓ auth config endpoint returns real PocketID issuer + authorize URL</li></ul>
+<li><span class="dot dot-good">&#x2713;</span> ✓ auth config endpoint returns real PocketID issuer + authorize URL</li>
+<li><span class="dot dot-good">&#x2713;</span> ✓ OIDC login loop fixed (0.1.14) — stale authed branch + double code exchange</li></ul>
   </section>
 <section class="card" style="border-left-color: #27ae60">
     <h2>Astryx UI redesign (Plan 6)</h2>
@@ -59,8 +60,9 @@
 <li><span class="dot dot-good">&#x2713;</span> ✓ ClickableCard SPA nav via LinkProvider router bridge (fixed bdb94b5)</li>
 <li><span class="dot dot-good">&#x2713;</span> ✓ Status-dot colors reflect event status (fixed 1551a1f)</li>
 <li><span class="dot dot-good">&#x2713;</span> ✓ narrative_unavailable banner restored in AnalysisDetail (fixed 1551a1f)</li>
-<li><span class="dot dot-good">&#x2713;</span> ✓ 50 frontend vitest / typecheck clean / production build OK</li>
+<li><span class="dot dot-good">&#x2713;</span> ✓ 51 frontend vitest / typecheck clean / production build OK</li>
 <li><span class="dot dot-good">&#x2713;</span> ✓ chrome barrel export test self-guarding (b748abc)</li>
+<li><span class="dot dot-good">&#x2713;</span> ✓ OIDC callback regression test: single exchange + authed render (78cf78e)</li>
 <li><span class="dot dot-good">&#x2713;</span> ✓ theme CSS (astryx-theme layer, data-theme light/dark) verified in served bundle</li></ul>
   </section>
 <section class="card" style="border-left-color: #27ae60">
