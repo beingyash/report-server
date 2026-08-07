@@ -37,14 +37,14 @@
 <header>
   <h1>sentiment-analysis</h1>
   <div class="meta">Last updated 2026-08-07</div>
-  <div class="badges"><span class="badge badge-good">20 OK</span>
+  <div class="badges"><span class="badge badge-good">21 OK</span>
 <span class="badge badge-bad">1 Issues</span>
 <span class="badge badge-pending">2 Pending</span></div>
 </header>
 <section class="card" style="border-left-color: #27ae60">
     <h2>Deployed services</h2>
-    <ul><li><span class="dot dot-good">&#x2713;</span> ✓ mediawatch-api running in cluster (mediawatch ns), image 0.1.11</li>
-<li><span class="dot dot-good">&#x2713;</span> ✓ mediawatch-worker running in cluster (mediawatch ns), image 0.1.11</li>
+    <ul><li><span class="dot dot-good">&#x2713;</span> ✓ mediawatch-api running in cluster (mediawatch ns), image 0.1.13</li>
+<li><span class="dot dot-good">&#x2713;</span> ✓ mediawatch-worker running in cluster (mediawatch ns), image 0.1.13</li>
 <li><span class="dot dot-good">&#x2713;</span> ✓ mediawatch-postgres-0 running</li>
 <li><span class="dot dot-good">&#x2713;</span> ✓ https://mediawatch.abysmallab.in/healthz → 200</li>
 <li><span class="dot dot-good">&#x2713;</span> ✓ SPA served at https://mediawatch.abysmallab.in/ (Astryx UI live)</li>
@@ -65,9 +65,10 @@
   </section>
 <section class="card" style="border-left-color: #27ae60">
     <h2>Deploy pipeline</h2>
-    <ul><li><span class="dot dot-good">&#x2713;</span> ✓ CI workflow test + build-push green (run 31175222735)</li>
-<li><span class="dot dot-good">&#x2713;</span> ✓ Image beingyash/mediawatch:0.1.9 multi-arch pushed to Docker Hub</li>
-<li><span class="dot dot-good">&#x2713;</span> ✓ ImageUpdateAutomation bumped kubernetes-deploy → Flux Helm upgrade v17 succeeded</li>
+    <ul><li><span class="dot dot-good">&#x2713;</span> ✓ CI workflow test + build-push green</li>
+<li><span class="dot dot-good">&#x2713;</span> ✓ CI skips docs-only pushes (paths-ignore) — images only rebuild on code change (5a76f47)</li>
+<li><span class="dot dot-good">&#x2713;</span> ✓ Image beingyash/mediawatch multi-arch pushed to Docker Hub (semver 0.1.N via run_number)</li>
+<li><span class="dot dot-good">&#x2713;</span> ✓ ImageUpdateAutomation bumps kubernetes-deploy → Flux Helm upgrade succeeds</li>
 <li><span class="dot dot-good">&#x2713;</span> ✓ Stale dead pods cleaned from mediawatch namespace</li></ul>
   </section>
 <section class="card" style="border-left-color: #e74c3c">
