@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Best Studio Monitors Under ₹25,000 in India (2026)</title>
+<style>
+:root {
+  --green: #16a34a; --yellow: #ca8a04; --orange: #ea580c; --blue: #2563eb;
+  --bg: #f8fafc; --card-bg: #fff; --text: #1e293b; --muted: #64748b;
+  --border: #e2e8f0; --badge-value: #dcfce7; --badge-pro: #dbeafe; --badge-max: #fef3c7;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f172a; --card-bg: #1e293b; --text: #e2e8f0;
+    --muted: #94a3b8; --border: #334155;
+    --badge-value: #14532d; --badge-pro: #1e3a5f; --badge-max: #3b2f1a;
+  }
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+       background: var(--bg); color: var(--text); line-height: 1.6; padding: 2rem; }
+.container { max-width: 1100px; margin: 0 auto; }
+h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+.subtitle { color: var(--muted); margin-bottom: 1.5rem; font-size: 0.9rem; }
+.filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.filter-tag { background: var(--border); padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.8rem; }
+.summary { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+.summary-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 0.5rem;
+                padding: 1rem 1.5rem; flex: 1; min-width: 140px; }
+.summary-card .num { font-size: 1.5rem; font-weight: 700; }
+.summary-card .label { font-size: 0.8rem; color: var(--muted); }
+h2 { font-size: 1.25rem; margin: 2rem 0 1rem; }
+.quick-picks { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+.quick-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 0.5rem; padding: 1.25rem; }
+.quick-card .tag { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; color: var(--blue); margin-bottom: 0.25rem; }
+.quick-card h3 { font-size: 1.05rem; margin-bottom: 0.25rem; }
+.quick-card .price { font-weight: 700; color: var(--green); }
+.quick-card p { font-size: 0.85rem; color: var(--muted); }
+.comp-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 2rem; }
+.comp-table th { text-align: left; padding: 0.5rem; border-bottom: 2px solid var(--border);
+                  color: var(--muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
+.comp-table td { padding: 0.5rem; border-bottom: 1px solid var(--border); }
+.comp-table tr:hover td { background: rgba(0,0,0,0.02); }
+.comp-table .best { color: var(--green); font-weight: 600; }
+.monitor-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 0.5rem;
+                padding: 1.5rem; margin-bottom: 1.5rem; }
+.card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem; }
+.monitor-name { font-size: 1.2rem; font-weight: 600; }
+.verdict { font-size: 0.85rem; color: var(--muted); font-style: italic; margin-bottom: 0.75rem; }
+.price-line { font-weight: 700; }
+.price-line .in-budget { color: var(--green); }
+.price-line .over-budget { color: var(--orange); }
+.spec-grid { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.75rem; }
+.spec-item { display: flex; flex-direction: column; }
+.spec-item .k { font-size: 0.7rem; text-transform: uppercase; color: var(--muted); }
+.spec-item .v { font-weight: 600; color: var(--text); }
+.pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.85rem; }
+.pros-cons ul { list-style: none; padding: 0; }
+.pros-cons li { padding: 0.15rem 0; }
+.pros-cons .p { color: var(--green); }
+.pros-cons .c { color: var(--orange); }
+.badge { padding: 0.2rem 0.6rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+.badge-value { background: var(--badge-value); color: #16a34a; }
+.badge-pro { background: var(--badge-pro); color: #3b82f6; }
+.badge-max { background: var(--badge-max); color: #d97706; }
+.callout { background: var(--card-bg); border: 1px solid var(--border); border-left: 4px solid var(--yellow);
+           border-radius: 0.375rem; padding: 1rem 1.25rem; margin: 1rem 0; font-size: 0.9rem; }
+.callout strong { color: var(--yellow); }
+.buy-guide { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1rem 0 2rem; }
+.guide-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 0.5rem; padding: 1rem; }
+.guide-card h4 { font-size: 0.9rem; margin-bottom: 0.35rem; }
+.guide-card p { font-size: 0.82rem; color: var(--muted); }
+.sources { font-size: 0.78rem; color: var(--muted); margin-top: 2rem; }
+.sources a { color: var(--blue); word-break: break-all; }
+.sources li { margin-bottom: 0.15rem; }
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border);
+         font-size: 0.75rem; color: var(--muted); }
+@media print { body { padding: 0; } .monitor-card, .quick-card { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Best Studio Monitors Under ₹25,000 in India</h1>
+  <p class="subtitle">Generated 8 August 2026 &middot; Prices checked Aug 2026 on Amazon.in &amp; Indian pro-audio stores &middot; Prices are per pair unless noted, and move with sales</p>
+
+  <div class="filters">
+    <span class="filter-tag">Budget ≤ ₹25,000</span>
+    <span class="filter-tag">Active powered monitors</span>
+    <span class="filter-tag">Home studio / bedroom producer</span>
+    <span class="filter-tag">Near-field mixing</span>
+  </div>
+
+  <div class="summary">
+    <div class="summary-card"><div class="num">8</div><div class="label">Monitors in budget</div></div>
+    <div class="summary-card"><div class="num">₹10k-₹26k</div><div class="label">Pair price range</div></div>
+    <div class="summary-card"><div class="num">₹11,990</div><div class="label">Best value (Edifier MR4)</div></div>
+    <div class="summary-card"><div class="num">₹18.5k-20k</div><div class="label">Best overall (Eris E4.5)</div></div>
+  </div>
+
+  <h2>Quick Picks</h2>
+  <div class="quick-picks">
+    <div class="quick-card">
+      <div class="tag">Best Value</div>
+      <h3>Edifier MR4</h3>
+      <div class="price">₹11,990</div>
+      <p>Near-flat Monitor mode, balanced TRS, MDF cabinets. Spends half the budget, leaves room for an interface + isolation pads. Best rupee-per-accuracy.</p>
+    </div>
+    <div class="quick-card">
+      <div class="tag">Best Overall in Budget</div>
+      <h3>PreSonus Eris E4.5 (2nd Gen)</h3>
+      <div class="price">₹18,500-20,250</div>
+      <p>The "safe studio entry point" — real balanced TRS, rear acoustic tuning, 50W Class AB. The safest pick for serious mixing under ₹20k.</p>
+    </div>
+    <div class="quick-card">
+      <div class="tag">Best Max-Budget 5"</div>
+      <h3>JBL 305P MkII</h3>
+      <div class="price">₹24,000-26,000</div>
+      <p>Widest bass (43Hz) and huge sweet spot at the ceiling of this budget. Best if you produce bass-heavy genres and have a treated-ish room.</p>
+    </div>
+  </div>
+
+  <h2>Comparison Table</h2>
+  <table class="comp-table">
+    <tr>
+      <th>Model</th><th>Pair Price</th><th>Driver</th><th>Power</th><th>Inputs</th><th>Best For</th>
+    </tr>
+    <tr>
+      <td>Edifier MR4</td><td class="best">₹11,990</td><td>4" + 1" silk dome</td><td>42W</td><td>RCA, TRS, AUX, HP out</td><td>Budget mixing + multimedia</td>
+    </tr>
+    <tr>
+      <td>PreSonus Eris E3.5</td><td>₹10,000-13,290</td><td>3.5" + 1"</td><td>50W Class AB</td><td>TRS, RCA</td><td>Vocal / acoustic clarity</td>
+    </tr>
+    <tr>
+      <td>Mackie CR4-X</td><td>₹11,500-13,000</td><td>4" + 0.75"</td><td>~40W</td><td>RCA, TRS, HP out</td><td>Multimedia, video editing</td>
+    </tr>
+    <tr>
+      <td>JBL 104-BT</td><td>₹14,000-16,000</td><td>4.5" coaxial</td><td>60W</td><td>RCA, AUX, Bluetooth</td><td>Cramped desks, casual reference</td>
+    </tr>
+    <tr>
+      <td>M-Audio BX4</td><td>₹16,065</td><td>4" + 1"</td><td>120W (2×60)</td><td>RCA, TRS, BT</td><td>Content creation</td>
+    </tr>
+    <tr>
+      <td>PreSonus Eris E4.5</td><td class="best">₹18,500-20,250</td><td>4.5" + 1"</td><td>50W Class AB</td><td>TRS, RCA</td><td>Accurate home-studio mixing</td>
+    </tr>
+    <tr>
+      <td>M-Audio BX5 D3</td><td class="over-budget" style="color:var(--orange)">~₹27,000 (borderline)</td><td>5" Kevlar + 1"</td><td>100W RMS</td><td>XLR, TRS</td><td>Larger room, pro inputs</td>
+    </tr>
+    <tr>
+      <td>JBL 305P MkII</td><td>₹24,000-26,000</td><td>5" + 1"</td><td>82W</td><td>XLR, TRS</td><td>Bass-heavy genres, max budget</td>
+    </tr>
+  </table>
+
+  <h2>Top Picks, In Detail</h2>
+
+  <div class="monitor-card">
+    <div class="card-header">
+      <div class="monitor-name">Edifier MR4 &nbsp;<span class="badge badge-value">Best Value</span></div>
+      <div class="price-line in-budget">₹11,990 (MRP ₹15,990 &middot; low ~₹9,891)</div>
+    </div>
+    <div class="verdict">The budget monitor to beat in India 2026 — honest tuning, real balanced TRS inputs and MDF cabinets at a price that undercuts everything else. Amazon rating ~9.2/10 across 3,400+ reviews.</div>
+    <div class="spec-grid">
+      <div class="spec-item"><span class="k">Drivers</span><span class="v">4" woofer + 1" silk dome</span></div>
+      <div class="spec-item"><span class="k">Power</span><span class="v">42W</span></div>
+      <div class="spec-item"><span class="k">Cabinet</span><span class="v">MDF wood</span></div>
+      <div class="spec-item"><span class="k">Inputs</span><span class="v">RCA, TRS, AUX, HP out</span></div>
+      <div class="spec-item"><span class="k">Mode switch</span><span class="v">Monitor / Music DSP</span></div>
+    </div>
+    <div class="pros-cons">
+      <ul class="pros"><li class="p">+ Astonishingly neutral in Monitor mode (≈ Mackie CR4-X flatness)</li><li class="p">+ Balanced TRS inputs no competitor offers near this price</li><li class="p">+ Non-fatiguing midrange; smooth highs</li><li class="p">+ Leaves ~₹13k for interface + isolation pads</li></ul>
+      <ul class="cons"><li class="c">- No Bluetooth; no sub out (closed system, amp in right speaker)</li><li class="c">- Not surgical top-end like PreSonus E3.5</li><li class="c">- Slight low-end hype below 80Hz</li></ul>
+    </div>
+  </div>
+
+  <div class="monitor-card">
+    <div class="card-header">
+      <div class="monitor-name">PreSonus Eris E4.5 (2nd Gen) &nbsp;<span class="badge badge-pro">Best Overall</span></div>
+      <div class="price-line in-budget">₹18,500-20,250</div>
+    </div>
+    <div class="verdict">The safest possible studio recommendation under ₹20k. Flat-ish response that won't flatter your mixes, plus rear acoustic tuning controls for untreated Indian rooms.</div>
+    <div class="spec-grid">
+      <div class="spec-item"><span class="k">Drivers</span><span class="v">4.5" + 1" silk dome</span></div>
+      <div class="spec-item"><span class="k">Power</span><span class="v">50W Class AB</span></div>
+      <div class="spec-item"><span class="k">Tuning</span><span class="v">Acoustic space, HF/LF trim</span></div>
+      <div class="spec-item"><span class="k">Inputs</span><span class="v">TRS balanced, RCA</span></div>
+    </div>
+    <div class="pros-cons">
+      <ul class="pros"><li class="p">+ Surprisingly flat response forces better mix discipline</li><li class="p">+ Acoustic tuning tames bass buildup in corners</li><li class="p">+ Balanced TRS for clean interface connection</li><li class="p">+ PreSonus dealer/service network across India</li></ul>
+      <ul class="cons"><li class="c">- 4.5" driver: sub-bass below ~60Hz needs headphones/car reference</li><li class="c">- No Bluetooth</li></ul>
+    </div>
+  </div>
+
+  <div class="monitor-card">
+    <div class="card-header">
+      <div class="monitor-name">JBL 305P MkII &nbsp;<span class="badge badge-max">Max Budget</span></div>
+      <div class="price-line in-budget">₹24,000-26,000</div>
+    </div>
+    <div class="verdict">The classic budget-pro choice. 5-inch bass down to 43Hz, huge sweet spot from JBL's M2-derived Image Control Waveguide. If your budget ceiling is ₹25k and you make bass-heavy music, this is it.</div>
+    <div class="spec-grid">
+      <div class="spec-item"><span class="k">Drivers</span><span class="v">5" + 1"</span></div>
+      <div class="spec-item"><span class="k">Power</span><span class="v">82W (41W LF + 41W HF)</span></div>
+      <div class="spec-item"><span class="k">Range</span><span class="v">43Hz-24kHz</span></div>
+      <div class="spec-item"><span class="k">Inputs</span><span class="v">XLR, TRS balanced</span></div>
+      <div class="spec-item"><span class="k">Tuning</span><span class="v">Boundary EQ, HF trim</span></div>
+    </div>
+    <div class="pros-cons">
+      <ul class="pros"><li class="p">+ Deepest bass in budget (43Hz) — great for EDM/hip-hop</li><li class="p">+ Wide sweet spot; easy to lean around</li><li class="p">+ More headroom than HS5; costs ~₹4k less</li><li class="p">+ Balanced XLR + TRS for pro interfaces</li></ul>
+      <ul class="cons"><li class="c">- Wide bass can get muddy in untreated rooms — needs panels</li><li class="c">- Rear-ported: keep 1.5-2 ft from wall</li><li class="c">- Sold as singles in India — confirm you're buying two</li></ul>
+    </div>
+  </div>
+
+  <div class="monitor-card">
+    <div class="card-header">
+      <div class="monitor-name">PreSonus Eris E3.5 (2nd Gen)</div>
+      <div class="price-line in-budget">₹10,000-13,290</div>
+    </div>
+    <div class="verdict">The undisputed entry-level king. Most analytical mid/high detail in the sub-₹15k class — brutal for vocal/audio mixing, forgiving on price.</div>
+    <div class="spec-grid">
+      <div class="spec-item"><span class="k">Drivers</span><span class="v">3.5" + 1" silk dome</span></div>
+      <div class="spec-item"><span class="k">Power</span><span class="v">50W Class AB</span></div>
+      <div class="spec-item"><span class="k">Range</span><span class="v">80Hz-20kHz</span></div>
+      <div class="spec-item"><span class="k">Inputs</span><span class="v">TRS, RCA</span></div>
+    </div>
+    <div class="pros-cons">
+      <ul class="pros"><li class="p">+ Surgical mid/high clarity — reveals masking and sibilance</li><li class="p">+ Acoustic tuning controls + RF/overheat protection</li><li class="p">+ Tried-and-tested brand with 2nd-gen refinement</li></ul>
+      <ul class="cons"><li class="c">- 3.5" driver: nothing below 80Hz — no sub-bass for EDM/trap</li><li class="c">- No Bluetooth</li></ul>
+    </div>
+  </div>
+
+  <div class="monitor-card">
+    <div class="card-header">
+      <div class="monitor-name">JBL 104-BT</div>
+      <div class="price-line in-budget">₹14,000-16,000</div>
+    </div>
+    <div class="verdict">Coaxial compact desktop solution. Great stereo imaging from a single point source, Bluetooth included — the pick for tiny desks and casual reference where speaker placement is impossible.</div>
+    <div class="spec-grid">
+      <div class="spec-item"><span class="k">Drivers</span><span class="v">4.5" coaxial + 0.75"</span></div>
+      <div class="spec-item"><span class="k">Power</span><span class="v">60W</span></div>
+      <div class="spec-item"><span class="k">Inputs</span><span class="v">RCA, AUX, Bluetooth</span></div>
+    </div>
+    <div class="pros-cons">
+      <ul class="pros"><li class="p">+ Coaxial design avoids phase issues on cramped desks</li><li class="p">+ Bluetooth for casual listening / reference</li></ul>
+      <ul class="cons"><li class="c">- No balanced inputs</li><li class="c">- Not a serious mixing tool — casual reference only</li></ul>
+    </div>
+  </div>
+
+  <div class="monitor-card">
+    <div class="card-header">
+      <div class="monitor-name">Mackie CR4-X</div>
+      <div class="price-line in-budget">₹11,500-13,000</div>
+    </div>
+    <div class="verdict">Warmer, more enjoyable sound with low-mid punch. A multimedia/content-creation hybrid that's accurate enough for light mixing.</div>
+    <div class="spec-grid">
+      <div class="spec-item"><span class="k">Drivers</span><span class="v">4" + 0.75" ferrofluid silk</span></div>
+      <div class="spec-item"><span class="k">Power</span><span class="v">~40W</span></div>
+      <div class="spec-item"><span class="k">Inputs</span><span class="v">RCA, TRS, HP out</span></div>
+    </div>
+    <div class="pros-cons">
+      <ul class="pros"><li class="p">+ Warm, fun sound for casual listening + light mixing</li><li class="p">+ Front-panel volume + headphone out</li></ul>
+      <ul class="cons"><li class="c">- No rear acoustic tuning controls</li><li class="c">- Less clinical than PreSonus alternatives</li></ul>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Borderline / just over budget:</strong> M-Audio BX5 D3 (5" Kevlar, 100W, XLR/TRS — ~₹27k/pair, usually ₹13-14k per single) and JBL 305P MkII edge up to ₹26k. Yamaha HS5 (~₹28-31k pair) and KRK Rokit 5 G4 (~₹38k pair) are the classic "worth saving up for" next step up.
+  </div>
+
+  <h2>Buying Guide — Where the ₹25k Goes</h2>
+  <div class="buy-guide">
+    <div class="guide-card">
+      <h4>Budget allocation</h4>
+      <p>Monitors ≤ ₹20k + audio interface ~₹8.5k (Focusrite Scarlett Solo) + isolation pads ~₹1.5-2.5k. An interface's balanced outputs kill the hum/hiss of laptop headphone jacks.</p>
+    </div>
+    <div class="guide-card">
+      <h4>Room acoustics beat speakers</h4>
+      <p>Expensive monitors in an untreated bedroom sound worse than cheap monitors in a treated room. Spend on panels/pads at first reflection points before maxing the speaker budget.</p>
+    </div>
+    <div class="guide-card">
+      <h4>Placement is free</h4>
+      <p>Tweeters at ear level, speakers forming an equilateral triangle with your head, 6-12" from the wall. Decouple from the desk (pads or folded towel) to stop it resonating like a subwoofer.</p>
+    </div>
+    <div class="guide-card">
+      <h4>Bluetooth = reference only</h4>
+      <p>BT adds 30-40ms latency — unusable for real-time mixing. Wired TRS/XLR for work, Bluetooth only for casual listening. Mix with a sub-$15k monitor's limits in mind; cross-check low-end on headphones.</p>
+    </div>
+  </div>
+
+  <h2>Sources</h2>
+  <ul class="sources">
+    <li><a href="https://12notez.in/blog/best-studio-monitors-under-20000-india-2026">12NOTEZ — Best Studio Monitors Under ₹20,000 in India (2026)</a></li>
+    <li><a href="https://12notez.in/blog/best-studio-monitors-under-15000-india-2026">12NOTEZ — Best Studio Monitors Under ₹15,000 in India (2026)</a></li>
+    <li><a href="https://12notez.in/blog/yamaha-hs5-vs-jbl-305p-mkii-studio-monitors-india-2026">12NOTEZ — Yamaha HS5 vs JBL 305P MkII</a></li>
+    <li><a href="https://proaudiovideo.in/edifier-mr4-review-2026/">ProAudioVideo — Edifier MR4 Review 2026</a></li>
+    <li><a href="https://reviehub.in/best-studio-monitors-india-2026-5-tested-picks/">RevieHub — Best Studio Monitors India 2026: 5 Tested Picks</a></li>
+    <li><a href="https://pricehistory.app/p/edifier-mr4-powered-studio-monitor-speakers-4-zCYCu8Q2">pricehistory.app — Edifier MR4 price history (Amazon.in)</a></li>
+    <li><a href="https://www.musicstores.in/studio-monitors">Music Stores India — Studio monitor prices</a></li>
+    <li><a href="https://www.indiamart.com/proddetail/presonus-eris-e5-2-way-active-studio-monitor-2855007756048.html">IndiaMART — PreSonus Eris E5 pricing</a></li>
+  </ul>
+
+  <footer>
+    Compiled 8 Aug 2026 from public Indian-market retail listings and 2026 review roundups. Prices fluctuate with sales; always confirm live price on the product page. Not affiliated with any brand or store.
+  </footer>
+</div>
+</body>
+</html>
