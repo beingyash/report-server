@@ -36,9 +36,9 @@
 <body>
 <header>
   <h1>kubernetes-deploy</h1>
-  <div class="meta">Last updated 2026-08-06</div>
+  <div class="meta">Last updated 2026-08-11</div>
   <div class="badges"><span class="badge badge-good">1 OK</span>
-<span class="badge badge-bad">6 Issues</span>
+<span class="badge badge-bad">7 Issues</span>
 <span class="badge badge-pending">154 Pending</span></div>
 </header>
 <section class="card" style="border-left-color: #3498db">
@@ -68,7 +68,7 @@
 <li><span class="dot ">&#x25CB;</span> Restarted kubelet; recreated source-controller pod; switched <code>jane-chart</code> back to SSH URL.</li>
 <li><span class="dot ">&#x25CB;</span> Updated <code>ansible/add-worker.yml</code> so future workers get the same clean resolv.conf.</li></ul>
   </section>
-<section class="card" style="border-left-color: #3498db">
+<section class="card" style="border-left-color: #e74c3c">
     <h2>Known Issues</h2>
     <ul><li><span class="dot ">&#x25CB;</span> Only <code>traefik</code> has LoadBalancer service (EXTERNAL-IP <code>&lt;pending&gt;</code>) — no MetalLB (bare-metal)</li>
 <li><span class="dot ">&#x25CB;</span> Traffic reaches node via NodePort: HTTP <code>32580</code>, HTTPS <code>32305</code></li>
@@ -92,7 +92,8 @@
 <li><span class="dot ">&#x25CB;</span> metrics-server: working for both nodes</li>
 <li><span class="dot ">&#x25CB;</span> kube-prometheus-stack: 7/7 pods running</li>
 <li><span class="dot ">&#x25CB;</span> Prometheus targets: <strong>22/22 UP</strong> (was 14 UP, 9 DOWN)</li>
-<li><span class="dot ">&#x25CB;</span> Grafana at <code>grafana.yash.abysmallab.in</code><p class="note">### Cross-node networking — resolved ✓</p></li>
+<li><span class="dot ">&#x25CB;</span> Grafana at <code>grafana.yash.abysmallab.in</code></li>
+<li><span class="dot dot-bad">&#x2717;</span> <strong>Grafana GitOps persistence (2026-08-12):</strong> OIDC now via <code>GF_AUTH_GENERIC_OAUTH_*</code> env vars (was broken nested <code>grafana.ini.auth.generic_oauth</code> → Go <code>map[...]</code>, never parsed). Client secret in SealedSecret <code>grafana-oidc</code> (<code>kube-system</code> sealed-secrets controller, NOT <code>sealed-secrets</code> ns — AGENTS.md drift). PVC <code>kube-prometheus-stack-grafana</code> Bound on <strong>longhorn</strong> 10Gi — grafana.db now survives restarts. PocketID client <code>b4fa6906</code> pkce_enabled=0 (Grafana no-PKCE, matches working config). OAuth 302 → PocketID authorize. <strong>Todo:</strong> full browser sign-in smoke test; consider rotation of client_secret (was committed plaintext pre-fix, private repo); prefer local-path over longhorn per SQLite guidance on next change.<p class="note">### Cross-node networking — resolved ✓</p></li>
 <li><span class="dot ">&#x25CB;</span> Pod-to-pod across nodes working</li>
 <li><span class="dot ">&#x25CB;</span> Routing fix: ip rule 5255 persisted via systemd</li></ul>
   </section>
