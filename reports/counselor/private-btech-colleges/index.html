@@ -1,0 +1,2370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Private B.Tech Colleges — Alwar, Bharatpur & Jaipur (65% PCM)</title>
+<style>
+:root {
+  --green: #16a34a; --yellow: #ca8a04; --orange: #ea580c;
+  --bg: #f8fafc; --card-bg: #fff; --text: #1e293b; --muted: #64748b;
+  --border: #e2e8f0; --badge-govt: #dbeafe; --badge-private: #fef3c7;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f172a; --card-bg: #1e293b; --text: #e2e8f0;
+    --muted: #94a3b8; --border: #334155;
+    --badge-govt: #1e3a5f; --badge-private: #3b2f1a;
+  }
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+       background: var(--bg); color: var(--text); line-height: 1.6; padding: 2rem; }
+.container { max-width: 1100px; margin: 0 auto; }
+h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+.subtitle { color: var(--muted); margin-bottom: 1.5rem; font-size: 0.9rem; }
+.filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.filter-tag { background: var(--border); padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.8rem; }
+.summary { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+.summary-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 0.5rem;
+                padding: 1rem 1.5rem; flex: 1; min-width: 140px; }
+.summary-card .num { font-size: 1.5rem; font-weight: 700; }
+.summary-card .label { font-size: 0.8rem; color: var(--muted); }
+
+.college-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 0.5rem;
+                padding: 1.5rem; margin-bottom: 1.5rem; }
+.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
+.college-name { font-size: 1.2rem; font-weight: 600; }
+.type-badge { padding: 0.2rem 0.6rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+.type-govt { background: var(--badge-govt); color: #2563eb; }
+.type-private { background: var(--badge-private); color: #d97706; }
+.fee-bar-container { margin-bottom: 1rem; }
+.fee-bar { height: 1.5rem; border-radius: 0.25rem; display: flex; align-items: center;
+           padding-left: 0.5rem; font-size: 0.8rem; color: #fff; font-weight: 600; min-width: fit-content; }
+.fee-bar.green { background: var(--green); }
+.fee-bar.yellow { background: var(--yellow); }
+.fee-bar.orange { background: var(--orange); }
+.fee-bar.gray { background: var(--muted); }
+.course-table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; font-size: 0.9rem; }
+.course-table th { text-align: left; padding: 0.5rem; border-bottom: 2px solid var(--border);
+                   color: var(--muted); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; }
+.course-table td { padding: 0.5rem; border-bottom: 1px solid var(--border); }
+.course-table tr:last-child td { border-bottom: none; }
+.accred-badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 0.25rem;
+                background: var(--border); font-size: 0.75rem; margin-right: 0.25rem; }
+.meta-grid { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.85rem; color: var(--muted); }
+.meta-item { display: flex; align-items: center; gap: 0.25rem; }
+
+.tab-bar { display: flex; gap: 0.375rem; flex-wrap: wrap; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border); padding-bottom: 0; }
+.tab-btn { padding: 0.5rem 1rem; border: 1px solid var(--border); border-bottom: none; border-radius: 0.375rem 0.375rem 0 0; background: transparent; color: var(--muted); cursor: pointer; font-size: 0.85rem; font-family: inherit; margin-bottom: -2px; }
+.tab-btn:hover { background: var(--border); color: var(--text); }
+.tab-btn.active { background: var(--card-bg); color: var(--text); font-weight: 600; border-bottom-color: var(--card-bg); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.comp-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 2rem; }
+.comp-table th { text-align: left; padding: 0.5rem; border-bottom: 2px solid var(--border);
+                  color: var(--muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
+.comp-table td { padding: 0.5rem; border-bottom: 1px solid var(--border); }
+.comp-table tr:hover td { background: rgba(0,0,0,0.02); }
+
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border);
+         font-size: 0.75rem; color: var(--muted); }
+
+@media print {
+  body { padding: 0; }
+  .college-card { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Private B.Tech Colleges — Alwar, Bharatpur & Jaipur (65% PCM)</h1>
+  <p class="subtitle">Generated 16 August 2026 &middot; Data as of 2026-08-16</p>
+
+  <div class="filters">
+    <span class="filter-tag">Fee ≤ ₹2,00,000</span>
+<span class="filter-tag">Jaipur, Rajasthan</span>
+<span class="filter-tag">B.Tech</span>
+  </div>
+
+  <div class="summary">
+    <div class="summary-card">
+      <div class="num">14</div>
+      <div class="label">Colleges</div>
+    </div>
+    <div class="summary-card">
+      <div class="num">28</div>
+      <div class="label">B.Tech Programs</div>
+    </div>
+    <div class="summary-card">
+      <div class="num">₹80,000-₹1,35,000</div>
+      <div class="label">Fee Range (₹/yr)</div>
+    </div>
+    <div class="summary-card">
+      <div class="num">0 / 14</div>
+      <div class="label">Govt / Private</div>
+    </div>
+  </div>
+
+  <button class="tab-btn active" data-field="all">All (14)</button>
+<button class="tab-btn" data-field="computer-science-engineering">Computer Science & Engineering (14)</button>
+<button class="tab-btn" data-field="mechanical-engineering">Mechanical Engineering (14)</button>
+
+  <div class="tab-panel active" id="tab-all">
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">IET Alwar (Institute of Engineering &amp; Technology)</span>
+          <a href="https://www.ietalwar.com" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:42%">
+          ₹84,500/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹84,500</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹84,500</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Alwar, Rajasthan</div>
+        <div class="meta-item">Phone: See website</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,50,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">NIET Alwar (Northern Institute of Engineering &amp; Technical Campus)</span>
+          <a href="https://www.nietalwar.com" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:43%">
+          ₹85,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹85,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹85,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Mandir Road, Alwar, Rajasthan</div>
+        <div class="meta-item">Phone: See website</div>
+        <div class="meta-item"><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span></div>
+        <div class="meta-item">Avg Package: ₹3,20,000</div>
+        <div class="meta-item">Recruiters: TCS, Wipro</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">MITRC Alwar (Modern Institute of Technology &amp; Research Centre)</span>
+          <a href="https://mitrc.ac.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:43%">
+          ₹85,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹85,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹85,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Alwar, Rajasthan</div>
+        <div class="meta-item">Phone: See website</div>
+        <div class="meta-item"><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,20,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">St. Margaret Engineering College, Neemrana</span>
+          <a href="https://www.smec.ac.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:43%">
+          ₹85,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹85,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹85,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Neemrana, Alwar, Rajasthan</div>
+        <div class="meta-item">Phone: See website</div>
+        <div class="meta-item"><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span></div>
+        <div class="meta-item">Avg Package: ₹3,00,000</div>
+        <div class="meta-item">Recruiters: TCS</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Raffles University, Neemrana</span>
+          <a href="https://rafflesuniversity.edu.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:64%">
+          ₹1,28,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,28,000</td>
+        <td>12th PCM 50%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,28,000</td>
+        <td>12th PCM 50%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Neemrana, Alwar, Rajasthan</div>
+        <div class="meta-item">Phone: See website</div>
+        <div class="meta-item"><span class="accred-badge">RECOGNITION: UGC,AICTE</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹4,00,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Sunrise University, Alwar</span>
+          <a href="https://www.sunriseuniversity.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:40%">
+          ₹80,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹80,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹80,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Alwar, Rajasthan</div>
+        <div class="meta-item">Phone: See website</div>
+        <div class="meta-item"><span class="accred-badge">RECOGNITION: UGC,AICTE</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span></div>
+        <div class="meta-item">Avg Package: ₹3,00,000</div>
+        <div class="meta-item">Recruiters: TCS</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Arya College of Engineering, Jaipur</span>
+          <a href="https://www.aryacollege.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:48%">
+          ₹95,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹95,000</td>
+        <td>12th PCM 45%; 65% board: direct admission confirm</td>
+        <td>180</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹95,000</td>
+        <td>12th PCM 45%; 65% board: direct admission confirm</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Kukas, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 1800-102-1044</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A+</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,50,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys, Wipro</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Anand International College of Engineering, Jaipur</span>
+          <a href="https://www.anandice.ac.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:45%">
+          ₹90,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹90,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹90,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Kanota, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 0141-5116888</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,20,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Global Institute of Technology (GIT), Jaipur</span>
+          <a href="https://www.gitjaipur.com" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:48%">
+          ₹95,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹95,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹95,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Sitapura, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 0141-2770573</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,50,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Regional College, Jaipur</span>
+          <a href="https://www.regional.ac.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:48%">
+          ₹95,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹95,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹95,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Sikar Road, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 0141-2252050</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,20,000</div>
+        <div class="meta-item">Recruiters: TCS, Wipro</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Jaipur Engineering College (JEC), Kukas</span>
+          <a href="https://www.jeckukas.org.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:50%">
+          ₹1,00,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,00,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,00,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Kukas, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 1800-200-7919</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,50,000</div>
+        <div class="meta-item">Recruiters: TCS, Wipro</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">JECRC Foundation (Jaipur Engineering College &amp; Research Centre)</span>
+          <a href="https://jecrcfoundation.com" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:65%">
+          ₹1,30,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,30,000</td>
+        <td>12th PCM 45%; 65% board: direct/management quota</td>
+        <td>180</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,30,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Sitapura, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 0141-2770148</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A++</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹4,00,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys, Wipro, Capgemini</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Poornima College of Engineering, Jaipur</span>
+          <a href="https://www.poornima.org" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:63%">
+          ₹1,25,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,25,000</td>
+        <td>12th PCM 45%; 65% board: management quota</td>
+        <td>180</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,25,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Sitapura, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 0141-6502333</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A++</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹4,00,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys, Cognizant</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">SKIT Jaipur (Swami Keshvanand Institute of Technology)</span>
+          <a href="https://www.skit.ac.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:68%">
+          ₹1,35,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,35,000</td>
+        <td>12th PCM 45%; CSE merit 70-75%, 65% via management quota</td>
+        <td>180</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,35,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Ramnagariya, Jagatpura, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 0141-2853244</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A++</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹4,50,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys, Wipro, Capgemini</div>
+      </div>
+    </div>
+    <h2 style="margin-top:2rem;margin-bottom:1rem;">Comparison</h2>
+    <table class="comp-table">
+      <thead><tr><th>College</th><th>Min Fee</th><th>NAAC</th><th>Avg Package</th><th>Courses</th></tr></thead>
+      <tbody><tr>
+      <td>IET Alwar (Institute of Engineering &amp; Technology)</td>
+      <td>₹84,500</td>
+      <td>A</td>
+      <td>₹3,50,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>NIET Alwar (Northern Institute of Engineering &amp; Technical Campus)</td>
+      <td>₹85,000</td>
+      <td>—</td>
+      <td>₹3,20,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>MITRC Alwar (Modern Institute of Technology &amp; Research Centre)</td>
+      <td>₹85,000</td>
+      <td>—</td>
+      <td>₹3,20,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>St. Margaret Engineering College, Neemrana</td>
+      <td>₹85,000</td>
+      <td>—</td>
+      <td>₹3,00,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Raffles University, Neemrana</td>
+      <td>₹1,28,000</td>
+      <td>—</td>
+      <td>₹4,00,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Sunrise University, Alwar</td>
+      <td>₹80,000</td>
+      <td>—</td>
+      <td>₹3,00,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Arya College of Engineering, Jaipur</td>
+      <td>₹95,000</td>
+      <td>A+</td>
+      <td>₹3,50,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Anand International College of Engineering, Jaipur</td>
+      <td>₹90,000</td>
+      <td>A</td>
+      <td>₹3,20,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Global Institute of Technology (GIT), Jaipur</td>
+      <td>₹95,000</td>
+      <td>A</td>
+      <td>₹3,50,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Regional College, Jaipur</td>
+      <td>₹95,000</td>
+      <td>A</td>
+      <td>₹3,20,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Jaipur Engineering College (JEC), Kukas</td>
+      <td>₹1,00,000</td>
+      <td>A</td>
+      <td>₹3,50,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>JECRC Foundation (Jaipur Engineering College &amp; Research Centre)</td>
+      <td>₹1,30,000</td>
+      <td>A++</td>
+      <td>₹4,00,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Poornima College of Engineering, Jaipur</td>
+      <td>₹1,25,000</td>
+      <td>A++</td>
+      <td>₹4,00,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>SKIT Jaipur (Swami Keshvanand Institute of Technology)</td>
+      <td>₹1,35,000</td>
+      <td>A++</td>
+      <td>₹4,50,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr></tbody>
+    </table></div>
+<div class="tab-panel" id="tab-computer-science-engineering">
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">IET Alwar (Institute of Engineering &amp; Technology)</span>
+          <a href="https://www.ietalwar.com" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:42%">
+          ₹84,500/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹84,500</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹84,500</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Alwar, Rajasthan</div>
+        <div class="meta-item">Phone: See website</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,50,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">NIET Alwar (Northern Institute of Engineering &amp; Technical Campus)</span>
+          <a href="https://www.nietalwar.com" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:43%">
+          ₹85,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹85,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹85,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Mandir Road, Alwar, Rajasthan</div>
+        <div class="meta-item">Phone: See website</div>
+        <div class="meta-item"><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span></div>
+        <div class="meta-item">Avg Package: ₹3,20,000</div>
+        <div class="meta-item">Recruiters: TCS, Wipro</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">MITRC Alwar (Modern Institute of Technology &amp; Research Centre)</span>
+          <a href="https://mitrc.ac.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:43%">
+          ₹85,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹85,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹85,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Alwar, Rajasthan</div>
+        <div class="meta-item">Phone: See website</div>
+        <div class="meta-item"><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,20,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">St. Margaret Engineering College, Neemrana</span>
+          <a href="https://www.smec.ac.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:43%">
+          ₹85,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹85,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹85,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Neemrana, Alwar, Rajasthan</div>
+        <div class="meta-item">Phone: See website</div>
+        <div class="meta-item"><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span></div>
+        <div class="meta-item">Avg Package: ₹3,00,000</div>
+        <div class="meta-item">Recruiters: TCS</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Raffles University, Neemrana</span>
+          <a href="https://rafflesuniversity.edu.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:64%">
+          ₹1,28,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,28,000</td>
+        <td>12th PCM 50%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,28,000</td>
+        <td>12th PCM 50%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Neemrana, Alwar, Rajasthan</div>
+        <div class="meta-item">Phone: See website</div>
+        <div class="meta-item"><span class="accred-badge">RECOGNITION: UGC,AICTE</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹4,00,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Sunrise University, Alwar</span>
+          <a href="https://www.sunriseuniversity.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:40%">
+          ₹80,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹80,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹80,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Alwar, Rajasthan</div>
+        <div class="meta-item">Phone: See website</div>
+        <div class="meta-item"><span class="accred-badge">RECOGNITION: UGC,AICTE</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span></div>
+        <div class="meta-item">Avg Package: ₹3,00,000</div>
+        <div class="meta-item">Recruiters: TCS</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Arya College of Engineering, Jaipur</span>
+          <a href="https://www.aryacollege.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:48%">
+          ₹95,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹95,000</td>
+        <td>12th PCM 45%; 65% board: direct admission confirm</td>
+        <td>180</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹95,000</td>
+        <td>12th PCM 45%; 65% board: direct admission confirm</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Kukas, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 1800-102-1044</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A+</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,50,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys, Wipro</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Anand International College of Engineering, Jaipur</span>
+          <a href="https://www.anandice.ac.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:45%">
+          ₹90,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹90,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹90,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Kanota, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 0141-5116888</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,20,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Global Institute of Technology (GIT), Jaipur</span>
+          <a href="https://www.gitjaipur.com" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:48%">
+          ₹95,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹95,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹95,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Sitapura, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 0141-2770573</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,50,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Regional College, Jaipur</span>
+          <a href="https://www.regional.ac.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:48%">
+          ₹95,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹95,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹95,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Sikar Road, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 0141-2252050</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,20,000</div>
+        <div class="meta-item">Recruiters: TCS, Wipro</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Jaipur Engineering College (JEC), Kukas</span>
+          <a href="https://www.jeckukas.org.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:50%">
+          ₹1,00,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,00,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,00,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Kukas, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 1800-200-7919</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,50,000</div>
+        <div class="meta-item">Recruiters: TCS, Wipro</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">JECRC Foundation (Jaipur Engineering College &amp; Research Centre)</span>
+          <a href="https://jecrcfoundation.com" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:65%">
+          ₹1,30,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,30,000</td>
+        <td>12th PCM 45%; 65% board: direct/management quota</td>
+        <td>180</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,30,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Sitapura, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 0141-2770148</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A++</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹4,00,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys, Wipro, Capgemini</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Poornima College of Engineering, Jaipur</span>
+          <a href="https://www.poornima.org" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:63%">
+          ₹1,25,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,25,000</td>
+        <td>12th PCM 45%; 65% board: management quota</td>
+        <td>180</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,25,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Sitapura, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 0141-6502333</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A++</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹4,00,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys, Cognizant</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">SKIT Jaipur (Swami Keshvanand Institute of Technology)</span>
+          <a href="https://www.skit.ac.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:68%">
+          ₹1,35,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,35,000</td>
+        <td>12th PCM 45%; CSE merit 70-75%, 65% via management quota</td>
+        <td>180</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,35,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Ramnagariya, Jagatpura, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 0141-2853244</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A++</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹4,50,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys, Wipro, Capgemini</div>
+      </div>
+    </div>
+    <h2 style="margin-top:2rem;margin-bottom:1rem;">Comparison</h2>
+    <table class="comp-table">
+      <thead><tr><th>College</th><th>Min Fee</th><th>NAAC</th><th>Avg Package</th><th>Courses</th></tr></thead>
+      <tbody><tr>
+      <td>IET Alwar (Institute of Engineering &amp; Technology)</td>
+      <td>₹84,500</td>
+      <td>A</td>
+      <td>₹3,50,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>NIET Alwar (Northern Institute of Engineering &amp; Technical Campus)</td>
+      <td>₹85,000</td>
+      <td>—</td>
+      <td>₹3,20,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>MITRC Alwar (Modern Institute of Technology &amp; Research Centre)</td>
+      <td>₹85,000</td>
+      <td>—</td>
+      <td>₹3,20,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>St. Margaret Engineering College, Neemrana</td>
+      <td>₹85,000</td>
+      <td>—</td>
+      <td>₹3,00,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Raffles University, Neemrana</td>
+      <td>₹1,28,000</td>
+      <td>—</td>
+      <td>₹4,00,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Sunrise University, Alwar</td>
+      <td>₹80,000</td>
+      <td>—</td>
+      <td>₹3,00,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Arya College of Engineering, Jaipur</td>
+      <td>₹95,000</td>
+      <td>A+</td>
+      <td>₹3,50,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Anand International College of Engineering, Jaipur</td>
+      <td>₹90,000</td>
+      <td>A</td>
+      <td>₹3,20,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Global Institute of Technology (GIT), Jaipur</td>
+      <td>₹95,000</td>
+      <td>A</td>
+      <td>₹3,50,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Regional College, Jaipur</td>
+      <td>₹95,000</td>
+      <td>A</td>
+      <td>₹3,20,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Jaipur Engineering College (JEC), Kukas</td>
+      <td>₹1,00,000</td>
+      <td>A</td>
+      <td>₹3,50,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>JECRC Foundation (Jaipur Engineering College &amp; Research Centre)</td>
+      <td>₹1,30,000</td>
+      <td>A++</td>
+      <td>₹4,00,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Poornima College of Engineering, Jaipur</td>
+      <td>₹1,25,000</td>
+      <td>A++</td>
+      <td>₹4,00,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>SKIT Jaipur (Swami Keshvanand Institute of Technology)</td>
+      <td>₹1,35,000</td>
+      <td>A++</td>
+      <td>₹4,50,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr></tbody>
+    </table></div>
+<div class="tab-panel" id="tab-mechanical-engineering">
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">IET Alwar (Institute of Engineering &amp; Technology)</span>
+          <a href="https://www.ietalwar.com" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:42%">
+          ₹84,500/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹84,500</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹84,500</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Alwar, Rajasthan</div>
+        <div class="meta-item">Phone: See website</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,50,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">NIET Alwar (Northern Institute of Engineering &amp; Technical Campus)</span>
+          <a href="https://www.nietalwar.com" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:43%">
+          ₹85,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹85,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹85,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Mandir Road, Alwar, Rajasthan</div>
+        <div class="meta-item">Phone: See website</div>
+        <div class="meta-item"><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span></div>
+        <div class="meta-item">Avg Package: ₹3,20,000</div>
+        <div class="meta-item">Recruiters: TCS, Wipro</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">MITRC Alwar (Modern Institute of Technology &amp; Research Centre)</span>
+          <a href="https://mitrc.ac.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:43%">
+          ₹85,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹85,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹85,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Alwar, Rajasthan</div>
+        <div class="meta-item">Phone: See website</div>
+        <div class="meta-item"><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,20,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">St. Margaret Engineering College, Neemrana</span>
+          <a href="https://www.smec.ac.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:43%">
+          ₹85,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹85,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹85,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Neemrana, Alwar, Rajasthan</div>
+        <div class="meta-item">Phone: See website</div>
+        <div class="meta-item"><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span></div>
+        <div class="meta-item">Avg Package: ₹3,00,000</div>
+        <div class="meta-item">Recruiters: TCS</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Raffles University, Neemrana</span>
+          <a href="https://rafflesuniversity.edu.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:64%">
+          ₹1,28,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,28,000</td>
+        <td>12th PCM 50%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,28,000</td>
+        <td>12th PCM 50%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Neemrana, Alwar, Rajasthan</div>
+        <div class="meta-item">Phone: See website</div>
+        <div class="meta-item"><span class="accred-badge">RECOGNITION: UGC,AICTE</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹4,00,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Sunrise University, Alwar</span>
+          <a href="https://www.sunriseuniversity.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:40%">
+          ₹80,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹80,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹80,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Alwar, Rajasthan</div>
+        <div class="meta-item">Phone: See website</div>
+        <div class="meta-item"><span class="accred-badge">RECOGNITION: UGC,AICTE</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span></div>
+        <div class="meta-item">Avg Package: ₹3,00,000</div>
+        <div class="meta-item">Recruiters: TCS</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Arya College of Engineering, Jaipur</span>
+          <a href="https://www.aryacollege.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:48%">
+          ₹95,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹95,000</td>
+        <td>12th PCM 45%; 65% board: direct admission confirm</td>
+        <td>180</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹95,000</td>
+        <td>12th PCM 45%; 65% board: direct admission confirm</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Kukas, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 1800-102-1044</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A+</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,50,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys, Wipro</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Anand International College of Engineering, Jaipur</span>
+          <a href="https://www.anandice.ac.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:45%">
+          ₹90,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹90,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹90,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Kanota, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 0141-5116888</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,20,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Global Institute of Technology (GIT), Jaipur</span>
+          <a href="https://www.gitjaipur.com" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:48%">
+          ₹95,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹95,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹95,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Sitapura, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 0141-2770573</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,50,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Regional College, Jaipur</span>
+          <a href="https://www.regional.ac.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:48%">
+          ₹95,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹95,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹95,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Sikar Road, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 0141-2252050</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,20,000</div>
+        <div class="meta-item">Recruiters: TCS, Wipro</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Jaipur Engineering College (JEC), Kukas</span>
+          <a href="https://www.jeckukas.org.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:50%">
+          ₹1,00,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,00,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>120</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,00,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Kukas, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 1800-200-7919</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹3,50,000</div>
+        <div class="meta-item">Recruiters: TCS, Wipro</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">JECRC Foundation (Jaipur Engineering College &amp; Research Centre)</span>
+          <a href="https://jecrcfoundation.com" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:65%">
+          ₹1,30,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,30,000</td>
+        <td>12th PCM 45%; 65% board: direct/management quota</td>
+        <td>180</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,30,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Sitapura, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 0141-2770148</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A++</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹4,00,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys, Wipro, Capgemini</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">Poornima College of Engineering, Jaipur</span>
+          <a href="https://www.poornima.org" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:63%">
+          ₹1,25,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,25,000</td>
+        <td>12th PCM 45%; 65% board: management quota</td>
+        <td>180</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,25,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Sitapura, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 0141-6502333</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A++</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹4,00,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys, Cognizant</div>
+      </div>
+    </div>
+
+    <div class="college-card">
+      <div class="card-header">
+        <div>
+          <span class="college-name">SKIT Jaipur (Swami Keshvanand Institute of Technology)</span>
+          <a href="https://www.skit.ac.in" target="_blank" style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">↗</a>
+        </div>
+        <span class="type-badge type-private">private</span>
+      </div>
+
+      <div class="fee-bar-container">
+        <div class="fee-bar orange" style="width:68%">
+          ₹1,35,000/yr min
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead><tr><th>Course</th><th>Duration</th><th>Fee (Annual)</th><th>Eligibility</th><th>Seats</th></tr></thead>
+        <tbody>
+      <tr>
+        <td>B.Tech. Computer Science &amp; Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,35,000</td>
+        <td>12th PCM 45%; CSE merit 70-75%, 65% via management quota</td>
+        <td>180</td>
+      </tr>
+    
+      <tr>
+        <td>B.Tech. Mechanical Engineering</td>
+        <td>4 yrs</td>
+        <td>₹1,35,000</td>
+        <td>12th PCM 45%; 65% board: direct admission</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+      </table>
+
+      <div class="meta-grid">
+        <div class="meta-item">Location: Ramnagariya, Jagatpura, Jaipur, Rajasthan</div>
+        <div class="meta-item">Phone: 0141-2853244</div>
+        <div class="meta-item"><span class="accred-badge">NAAC: A++</span><span class="accred-badge">RECOGNITION: AICTE,RTU</span></div>
+        <div class="meta-item"><span class="accred-badge">hostel</span><span class="accred-badge">library</span><span class="accred-badge">lab</span><span class="accred-badge">sports</span><span class="accred-badge">wifi</span></div>
+        <div class="meta-item">Avg Package: ₹4,50,000</div>
+        <div class="meta-item">Recruiters: TCS, Infosys, Wipro, Capgemini</div>
+      </div>
+    </div>
+    <h2 style="margin-top:2rem;margin-bottom:1rem;">Comparison</h2>
+    <table class="comp-table">
+      <thead><tr><th>College</th><th>Min Fee</th><th>NAAC</th><th>Avg Package</th><th>Courses</th></tr></thead>
+      <tbody><tr>
+      <td>IET Alwar (Institute of Engineering &amp; Technology)</td>
+      <td>₹84,500</td>
+      <td>A</td>
+      <td>₹3,50,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>NIET Alwar (Northern Institute of Engineering &amp; Technical Campus)</td>
+      <td>₹85,000</td>
+      <td>—</td>
+      <td>₹3,20,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>MITRC Alwar (Modern Institute of Technology &amp; Research Centre)</td>
+      <td>₹85,000</td>
+      <td>—</td>
+      <td>₹3,20,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>St. Margaret Engineering College, Neemrana</td>
+      <td>₹85,000</td>
+      <td>—</td>
+      <td>₹3,00,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Raffles University, Neemrana</td>
+      <td>₹1,28,000</td>
+      <td>—</td>
+      <td>₹4,00,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Sunrise University, Alwar</td>
+      <td>₹80,000</td>
+      <td>—</td>
+      <td>₹3,00,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Arya College of Engineering, Jaipur</td>
+      <td>₹95,000</td>
+      <td>A+</td>
+      <td>₹3,50,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Anand International College of Engineering, Jaipur</td>
+      <td>₹90,000</td>
+      <td>A</td>
+      <td>₹3,20,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Global Institute of Technology (GIT), Jaipur</td>
+      <td>₹95,000</td>
+      <td>A</td>
+      <td>₹3,50,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Regional College, Jaipur</td>
+      <td>₹95,000</td>
+      <td>A</td>
+      <td>₹3,20,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Jaipur Engineering College (JEC), Kukas</td>
+      <td>₹1,00,000</td>
+      <td>A</td>
+      <td>₹3,50,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>JECRC Foundation (Jaipur Engineering College &amp; Research Centre)</td>
+      <td>₹1,30,000</td>
+      <td>A++</td>
+      <td>₹4,00,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>Poornima College of Engineering, Jaipur</td>
+      <td>₹1,25,000</td>
+      <td>A++</td>
+      <td>₹4,00,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr>
+<tr>
+      <td>SKIT Jaipur (Swami Keshvanand Institute of Technology)</td>
+      <td>₹1,35,000</td>
+      <td>A++</td>
+      <td>₹4,50,000</td>
+      <td>B.Tech. Computer Science &amp; Engineering, B.Tech. Mechanical Engineering</td>
+    </tr></tbody>
+    </table></div>
+
+  <footer>
+    <p>Data sourced from college websites and Rajasthan University affiliation lists. Verify fees and eligibility with the college before applying. Report generated by <strong>Counselor</strong>.</p>
+    <p>Report ID: cslr-msvpaq1d-b8753e</p>
+  </footer>
+</div>
+<script>
+document.querySelector('.tab-bar')?.addEventListener('click', e => {
+  const btn = e.target.closest('.tab-btn');
+  if (!btn) return;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  const panel = document.getElementById('tab-' + btn.dataset.field);
+  if (panel) panel.classList.add('active');
+});
+</script>
+</body>
+</html>
