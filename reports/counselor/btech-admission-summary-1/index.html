@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B.Tech Admission Summary — 65% PCM, No JEE</title>
+<style>
+:root {
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --text: #1a1d21;
+  --text-muted: #5b6168;
+  --border: #e4e7ec;
+  --brand: #5b8def;
+  --brand-hover: #4a7ad6;
+  --danger: #e5484d;
+  --success: #30a46c;
+  --warning: #d99a1b;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-16: 64px;
+  --radius-sm: 6px; --radius-md: 10px; --radius-lg: 16px;
+  --shadow-1: 0 1px 2px rgba(0,0,0,.06);
+  --shadow-2: 0 4px 12px rgba(0,0,0,.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.6;
+}
+.container { max-width: 1100px; margin: 0 auto; padding: var(--space-6); }
+
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, #1a1d21 0%, #2a2f37 100%);
+  color: #e6e8eb; border-radius: var(--radius-lg); padding: var(--space-12);
+  margin-bottom: var(--space-8);
+}
+.hero h1 { font-size: 2.25rem; line-height: 1.2; margin-bottom: var(--space-2); }
+.hero .sub { color: #9aa0a8; font-size: 1.125rem; margin-bottom: var(--space-6); }
+.chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.chip {
+  background: rgba(255,255,255,.08); border: 1px solid #2a2f37;
+  padding: var(--space-2) var(--space-3); border-radius: 999px; font-size: 0.875rem;
+}
+.chip b { color: #fff; }
+
+/* Section */
+section { margin-bottom: var(--space-8); }
+h2 { font-size: 1.375rem; margin-bottom: var(--space-3); }
+.lead { color: var(--text-muted); margin-bottom: var(--space-4); }
+
+/* Verdict cards */
+.verdicts { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4); }
+.verdict {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);
+  padding: var(--space-6); box-shadow: var(--shadow-1);
+}
+.verdict.danger { border-top: 4px solid var(--danger); }
+.verdict.warning { border-top: 4px solid var(--warning); }
+.verdict.success { border-top: 4px solid var(--success); }
+.verdict .tag { display: inline-block; font-weight: 700; font-size: 0.75rem; text-transform: uppercase;
+  letter-spacing: .05em; padding: 2px 8px; border-radius: var(--radius-sm); margin-bottom: var(--space-3); }
+.verdict.danger .tag { background: #fdecec; color: var(--danger); }
+.verdict.warning .tag { background: #fdf4e0; color: #a4760c; }
+.verdict.success .tag { background: #e6f4ec; color: var(--success); }
+.verdict h3 { font-size: 1.125rem; margin-bottom: var(--space-2); }
+.verdict p { color: var(--text-muted); font-size: 0.9rem; }
+
+/* Tables */
+.table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);
+  overflow: hidden; box-shadow: var(--shadow-1); overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+th { text-align: left; padding: var(--space-3) var(--space-4); background: #f0f2f5;
+  color: var(--text-muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: .03em; }
+td { padding: var(--space-3) var(--space-4); border-top: 1px solid var(--border); vertical-align: middle; }
+tr:hover td { background: #fafbfc; }
+
+/* Bars */
+.bar { background: #eceef2; border-radius: 999px; height: 8px; width: 120px; position: relative; overflow: hidden; }
+.bar .fill { height: 100%; border-radius: 999px; }
+.fill.green { background: var(--success); }
+.fill.orange { background: var(--warning); }
+.fill.red { background: var(--danger); }
+.fill.blue { background: var(--brand); }
+
+/* Badges */
+.badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+.badge.green { background: #e6f4ec; color: var(--success); }
+.badge.red { background: #fdecec; color: var(--danger); }
+.badge.orange { background: #fdf4e0; color: #a4760c; }
+.badge.gray { background: #eceef2; color: var(--text-muted); }
+
+/* Recommendation */
+.reco { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: var(--space-8); box-shadow: var(--shadow-2); }
+.reco .rank { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border); }
+.reco .rank:last-child { border-bottom: none; }
+.reco .num { background: var(--brand); color: #fff; width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+.reco .num.gold { background: #d99a1b; }
+
+.steps { background: #eef4ff; border-radius: var(--radius-md); padding: var(--space-6); }
+.steps li { margin-left: var(--space-6); padding: var(--space-2) 0; }
+
+footer { text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: var(--space-6) 0; }
+.highlight { background: #fff8e6; border-radius: var(--radius-sm); padding: 0 4px; font-weight: 600; }
+
+@media (max-width: 640px) {
+  .hero { padding: var(--space-8); }
+  .hero h1 { font-size: 1.75rem; }
+  .bar { width: 80px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="hero">
+    <h1>B.Tech Admission Summary</h1>
+    <p class="sub">Tumhara full analysis — engineering college, branch, fees, aur best rasta</p>
+    <div class="chips">
+      <span class="chip">12th PCM: <b>65%</b></span>
+      <span class="chip">JEE: <b>Nahi diya</b></span>
+      <span class="chip">Branch: <b>CS → Mechanical</b></span>
+      <span class="chip">Budget: <b>₹70–80K (stretch ₹90K)</b></span>
+      <span class="chip">Cities: <b>Jaipur · Alwar · Bharatpur</b></span>
+    </div>
+  </header>
+
+  <section>
+    <h2>Critical Verdict</h2>
+    <p class="lead">Sabse important 3 baatein — yehi decide karti hain tumhara rasta.</p>
+    <div class="verdicts">
+      <div class="verdict danger">
+        <span class="tag">Not Possible</span>
+        <h3>Government CS/Mechanical = JEE chahiye</h3>
+        <p>State govt colleges (RTU GEC) ka cutoff <b>JEE 75–98 percentile</b>. Bina JEE, 65% board se government CS/Mechanical <b>nahi milega</b>. Sirf GEC Bharatpur/Jhalawar mein spot-round mein Mechanical ka thin chance.</p>
+      </div>
+      <div class="verdict warning">
+        <span class="tag">Budget Reality</span>
+        <h3>Private ₹70–80K mein nahi milta</h3>
+        <p>Jaipur private B.Tech ka <b>real floor ₹90K</b> hai (₹90K–1.3L). ₹70–80K budget mein sirf government (JEE) ya weak college (SBCET ~₹80K) milta.</p>
+      </div>
+      <div class="verdict success">
+        <span class="tag">Best Path</span>
+        <h3>Low-fee private CS — ₹90–95K, confirm</h3>
+        <p>65% board + bina JEE = <b>private CS direct admission pakka</b>. Sabse acha balance: <b>Arya (₹95K)</b> ya <b>JECRC (₹1.3L)</b>. Sabse sasta: <b>Sunrise Alwar ₹80K</b>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Government Colleges (Rajasthan)</h2>
+    <p class="lead">Bar = JEE cutoff (percentile). Tumhara 65% board <span class="highlight">bina JEE</span> in sab se bahar hai.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>College</th><th>City</th><th>Fees/yr</th><th>CSE Cutoff (JEE)</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>MNIT Jaipur</td><td>Jaipur</td><td>₹1.72L</td><td><div class="bar"><div class="fill red" style="width:98%"></div></div> 98.2%ile</td><td><span class="badge red">NIT — top JEE</span></td></tr>
+          <tr><td>CTAE Udaipur</td><td>Udaipur</td><td>₹52K</td><td><div class="bar"><div class="fill red" style="width:92%"></div></div> 92%ile</td><td><span class="badge red">JEE</span></td></tr>
+          <tr><td>RTU Kota</td><td>Kota</td><td>₹48K</td><td><div class="bar"><div class="fill red" style="width:89%"></div></div> 89%ile</td><td><span class="badge red">JEE</span></td></tr>
+          <tr><td>MBM Jodhpur</td><td>Jodhpur</td><td>₹40K</td><td><div class="bar"><div class="fill red" style="width:88%"></div></div> 88%ile</td><td><span class="badge red">JEE</span></td></tr>
+          <tr><td>GEC Ajmer</td><td>Ajmer</td><td>₹35K</td><td><div class="bar"><div class="fill red" style="width:84%"></div></div> 84%ile</td><td><span class="badge red">JEE</span></td></tr>
+          <tr><td>GEC Bikaner</td><td>Bikaner</td><td>₹34K</td><td><div class="bar"><div class="fill red" style="width:82%"></div></div> 82%ile</td><td><span class="badge red">JEE</span></td></tr>
+          <tr><td>MLV Bhilwara</td><td>Bhilwara</td><td>₹36K</td><td><div class="bar"><div class="fill red" style="width:81%"></div></div> 81%ile</td><td><span class="badge red">JEE</span></td></tr>
+          <tr><td>GEC Bharatpur</td><td>Bharatpur</td><td>₹33K</td><td><div class="bar"><div class="fill red" style="width:78%"></div></div> 78%ile</td><td><span class="badge orange">Mech spot chance</span></td></tr>
+          <tr><td>GEC Jhalawar</td><td>Jhalawar</td><td>₹32K</td><td><div class="bar"><div class="fill red" style="width:75%"></div></div> 75%ile</td><td><span class="badge orange">Mech spot chance</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Private Colleges (65% board = confirm)</h2>
+    <p class="lead">Sorted by fees. Sab jagah CS + Mechanical dono milta hai. <span class="highlight">Green = best budget pick.</span></p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>College</th><th>City</th><th>Fees/yr</th><th>NAAC</th><th>Phone</th><th>Pick</th></tr></thead>
+        <tbody>
+          <tr><td>Sunrise University</td><td>Alwar</td><td><b>₹80K</b></td><td>—</td><td>Website pe</td><td><span class="badge green">Sabse sasta</span></td></tr>
+          <tr><td>IET Alwar</td><td>Alwar</td><td><b>₹84.5K</b></td><td>A</td><td>Website pe</td><td><span class="badge gray">—</span></td></tr>
+          <tr><td>NIET Alwar</td><td>Alwar</td><td>₹85K</td><td>—</td><td>Website pe</td><td><span class="badge gray">—</span></td></tr>
+          <tr><td>MITRC Alwar</td><td>Alwar</td><td>₹85K</td><td>—</td><td>Website pe</td><td><span class="badge gray">—</span></td></tr>
+          <tr><td>Anand International</td><td>Jaipur</td><td><b>₹90K</b></td><td>A</td><td>0141-5116888</td><td><span class="badge green">Sasta + decent</span></td></tr>
+          <tr><td>Arya College</td><td>Jaipur</td><td><b>₹95K</b></td><td>A+</td><td>1800-102-1044</td><td><span class="badge green">★ Best CS pick</span></td></tr>
+          <tr><td>GIT Jaipur</td><td>Jaipur</td><td>₹95K</td><td>A</td><td>0141-2770573</td><td><span class="badge gray">—</span></td></tr>
+          <tr><td>Regional College</td><td>Jaipur</td><td>₹95K</td><td>A</td><td>0141-2252050</td><td><span class="badge gray">—</span></td></tr>
+          <tr><td>JEC Kukas</td><td>Jaipur</td><td>₹1L</td><td>A</td><td>1800-200-7919</td><td><span class="badge gray">—</span></td></tr>
+          <tr><td>Poornima College</td><td>Jaipur</td><td>₹1.25L</td><td>A++</td><td>0141-6502333</td><td><span class="badge gray">—</span></td></tr>
+          <tr><td>JECRC Foundation</td><td>Jaipur</td><td>₹1.30L</td><td>A++</td><td>0141-2770148</td><td><span class="badge green">★ Best placement</span></td></tr>
+          <tr><td>SKIT Jaipur</td><td>Jaipur</td><td>₹1.35L</td><td>A++</td><td>0141-2853244</td><td><span class="badge gray">—</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="lead" style="margin-top:var(--space-3)">Bharatpur: sirf 1 private B.Tech college hai — naam/fee website pe verify karo. Wahan main option = GEC Bharatpur (govt, ₹33K).</p>
+  </section>
+
+  <section>
+    <h2>Recommended Path</h2>
+    <div class="reco">
+      <div class="rank"><span class="num gold">1</span><div><b>Arya College, Jaipur (₹95K, NAAC A+)</b> — CS confirm, best budget + placement balance. Phone 1800-102-1044.</div></div>
+      <div class="rank"><span class="num">2</span><div><b>JECRC Foundation, Jaipur (₹1.3L, NAAC A++)</b> — agar ₹1.3L afford ho, sabse strong placement.</div></div>
+      <div class="rank"><span class="num">3</span><div><b>Sunrise/IET Alwar (₹80–84.5K)</b> — budget ₹80K hard hai to yahan, par placement kamzor.</div></div>
+      <div class="rank"><span class="num">4</span><div><b>Government (alternate)</b> — JEE 2027 doge to 60–70%ile bhi state GEC khol deta (₹32–52K).</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Action Steps (aaj hi karo)</h2>
+    <div class="steps">
+      <ol>
+        <li><b>Arya College</b> call karo — 1800-102-1044. Pucho: CSE seat 65% board pe, exact fees, hostel.</li>
+        <li><b>JECRC Foundation</b> call karo — 0141-2770148. Management quota ka total cost pucho.</li>
+        <li>Documents ready: 10th + 12th marksheet, domicile, photos.</li>
+        <li>REAP spot-round / direct admission form bharo (GEC Bharatpur Mechanical try karna ho to).</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    <p>Fees/cutoffs approximate (2026). Admission se pehle college se verify karo. Generated by Counselor.</p>
+  </footer>
+</div>
+</body>
+</html>
